@@ -35,15 +35,14 @@ const validateEmail = (email) => {
 
 const userRegister = async ({ email, password, username }, knex, ws) => {
   if (email && password && username) {
-
     if(!validateEmail(email)){
-        JSON.stringify({
+        ws.send(JSON.stringify({
             type: "register",
             redirectUrl: "/register",
             sucess: false,
             redirect: false,
-            message: "E-mail invalid."
-        })
+            message: "E-mail invalid. Try again with other e-mail."
+        }))
         return;
     }
     const token = generateToken(199);
@@ -102,16 +101,15 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
           private: false,
           lumis: 0
         });
-
-      ws.send(
-        JSON.stringify({
-          type: "register",
-          redirectUrl: "/login",
-          sucess: true,
-          redirect: true,
-          message: "Register successfuly."
-        })
-      );
+        ws.send(
+            JSON.stringify({
+            type: "register",
+            redirectUrl: "/registerSucessfully",
+            sucess: true,
+            redirect: true,
+            message: "Register successfuly."
+            })
+        );
     } else {
       ws.send(
         JSON.stringify({

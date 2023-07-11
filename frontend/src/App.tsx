@@ -47,22 +47,27 @@ function App() {
         <Route path="/" exact render={(props) => <>
           { user?.id ? <>
             <Dashboard user={user}/>
-          </> : <Login setLogged={setLogged} /> }
+          </> : <Login registerSucess={false} setLogged={setLogged} /> }
+        </>} />
+        <Route path="/registerSucessfully" exact render={(props) => <>
+          { user?.id ? <>
+            <Dashboard user={user}/>
+          </> : <Login registerSucess={true} setLogged={setLogged} /> }
         </>} />
         <Route path="/login" exact render={(props) => <>
           { user?.id ? <>
             <Dashboard user={user}/>
-          </> : <Login setLogged={setLogged} /> }
+          </> : <Login registerSucess={false}  setLogged={setLogged} /> }
         </>} />
         <Route path="/app" exact render={(props) => <>
           { user?.id ? <>
             <Dashboard user={user}/>
-          </> : <Login setLogged={setLogged} /> }
+          </> : <Login registerSucess={false}  setLogged={setLogged} /> }
         </>} />
         <Route path="/register" exact render={(props) => <>
           { user?.id ? <>
             <Dashboard user={user}/>
-          </> : <Register setLogged={setLogged}/> }
+          </> : <Register registerSucess={false}  setLogged={setLogged}/> }
         </>} />
       </BrowserRouter>
     </div>

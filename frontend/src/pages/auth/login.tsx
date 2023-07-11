@@ -62,6 +62,12 @@ function Login(props: any) {
                 onKeyUp={(e) => setPassword((e.target as any).value)}
                 type="password" id="password"/>
                 <span className='error'>{ error && message }</span>
+                { props.registerSucess && <h4 className="error subtitle" style={{
+                  color: "#74da7285",
+                  fontSize: '14px',
+                  left: '25px',
+                  position: 'relative'
+                }}>Cadastro feito com sucesso, faça o login acima usando os mesmas crendencias.</h4>}
                 <p><a className="register" href="#">Forgot your password?</a></p>
                 <button>Login</button>
                 <p>Need an account? <Link 

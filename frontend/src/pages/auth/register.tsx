@@ -33,7 +33,7 @@ function Register(props: any) {
             setMessage(message.message)
             if(message?.sucess){
               if(message?.redirect){
-                window.location.pathname = message?.redirectUrl
+                window.location.pathname = `${message?.redirectUrl.replaceAll("/registerSucessfully=true", "?registerSucessfully=true")}`
               }
             }
           } else if(message.type == 'validateToken'){
