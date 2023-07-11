@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 
-import ChatContainer from "../components/Chat";
-import Header from "../components/Header";
-import Online from "../ws/ping";
-
 import { Link } from "react-router-dom";
-
-const typePage = "dashboard";
 
 declare global {
     interface Window {
@@ -17,7 +11,7 @@ declare global {
 import { io, Socket } from "socket.io-client";
 var socket: Socket;
 
-function Dashboard({ user }: any) {
+function Header({ user }: any) {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setTimeout(() => {
@@ -42,20 +36,10 @@ function Dashboard({ user }: any) {
     };
 
     return (
-        <div className="App">
-            {loading ? (
-                <>
-                    <Header></Header>
-                    <Online user={user} socket={socket} emited={emited} />
-                </>
-            ) : (
-                "Carregando"
-            )}
-            <h1>
-                Your username is {user.username}#{user.discrimination}
-            </h1>
+        <div className="Header">
+            <h1>Isso aqui é um header</h1>
         </div>
     );
 }
 
-export default Dashboard;
+export default Header;

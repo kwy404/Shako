@@ -1,4 +1,5 @@
 const {getOtherUsers} = require('../user/getUsers');
+const {jsonE} = require("../helpers/parse");
 
 const validationToken = async ({token}, knex, ws) => {
     knex('users').where({
@@ -7,7 +8,7 @@ const validationToken = async ({token}, knex, ws) => {
         if(rows.length > 0){
             rows[0].password = undefined
             ws.send(
-                JSON.stringify({
+              jsonE({
                   type: "login",
                   user: rows[0],
                   sucess: true,
@@ -18,7 +19,7 @@ const validationToken = async ({token}, knex, ws) => {
             return rows[0]
         } else{
             ws.send(
-                JSON.stringify({
+                jsonE({
                   type: "login",
                   user: {},
                   sucess: false,

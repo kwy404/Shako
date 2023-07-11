@@ -6,7 +6,7 @@ const parseMessage = async ({type, data}, ws, knex, app, io) => {
     try {
         await types[type](data, knex, ws)
     } catch (error) {
-        //console.log('Why so many codes, if your life its no have sense')
+        //Pass, no code here
     }
 }
 

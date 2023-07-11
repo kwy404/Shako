@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react'
 
-import {
-  BrowserRouter,
-  Route,
-  Link
-} from "react-router-dom"
-
 interface User {
   id: string;
   username: string;
