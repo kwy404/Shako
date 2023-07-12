@@ -10,7 +10,8 @@
 
 body {
   overflow: hidden;
-  background: #2f363d !important;
+  background: #242426 !important;
+  filter: brightness(1.2) drop-shadow(2px 4px 6px black);
 }
 
 .login-container {
