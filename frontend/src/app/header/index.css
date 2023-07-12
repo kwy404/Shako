@@ -92,6 +92,12 @@
     object-fit: cover;
     transform: scale(0.5);
     transition: 0.4s;
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.icon:hover{
+    opacity: 0.7;
 }
 
 .expand{
@@ -114,6 +120,7 @@
     border-bottom: 1px solid black;
     border-radius: 0px;
     z-index: 10;
+    opacity: 1 !important;
 }
 
 .search-bar::-ms-value{
