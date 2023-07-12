@@ -80,7 +80,10 @@ function Register(props: any) {
                 'height': '3px'
                 }}>
                 <div className="simple_form">
-                  <ol className="progress-tracker">
+                  <ol className="progress-tracker" style={{
+                    'top': '0',
+                    'left': '-5px'
+                  }}>
                       <li className="active">
                       <div className="circle"></div>
                       <div className="label">Accept rules</div>
