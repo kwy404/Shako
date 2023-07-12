@@ -2,70 +2,85 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 const generateHtmlEmail = (username, code) => {
-  return `<td class="x_p-80 x_mpy-35 x_mpx-15" bgcolor="#212429" style="padding:80px">
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-      <tr>
-        
-      </tr>
-      <tr>
+  return `<table width="100%" border="0" cellspacing="0" cellpadding="0" 
+  bgcolor="#1f2124" style="padding-top:30px; padding-bottom:30px; padding-left:56px; padding-right:56px">
+  <tbody>
+     <tr>
         <td>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td class="x_title-36 x_pb-30 x_c-grey6 x_fw-b" style="font-size:36px; line-height:42px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-bottom:30px; color:#bfbfbf; font-weight:bold">Caro(a) ${username}</td>
-              </tr>
-            </tbody>
-          </table>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td class="x_text-18 x_c-white x_pb-20" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:20px">Este é o seu código de ativação de Shako '${code}', verifique sua conta.</td>
-              </tr>
-            </tbody>
-          </table>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              
-            </tbody>
-          </table>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                
-              </tr>
-            </tbody>
-          </table>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td class="x_pt-30" style="padding-top:30px">
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tbody>
-                      <tr>
-                        <td class="x_img" width="3" bgcolor="#3a9aed" style="font-size:0pt; line-height:0pt; text-align:left"></td>
-                        <td class="x_img" width="37" style="font-size:0pt; line-height:0pt; text-align:left"></td>
-                        <td>
-                          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <tbody>
-                              <tr>
-                                <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px; line-height:22px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-top:20px; padding-bottom:20px; color:#f1f1f1">Atenciosamente, <br aria-hidden="true">A equipe da Baimless </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+                 <tr>
+                    <td class="x_title-36 x_pb-30 x_c-grey6 x_fw-b" style="font-size:36px; line-height:42px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-bottom:30px; color:#bfbfbf; font-weight:bold">Caro(a) ${username},</td>
+                 </tr>
+              </tbody>
+           </table>
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+                 <tr>
+                    <td class="x_text-18 x_c-grey4 x_pb-30" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:30px">Aqui está o código do Shako exigido para iniciar a sessão com a conta ${username}:</td>
+                 </tr>
+              </tbody>
+           </table>
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+                 <tr>
+                    <td class="x_pb-70 x_mpb-50" style="padding-bottom:70px">
+                       <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#17191c">
+                          <tbody>
+                             <tr>
+                                <td class="x_py-30 x_px-56" style="padding-top:30px; padding-bottom:30px; padding-left:56px; padding-right:56px">
+                                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tbody>
+                                         <tr>
+                                            <td class="x_title-48 x_c-blue1 x_fw-b x_a-center" style="font-size:48px; line-height:52px; font-family:Arial,sans-serif,'Motiva Sans'; color:#3a9aed; font-weight:bold; text-align:center">${code} </td>
+                                         </tr>
+                                      </tbody>
+                                   </table>
+                                </td>
+                             </tr>
+                          </tbody>
+                       </table>
+                    </td>
+                 </tr>
+              </tbody>
+           </table>
+           
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+                 <tr>
+                    <td class="x_text-18 x_c-blue1 x_pb-40" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#7abefa; padding-bottom:40px"></td>
+                 </tr>
+              </tbody>
+           </table>
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+                 <tr>
+                    <td class="x_pt-30" style="padding-top:30px">
+                       <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tbody>
+                             <tr bgcolor="#17191c">
+                                <td class="x_img" width="3" bgcolor="#3a9aed" style="font-size:0pt; line-height:0pt; text-align:left"></td>
+                                <td class="x_img" width="37" style="font-size:0pt; line-height:0pt; text-align:left"></td>
+                                <td>
+                                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tbody>
+                                         <tr>
+                                            <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px;line-height:22px;font-family:Arial,sans-serif,'Motiva Sans';text-align:left;padding-top:20px;padding-bottom:20px;color:#f1f1f1;">Atenciosamente,<br aria-hidden="true">A equipe do <span data-markjs="true" class="marklg6kiz2p7" data-ogac="" data-ogab="" data-ogsc="" data-ogsb="">Shako</span> </td>
+                                         </tr>
+                                      </tbody>
+                                   </table>
+                                </td>
+                             </tr>
+                          </tbody>
+                       </table>
+                    </td>
+                 </tr>
+              </tbody>
+           </table>
         </td>
-      </tr>
-    </tbody>
-  </table>
-</td>`
+     </tr>
+  </tbody>
+</table>`
 }
 
 async function enviarEmail({ username, email, code_ativacao }) {

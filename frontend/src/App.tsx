@@ -44,7 +44,7 @@ function App() {
   }
 
   return (
-    <div className="App lighter theme-default no-reduce-motion">
+    <div className="App dark-mode theme-default no-reduce-motion">
       <BrowserRouter>
         <Route path="/" exact render={(props) => <>
           { user?.id ? <>

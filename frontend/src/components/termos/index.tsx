@@ -26,19 +26,19 @@ const TermosDeUso: React.FC<TermosDeUsoProps> = ({ setTermos }) => {
 
             <ol className="rules-list">
                 <li>
-                <div className="rules-list__text">Sexually explicit or violent media must be marked as sensitive when posting</div>
+                <div className="rules-list__text">Sexually explicit or violent media must be marked as sensitive when posting.</div>
                 </li>
                 <li>
-                <div className="rules-list__text">No racism, sexism, homophobia, transphobia, xenophobia, or casteism</div>
+                <div className="rules-list__text">No racism, sexism, homophobia, transphobia, xenophobia, or casteism.</div>
                 </li>
                 <li>
-                <div className="rules-list__text">No incitement of violence or promotion of violent ideologies</div>
+                <div className="rules-list__text">No incitement of violence or promotion of violent ideologies.</div>
                 </li>
                 <li>
-                <div className="rules-list__text">No harassment, dogpiling or doxxing of other users</div>
+                <div className="rules-list__text">No harassment, dogpiling or doxxing of other users.</div>
                 </li>
                 <li>
-                <div className="rules-list__text">Do not share intentionally false or misleading information</div>
+                <div className="rules-list__text">Do not share intentionally false or misleading information.</div>
                 </li>
             </ol>
 
