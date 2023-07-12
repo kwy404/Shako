@@ -9,7 +9,11 @@ const typePage = 'login'
 
 const ws = new WebSocket('ws://localhost:9000/ws/login')
 
-
+function getRandomChoicePhoto() {
+  const choices = ['geek', 'anime', 'photo', 'cinema'];
+  const randomIndex = Math.floor(Math.random() * choices.length);
+  return choices[randomIndex];
+}
 
 function Login(props: any) {
     const [email, setEmail] = useState('');
@@ -46,6 +50,7 @@ function Login(props: any) {
   
     return (
       <>
+        <img className='background--image' src={`https://source.unsplash.com/random/1920%C3%971080/?${getRandomChoicePhoto()}`}/>
         { error && <MyAlertDialog open={dialog} message={message} error="I made a mistake" setDialog={setDialog}/> }
         <div className="App">
           <div className="login-container">

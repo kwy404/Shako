@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { AlertDialog, Button } from 'react-onsenui';
 
-interface MyAlertDialogProps {
-  message: string;
-  open: boolean;
-  error: string;
-  setDialog: void;
-}
-
-const MyAlertDialog: React.FC<MyAlertDialogProps> = (props:any) => {
+const MyAlertDialog: React.FC = (props:any) => {
   const handleCancel = () => {
     props?.setDialog(false);
   };
