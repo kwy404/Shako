@@ -5,6 +5,7 @@ import 'onsenui/css/onsen-css-components.css';
 
 
 import ChatContainer from "../components/Chat";
+import Loading from "./loading";
 import Header from "../components/Header";
 import Online from "../ws/ping";
 
@@ -52,11 +53,11 @@ function Dashboard({ user }: any) {
                     <Online user={user} socket={socket} emited={emited} />
                 </>
             ) : (
-                "Carregando"
+                <Loading/>
             )}
-            <h1>
+            {/* <h1>
                 Your username is {user.username}#{user.discrimination}
-            </h1>
+            </h1> */}
         </div>
     );
 }

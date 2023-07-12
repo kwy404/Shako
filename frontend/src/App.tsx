@@ -2,8 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import {
   BrowserRouter,
-  Route,
-  Link
+  Route
 } from "react-router-dom"
 
 import Login from './pages/auth/login'
