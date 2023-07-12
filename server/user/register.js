@@ -21,7 +21,7 @@ const generateHtmlEmail = (username, code) => {
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody>
               <tr>
-                <td class="x_text-18 x_c-white x_pb-20" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:20px">Este é o seu código de Shako '${code}', verifique sua conta.</td>
+                <td class="x_text-18 x_c-white x_pb-20" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:20px">Este é o seu código de ativação de Shako '${code}', verifique sua conta.</td>
               </tr>
             </tbody>
           </table>
@@ -83,7 +83,7 @@ async function enviarEmail({ username, email, code_ativacao }) {
 
   // Defina as informações do e-mail
   let mailOptions = {
-    from: 'xande1231221@hotmail.com',
+    from: `"Shako - Baimless 👻" <xande1231221@hotmail.com>`,
     to: email,
     subject: 'Código de ativação - Shako',
     html: generateHtmlEmail(username,code_ativacao)
@@ -91,8 +91,6 @@ async function enviarEmail({ username, email, code_ativacao }) {
 
   // Envie o e-mail
   let info = await transporter.sendMail(mailOptions);
-
-  console.log('E-mail enviado: ', info.messageId);
 }
 
 
