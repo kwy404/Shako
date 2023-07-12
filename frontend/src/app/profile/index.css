@@ -33,3 +33,31 @@
     left: 30px;
     border: 4px solid #030303;
 }
+
+.Profile .info{
+    position: relative;
+    top: calc(300px + 40px);
+}
+
+.Profile .info h3{
+    position: relative;
+    left: 10px;
+}
+
+.gray{
+    color: rgb(113, 118, 123);
+    fill: rgb(113, 118, 123);
+}
+
+.date{
+    height: 0.9em;
+    padding: 5px;
+    margin: 0em;
+    top: 6px;
+    position: relative;
+}
+
+.date-info{
+    font-size: 18px;
+    margin-top: -2px;
+}

@@ -83,7 +83,7 @@ function Dashboard({ user, isProfile }: any) {
                        <Left>
                             
                        </Left>
-                       <Profile>
+                       <Profile user={user}>
                        
                        </Profile>
                     </div>
