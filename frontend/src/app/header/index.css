@@ -20,6 +20,8 @@
     right: 335px;
     position: relative;
     color: rgba(255,255,255,.7) !important;
+    font-size: 12px;
+    height: 15px;
 }
 
 .search-bar::placeholder{
@@ -89,6 +91,7 @@
     height: 15px;
     object-fit: cover;
     transform: scale(0.5);
+    transition: 0.4s;
 }
 
 .expand{
@@ -115,4 +118,33 @@
 
 .search-bar::-ms-value{
     color: black;
+}
+
+.bell-icon{
+    left: 109px;
+    width: 40px;
+    height: 40px;
+    transform: scale(0.8);
+    filter: contrast(-0) drop-shadow(2px 4px 6px rgba(0,0,0,.1));
+    cursor: pointer;
+}
+
+.bell-icon:hover{
+    filter: contrast(-0) drop-shadow(2px 4px 6px black);
+    transform: scale(0.84);
+}
+
+.chat-icon{
+    left: 169px;
+    width: 40px;
+    height: 40px;
+    transform: scale(0.8);
+    filter: contrast(-0) drop-shadow(2px 4px 6px rgba(0,0,0,.1));
+    cursor: pointer;
+    top: -2px;
+}
+
+.chat-icon:hover{
+    filter: contrast(-0) drop-shadow(2px 4px 6px black);
+    transform: scale(0.84);
 }
