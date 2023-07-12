@@ -142,7 +142,7 @@ a{
   height: 100%;
   z-index: 0;
   opacity: 0.2;
-  filter: blur(5px);
+  filter: blur(2px);
 }
 
 .ons-page, .ons-navigator, .ons-tabbar, .ons-dialog, .ons-alert-dialog, .ons-action-sheet, .ons-toast {
@@ -199,4 +199,8 @@ a{
   left: -24px;
   position: relative;
   top: -20px;
+}
+
+.login-box-content input{
+  background-color: rgba(0,0,0,.25) !important;
 }
