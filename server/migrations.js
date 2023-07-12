@@ -15,6 +15,12 @@ const up = function (knex) {
     knex.schema.createTableIfNotExists("users", function (table) {
       table.increments("id");
       table.string("username", 255).notNullable();
+      table.string("display_name", 255).notNullable();
+      table.string("about", 255).notNullable();
+      table.string("language", 255).notNullable();
+      table.string("beta", 255).notNullable();
+      table.string("banned", 255).notNullable();
+      table.string("created_at", 255).notNullable();
       // Private profile, 0 or 1 or true or false, idk. what do u mean?
       table.string("private", 255).notNullable();
       // Lumis points profile, like a karma (reddit)
@@ -25,7 +31,7 @@ const up = function (knex) {
       table.string("password", 255).notNullable();
       table.string("discrimination", 255).notNullable();
       table.longtext("avatar", 16383).notNullable();
-      table.longtext("bg", 16383).notNullable();
+      table.longtext("banner", 16383).notNullable();
       table.string("admin", 255).notNullable();
     }),
   ]);

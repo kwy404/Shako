@@ -118,6 +118,16 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
               return;
           }
       })
+      const currentDate = new Date();
+      const currentDay = currentDate.getDate();
+      const currentMonth = currentDate.getMonth() + 1;  // Os meses são indexados de 0 a 11
+      const currentYear = currentDate.getFullYear();
+      
+      // Adiciona zeros à esquerda para o dia e mês, caso necessário
+      const formattedDay = currentDay < 10 ? `0${currentDay}` : currentDay;
+      const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
+      
+      const created_at = `${formattedDay}/${formattedMonth}/${currentYear}`;
 
       await knex('users')
         .insert({
@@ -127,12 +137,18 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
           token: token,
           admin: '0',
           avatar: '',
-          bg: '',
+          banner: '',
           discrimination: discrimitor,
-          private: false,
-          lumis: 0,
-          verificado: 0
-        }).then(()=>{
+          private: '0',
+          lumis: '0',
+          verificado: '0',
+          created_at: created_at,
+          display_name: '',
+          about: '',
+          language: 'en',
+          beta: '1',
+          banned: '0'
+        }).then(() => {
           ws.send(
               JSON.stringify({
               type: "register",
