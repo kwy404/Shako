@@ -14,7 +14,30 @@ function calcularIncrementoExp(acao) {
       case 'compartilhamento':
         incrementoExp = 20;
         break;
-        // Adicione mais casos para outras ações, se necessário
+      default:
+        incrementoExp = 0;
+        break;
+    }
+  
+    return incrementoExp;
+}
+  
+function calcularIncrementoReputacao(acao) {
+    var incrementoExp = 0;
+  
+    switch (acao) {
+      case 'postagem':
+        incrementoExp = 5;
+        break;
+      case 'curtida':
+        incrementoExp = 2;
+        break;
+      case 'comentario':
+        incrementoExp = 3;
+        break;
+      case 'compartilhamento':
+        incrementoExp = 0;
+        break;
       default:
         incrementoExp = 0;
         break;
@@ -23,7 +46,13 @@ function calcularIncrementoExp(acao) {
     return incrementoExp;
   }
   
-  function calcularExpProximoNivel(level) {
+  function reputacaoIncrement(acao) {
+    const incrementoExp = calcularIncrementoReputacao(acao);
+    reputacaoLumis += incrementoExp;
+    return reputacaoLumis
+  }
+
+function calcularExpProximoNivel(level) {
     // Constantes
     var pi = Math.PI;
     var aceleracaoGravitacional = 9.8; // m/s^2
@@ -45,9 +74,10 @@ function calcularIncrementoExp(acao) {
     var expProximoNivel = areaCirculo * massaObjeto * tempoQueda;
   
     return `${Math.round(expProximoNivel, 1)}`;
-  }
+}
   
-  module.exports = {
+module.exports = {
     calcularExpProximoNivel,
-    calcularIncrementoExp
-  }
+    calcularIncrementoExp,
+    reputacaoIncrement
+}
