@@ -100,6 +100,17 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
         discrimitor = discriminationParse(1);
       }
 
+      if(discrimitor > 9999){
+        ws.send(JSON.stringify({
+          type: "register",
+          redirectUrl: "/register",
+          sucess: false,
+          redirect: false,
+          message: `There are already too many users with this ${username}, please create another one.`
+      }))
+      return;
+      }
+
       //Return erro e-mail already exist.
       knex('users')
       .select()
