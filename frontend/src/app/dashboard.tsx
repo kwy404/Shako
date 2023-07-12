@@ -5,6 +5,7 @@ import Loading from "./loading";
 import Online from "../ws/ping";
 import { Link, useParams, useLocation } from "react-router-dom";
 import Header from "./header";
+import Left from "./left";
 import { io, Socket } from "socket.io-client";
 import Profile from "./profile";
 
@@ -77,9 +78,16 @@ function Dashboard({ user, isProfile }: any) {
                 <Loading />
             )}
             {params?.username && params?.discrimination && (
-                <Profile>
-                    {/* Renderizar o conteúdo do perfil aqui */}
-                </Profile>
+                <div className="container">
+                    <div className="center">
+                       <Left>
+
+                       </Left>
+                       <Profile>
+                       
+                       </Profile>
+                    </div>
+                </div>
             )}
         </div>
     );

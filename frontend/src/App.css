@@ -208,3 +208,22 @@ a{
 .Header .left a{
   text-decoration: none !important;
 }
+
+.center{
+  position: relative;
+  margin: 0px auto;
+  max-width: 1200px;
+  top: 0px;
+  background: transparent;
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.container{
+  height: 100%;
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  overflow: auto;
+}
