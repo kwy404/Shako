@@ -2,8 +2,8 @@
     width: 100%;
     position: fixed;
     height: 40px;
-    background: #202020;
-    box-shadow: 2px 2px 10px 0px #101012;
+    background: #2e353b;
+    border-bottom: 1px solid rgba(0,0,0,.80);
     padding: 15px;
     display: flex;
     flex-direction: row;
@@ -16,7 +16,7 @@
 
 .search-bar{
     width: 400px;
-    background-color: #343434 !important;
+    background-color: rgba(0,0,0,.20) !important;
     right: 335px;
     position: relative;
     color: rgba(255,255,255,.7) !important;
@@ -111,7 +111,7 @@
     height: 37px;
     object-fit: fill;
     transform: scale(1);
-    background-color: #343434;
+    background-color: rgba(0,0,0,.20) !important;
     left: -371px;
     top: 0px;
     position: absolute;
