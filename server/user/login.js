@@ -41,13 +41,13 @@ const userLogin = async ({email, password}, knex, ws) => {
         }
       })
     } else{
-      JSON.stringify({
+      ws.send(JSON.stringify({
         type: "login",
         user: {},
         sucess: false,
         noMessageError: false,
         message: "E-mail or password is not valid"
-      })
+      }))
       return;
     }
 }
