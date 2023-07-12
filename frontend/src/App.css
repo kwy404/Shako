@@ -141,7 +141,8 @@ a{
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: 0.2;
+  opacity: 0.8;
+  filter: blur(15px);
 }
 
 .ons-page, .ons-navigator, .ons-tabbar, .ons-dialog, .ons-alert-dialog, .ons-action-sheet, .ons-toast {
@@ -191,4 +192,11 @@ a{
 
 .login-box-content{
   animation: 0.4s;
+}
+
+
+.progress-tracker{
+  left: -24px;
+  position: relative;
+  top: -20px;
 }
