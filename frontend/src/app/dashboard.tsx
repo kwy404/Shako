@@ -81,7 +81,7 @@ function Dashboard({ user, isProfile }: any) {
                 <div className="container">
                     <div className="center">
                        <Left>
-
+                            
                        </Left>
                        <Profile>
                        
