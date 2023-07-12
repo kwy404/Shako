@@ -107,8 +107,8 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
           sucess: false,
           redirect: false,
           message: `There are already too many users with this ${username}, please create another one.`
-      }))
-      return;
+        }))
+        return;
       }
 
       //Return erro e-mail already exist.
