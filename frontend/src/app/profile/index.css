@@ -2,7 +2,6 @@
     position: relative;
     width: calc(100% - 200px);
     height: 800px;
-    background-color: #000;
     right: -10px;
     border: 1px solid #2f3336;
 }
