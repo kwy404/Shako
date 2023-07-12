@@ -153,6 +153,16 @@ const validateEmail = (email) => {
 
 const userRegister = async ({ email, password, username }, knex, ws) => {
   if (email && password && username) {
+    if(!validateEmail(email)){
+        ws.send(JSON.stringify({
+            type: "register",
+            redirectUrl: "/register",
+            sucess: false,
+            redirect: false,
+            message: "E-mail invalid. Try again with other e-mail."
+        }))
+        return;
+    }
 
     if(!isStrongPassword(password).strong){
       ws.send(JSON.stringify({
@@ -163,17 +173,6 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
         message: "The password is not strong. It must contain at least one special character and one number, and be at least 8 characters long."
     }))
     return;
-    }
-
-    if(!validateEmail(email)){
-        ws.send(JSON.stringify({
-            type: "register",
-            redirectUrl: "/register",
-            sucess: false,
-            redirect: false,
-            message: "E-mail invalid. Try again with other e-mail."
-        }))
-        return;
     }
    
     const token = generateToken(199);
