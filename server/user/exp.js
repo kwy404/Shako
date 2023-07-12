@@ -18,13 +18,11 @@ function calcularIncrementoExp(acao) {
         incrementoExp = 0;
         break;
     }
-  
     return incrementoExp;
 }
   
 function calcularIncrementoReputacao(acao) {
     var incrementoExp = 0;
-  
     switch (acao) {
       case 'postagem':
         incrementoExp = 5;
