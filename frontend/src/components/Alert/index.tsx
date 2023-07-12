@@ -25,8 +25,8 @@ const MyAlertDialog: React.FC<MyAlertDialogProps> = ({setDialog, open, error, me
       <div className="alert-dialog-mask"></div>
       <div className={`alert-dialog  ${!open ? 'ons-alert--close': 'ons-alert--open'}`}>
         <div className="alert-dialog-container">
-          <div className="alert-dialog-title">I made a mistake</div>
-          <div className="alert-dialog-content">E-mail or password is not valid</div>
+          <div className="alert-dialog-title">{error}</div>
+          <div className="alert-dialog-content">{message}</div>
           <div className="alert-dialog-footer">
             <button 
             onClick={() => handleCancel()}
