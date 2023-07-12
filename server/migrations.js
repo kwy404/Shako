@@ -14,6 +14,7 @@ const up = function (knex) {
   Promise.all([
     knex.schema.createTableIfNotExists("users", function (table) {
       table.increments("id");
+      table.string("epic", 255).notNullable();
       table.string("username", 255).notNullable();
       table.string("display_name", 255).notNullable();
       table.string("about", 255).notNullable();

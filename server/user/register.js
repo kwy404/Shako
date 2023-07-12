@@ -145,6 +145,7 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
           email: email,
           password: encrypt(password),
           username: username,
+          epic: '0',
           token: token,
           admin: '0',
           avatar: '',
