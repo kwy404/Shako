@@ -124,3 +124,7 @@ a{
   height: 100%;
   width: 200px;
 }
+
+.alert-dialog-mask{
+  background-color: rgba(0, 0, 0, 0.60) !important;
+}
