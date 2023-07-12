@@ -1,4 +1,5 @@
 const {connected, getOtherUsersChat, ping} = require('../user/validationToken');
+const {getUserProfile} = require('../user/profile');
 
 const dashboard = async (socket, knex, io) => {
     const socket_id = socket.id
@@ -26,7 +27,8 @@ const sendToRoom = async(room, event, data, io, socket) => {
 const types = {
   'connected': connected,
   'getFriends': getOtherUsersChat,
-  'ping': ping
+  'ping': ping,
+  'getProfile': getUserProfile
 }
 
 module.exports = {dashboard}

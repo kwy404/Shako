@@ -86,7 +86,7 @@ function Dashboard({ user, isProfile }: any) {
                        <Left>
                             
                        </Left>
-                       <Profile user={user}>
+                       <Profile params={params} socket={socket} emited={emited} user={user}>
                        
                        </Profile>
                     </div>

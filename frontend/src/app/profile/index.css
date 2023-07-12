@@ -62,3 +62,18 @@
     font-size: 18px;
     margin-top: -2px;
 }
+
+.notfoundprofile {
+    position: relative;
+    margin: 0px auto;
+    width: 100%;
+    text-align: center;
+    top: 40px;
+    font-size: 26px;
+}
+
+.notfoundprofile h2{
+    font-size: 20px;
+    color: rgb(113, 118, 123);
+}
+  
