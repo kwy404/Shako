@@ -33,7 +33,7 @@ function Register(props: any) {
             setMessage(message.message)
             if(message?.sucess){
               if(message?.redirect){
-                window.location.pathname = `${message?.redirectUrl.replaceAll("/registerSucessfully=true", "?registerSucessfully=true")}`
+                window.location.pathname = `${message?.redirectUrl}`
               }
             }
           } else if(message.type == 'validateToken'){
@@ -73,7 +73,10 @@ function Register(props: any) {
                 <input 
                 onKeyUp={(e) => setPassword((e.target as any).value)}
                 type="password" id="password"/>
-                <span className='error'>{ error && message }</span>
+                <span className='error' style={{
+                  left: '27px',
+                  position: 'relative'
+                }}>{ error && message }</span>
                 <p><a className="register" href="#">Forgot your password?</a></p>
                 <button>Register</button>
                 <p>Have a account? <Link 

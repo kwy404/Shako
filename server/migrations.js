@@ -18,6 +18,7 @@ const up = function (knex) {
       // Private profile, 0 or 1 or true or false, idk. what do u mean?
       table.string("private", 255).notNullable();
       // Lumis points profile, like a karma (reddit)
+      table.string("verificado", 255).notNullable();
       table.string("lumis", 255).notNullable();
       table.string("token", 255).notNullable();
       table.string("email", 255).notNullable();

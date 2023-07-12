@@ -8,6 +8,24 @@ const discriminationParse = number => {
   return ans;
 };
 
+function isStrongPassword(password) {
+  // Expressão regular para verificar se a senha contém caracteres especiais e números
+  const regex = /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.*[0-9]).{8,}$/;
+  const isStrong = regex.test(password);
+
+  if (isStrong) {
+    return {
+      strong: true,
+      message: "A senha é forte. Ela deve conter pelo menos um caractere especial e um número, e ter no mínimo 8 caracteres de comprimento."
+    };
+  } else {
+    return {
+      strong: false,
+      message: "A senha não é forte. Ela deve conter pelo menos um caractere especial e um número, e ter no mínimo 8 caracteres de comprimento."
+    };
+  }
+}
+
 // Criptografa a senha
 function encrypt(password) {
   const cipher = crypto.createCipher('aes256', 'my_little_hex_deca');
@@ -35,6 +53,18 @@ const validateEmail = (email) => {
 
 const userRegister = async ({ email, password, username }, knex, ws) => {
   if (email && password && username) {
+
+    if(!isStrongPassword(password).strong){
+      ws.send(JSON.stringify({
+        type: "register",
+        redirectUrl: "/register",
+        sucess: false,
+        redirect: false,
+        message: "A senha não é forte. Ela deve conter pelo menos um caractere especial e um número, e ter no mínimo 8 caracteres de comprimento."
+    }))
+    return;
+    }
+
     if(!validateEmail(email)){
         ws.send(JSON.stringify({
             type: "register",
@@ -45,6 +75,7 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
         }))
         return;
     }
+   
     const token = generateToken(199);
     let discrimi = await knex('users')
       .select('*')
@@ -61,7 +92,7 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
         .first();
 
       const count = parseInt(discrimi.count);
-
+      let discrimitor = 0;
       if (count > 0) {
         // Nome de usuário repetido, aumenta o discrimi
         discrimitor = discriminationParse(count + 1);
@@ -99,17 +130,19 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
           bg: '',
           discrimination: discrimitor,
           private: false,
-          lumis: 0
-        });
-        ws.send(
-            JSON.stringify({
-            type: "register",
-            redirectUrl: "/registerSucessfully",
-            sucess: true,
-            redirect: true,
-            message: "Register successfuly."
-            })
-        );
+          lumis: 0,
+          verificado: 0
+        }).then(()=>{
+          ws.send(
+              JSON.stringify({
+              type: "register",
+              redirectUrl: "/registerSucessfully",
+              sucess: true,
+              redirect: true,
+              message: "Register successfuly."
+              })
+          );
+      })
     } else {
       ws.send(
         JSON.stringify({
