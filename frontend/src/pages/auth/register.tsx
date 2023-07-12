@@ -69,7 +69,7 @@ function Register(props: any) {
         <div className="App">
           <div className="login-container">
             <div className={`login-box ${(error ? 'error': '')}`}  style={{
-            paddingRight: '35px',
+            paddingRight: '20px',
           }}>
               {termos ? <>
                 <div className="form-container" style={{
