@@ -68,7 +68,7 @@ function Dashboard({ user, isProfile }: any) {
     };
 
     return (
-        <div className="App">
+        <div className="dashboard">
             {loading ? (
                 <>
                     <Header user={user} />

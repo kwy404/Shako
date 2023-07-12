@@ -10,7 +10,7 @@
 
 body {
   overflow: hidden;
-  background: #242426 !important;
+  background: #030303 !important;
   filter: brightness(1.2) drop-shadow(2px 4px 6px black);
 }
 
@@ -222,10 +222,32 @@ a{
   padding: 10px;
 }
 
+.dashboard .center{
+  left: -10px;
+}
+
 .container{
-  height: 100%;
-  position: absolute;
-  top: 60px;
+  height: calc(100% - 60px);
+  position: fixed;
+  top: 40px;
   width: 100%;
   overflow: auto;
+}
+
+/* For WebKit-based browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030303;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1D1D1F;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #23272a;
 }

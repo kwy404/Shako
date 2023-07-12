@@ -1,5 +1,10 @@
 .Left{
     width: 400px;
     height: 500px;
-    background-color: blue;
+}
+
+.Left .cardT{
+    width: 100%;
+    height: 100px;
+    background: #1D1D1F;
 }

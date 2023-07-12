@@ -21,7 +21,9 @@ declare global {
 function Left({ user }: any) {
     return (
         <div className="Left">
-            
+            <div className="cardT">
+
+            </div>
         </div>
     );
 }
