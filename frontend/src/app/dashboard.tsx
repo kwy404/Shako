@@ -75,7 +75,10 @@ function Dashboard({ user, isProfile }: any) {
                     <Online user={user} socket={socket!} emited={emited} />
                 </>
             ) : (
-                <Loading />
+                <>
+                    <Header user={user} />
+                    <Loading />
+                </>
             )}
             {params?.username && params?.discrimination && (
                 <div className="container">

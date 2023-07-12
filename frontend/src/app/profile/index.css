@@ -37,6 +37,7 @@
 .Profile .info{
     position: relative;
     top: calc(300px + 40px);
+    left: 10px;
 }
 
 .Profile .info h3{

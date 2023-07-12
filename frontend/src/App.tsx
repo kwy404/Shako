@@ -12,7 +12,7 @@ import Register from './pages/auth/register';
 import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
 
-const ws = new WebSocket('ws://localhost:9000/ws/login')
+const ws = new WebSocket('ws://localhost:9001/ws/login')
 
 interface User {
   id: string;
@@ -54,6 +54,7 @@ function App() {
         ws.send(stringy(data))
       }
     }
+    window.localStorage.getItem('token')?window.localStorage.getItem('token'): setLoading(true);
 }, []);
 
 const stringy = (json: object) => {
