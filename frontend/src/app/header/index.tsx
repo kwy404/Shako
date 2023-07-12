@@ -25,18 +25,24 @@ function Header({ user }: any) {
     return (
         <div className="Header">
             <div className="absolute left">
-                <h1>Shako</h1>
+                <Link 
+                onClick={() => {
+                    window.document.title = "Shako"
+                }}
+                to={"/"}><h1>Shako</h1></Link>
             </div>
             <div className="absolute right">
                 <img className="icon search-input" src={search_icon}/>
                 <input className="search-bar" type="text" placeholder="Search on Shako"/>
                 <img className="icon bell-icon" src={bell_icon}/>
                 <img className="icon chat-icon" src={chat_icon}/>
-                <div className="profile">
-                    <img className="icon expand" src={expand_icon}/>
-                    <img className="avatar" src="https://www.redditstatic.com/avatars/avatar_default_12_545452.png"/>
-                    <span className="username">{user.username}#{user.discrimination}</span>
-                </div>
+                <Link to={`/u/${user.username}/${user.discrimination}`}>
+                    <div className="profile">
+                        <img className="icon expand" src={expand_icon}/>
+                        <img className="avatar" src="https://www.redditstatic.com/avatars/avatar_default_12_545452.png"/>
+                        <span className="username">{user.username}#{user.discrimination}</span>
+                    </div>
+                </Link>
             </div>
         </div>
     );

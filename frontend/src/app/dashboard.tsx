@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
-// Webpack CSS import
+import { useState, useEffect, useRef } from "react";
 import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 import Loading from "./loading";
 import Online from "../ws/ping";
-
-import { Link } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import Header from "./header";
-
-const typePage = "dashboard";
+import { io, Socket } from "socket.io-client";
+import Profile from "./profile";
 
 declare global {
     interface Window {
@@ -16,22 +14,47 @@ declare global {
     }
 }
 
-import { io, Socket } from "socket.io-client";
-var socket: Socket;
+let socket: Socket | null = null;
 
-function Dashboard({ user }: any) {
+function Dashboard({ user, isProfile }: any) {
+    const params = useParams<{ username?: string; discrimination?: string }>();
+    const location = useLocation();
     const [loading, setLoading] = useState(false);
+    const initialMount = useRef(true);
+
     useEffect(() => {
-        setTimeout(() => {
+        if (!socket) {
             socket = io("localhost:9090");
             setTimeout(() => {
-                emited({}, "connected", socket);
+                emited({}, "connected", socket!);
             }, 1000);
-            socket.on("connected", (message: any) => {
-                setLoading(true);
-            });
-        }, 1000);
+        }
+
+        socket.on("connected", (message: any) => {
+            setLoading(true);
+            isProfileTitle();
+        });
+        
+        return () => {
+            // Mantenha a conexão aberta se for a primeira montagem ou se o componente estiver sendo desmontado
+            if (initialMount.current || !socket) {
+                return;
+            }
+            
+            // Remova apenas os ouvintes do socket
+            socket.off("connected");
+        };
     }, []);
+
+    useEffect(() => {
+        isProfileTitle();
+    }, [location.pathname])
+
+    const isProfileTitle = () => {
+        if (isProfile) {
+            window.document.title = `${params?.username} (u/${params?.username}/${params?.discrimination} - Shako)`;
+        }
+    }
 
     const emited = (data: any, type: any, socket: any) => {
         socket.emit("message", {
@@ -47,11 +70,16 @@ function Dashboard({ user }: any) {
         <div className="App">
             {loading ? (
                 <>
-                    <Header user={user}></Header>
-                    <Online user={user} socket={socket} emited={emited} />
+                    <Header user={user} />
+                    <Online user={user} socket={socket!} emited={emited} />
                 </>
             ) : (
-                <Loading/>
+                <Loading />
+            )}
+            {params?.username && params?.discrimination && (
+                <Profile>
+                    {/* Renderizar o conteúdo do perfil aqui */}
+                </Profile>
             )}
         </div>
     );
