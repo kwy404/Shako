@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 // Webpack CSS import
 import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
-
-
-import ChatContainer from "../components/Chat";
 import Loading from "./loading";
-import Header from "../components/Header";
 import Online from "../ws/ping";
 
 import { Link } from "react-router-dom";
@@ -55,9 +51,6 @@ function Dashboard({ user }: any) {
             ) : (
                 <Loading/>
             )}
-            {/* <h1>
-                Your username is {user.username}#{user.discrimination}
-            </h1> */}
         </div>
     );
 }
