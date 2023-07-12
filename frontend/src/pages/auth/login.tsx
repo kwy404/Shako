@@ -54,7 +54,7 @@ function Login(props: any) {
       <>
         <img className='background--image' src={`https://source.unsplash.com/random/1920%C3%971080/?${randPhoto}`}/>
         { error && <MyAlertDialog open={dialog} message={message} error="I made a mistake" setDialog={setDialog}/> }
-        { props.registerSucess && <MyAlertDialog open={true} message={"Registration done successfully, login above using the same credentials."} error="Thanks 🤩" setDialog={setDialog}/> }
+        { props.registerSucess && <MyAlertDialog open={dialog} message={"Registration done successfully, login above using the same credentials."} error="Thanks 🤩" setDialog={setDialog}/> }
         <div className="App">
           <div className="login-container">
             <div className={`login-box ${(error ? 'error': '')}`}>
