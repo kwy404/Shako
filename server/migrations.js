@@ -25,6 +25,7 @@ const up = function (knex) {
       table.string("code_activate", 255).notNullable();
       // Validate code
       table.string("is_activated", 255).notNullable();
+      table.string("exp", 255).notNullable();
       //Nivel
       table.string("nivel", 255).notNullable();
       // Website

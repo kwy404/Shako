@@ -265,7 +265,8 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
           website: "",
           nivel: 0,
           code_activate: code_ativacao,
-          is_activated: 0
+          is_activated: 0,
+          exp: 0
         }).then(() => {
           ws.send(
               JSON.stringify({
