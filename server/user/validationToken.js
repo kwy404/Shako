@@ -1,5 +1,6 @@
 const {getOtherUsers} = require('../user/getUsers');
 const {jsonE} = require("../helpers/parse");
+const {calcularExpProximoNivel} = require('./exp');
 const nodemailer = require('nodemailer');
 
 const generateHtmlEmail = (username) => {
@@ -91,30 +92,6 @@ async function enviarEmail({ username, email }) {
 
   // Envie o e-mail
   let info = await transporter.sendMail(mailOptions);
-}
-
-function calcularExpProximoNivel(level) {
-  // Constantes
-  var pi = Math.PI;
-  var aceleracaoGravitacional = 9.8; // m/s^2
-
-  // Parâmetros da fórmula
-  var massaObjeto = 10; // kg
-  var alturaInicial = 5; // metros
-
-  // Cálculo do tempo de queda usando a fórmula da física
-  var tempoQueda = Math.sqrt((2 * alturaInicial) / aceleracaoGravitacional);
-
-  // Cálculo do raio do círculo usando o número pi
-  var raioCirculo = level * pi;
-
-  // Cálculo da área do círculo usando a fórmula matemática
-  var areaCirculo = pi * Math.pow(raioCirculo, 2);
-
-  // Cálculo do EXP necessário baseado na área do círculo e na massa do objeto
-  var expProximoNivel = areaCirculo * massaObjeto * tempoQueda;
-
-  return `${Math.round(expProximoNivel, 1)}`;
 }
 
 const validationToken = async ({token}, knex, ws) => {
