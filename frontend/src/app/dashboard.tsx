@@ -49,7 +49,6 @@ function Dashboard({ user }: any) {
         <div className="App">
             {loading ? (
                 <>
-                    <Header user={user} socket={socket} emited={emited} ></Header>
                     <Online user={user} socket={socket} emited={emited} />
                 </>
             ) : (

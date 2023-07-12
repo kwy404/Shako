@@ -139,3 +139,44 @@ a{
   z-index: -1;
   opacity: 0.1;
 }
+
+.ons-page, .ons-navigator, .ons-tabbar, .ons-dialog, .ons-alert-dialog, .ons-action-sheet, .ons-toast {
+  z-index: 2;
+}
+
+.ons-navigator, .ons-tabbar, .ons-splitter, .ons-action-sheet, .ons-dialog, .ons-toast, .ons-alert-dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+@keyframes open{
+  0%{
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  100%{
+    opacity: 1;
+    transform: translate(-50%, -50%)  scale(1);
+  }
+}
+
+.ons-alert--close{
+  transform: scale(0) translate(-50%, -50%);
+}
+
+.ons-alert--close-e{
+  display: none;
+}
+
+.ons-alert--open{
+  animation: open 0.4s;
+}
+
+.alert-dialog-mask{
+  animation: open 0s;
+}
