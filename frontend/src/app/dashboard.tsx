@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+// Webpack CSS import
+import 'onsenui/css/onsenui.css';
+import 'onsenui/css/onsen-css-components.css';
+
 
 import ChatContainer from "../components/Chat";
 import Header from "../components/Header";
@@ -45,7 +49,7 @@ function Dashboard({ user }: any) {
         <div className="App">
             {loading ? (
                 <>
-                    <Header></Header>
+                    <Header user={user} socket={socket} emited={emited} ></Header>
                     <Online user={user} socket={socket} emited={emited} />
                 </>
             ) : (

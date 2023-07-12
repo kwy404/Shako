@@ -4,6 +4,8 @@ import {
   Redirect
 } from "react-router-dom"
 
+import MyAlertDialog from "../../components/Alert";
+
 const typePage = 'register'
 
 const ws = new WebSocket('ws://localhost:9000/ws/register')
@@ -14,6 +16,7 @@ function Register(props: any) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
+    const [dialog, setDialog] = useState(true);
     
     useEffect(() => {
         ws.onmessage = (evt: any) => {
@@ -30,6 +33,7 @@ function Register(props: any) {
             } 
           } else if(message.type === typePage){
             setError(!message.sucess)
+            setDialog(true)
             setMessage(message.message)
             if(message?.sucess){
               if(message?.redirect){
@@ -49,45 +53,48 @@ function Register(props: any) {
     }
   
     return (
-      <div className="App">
-        <div className="login-container">
-          <div className={`login-box ${(error ? 'error': '')}`}>
-            <form
-            onSubmit={(e: any) => {
-              e.preventDefault();
-              const data = {type: 'userRegister', data: {email, password, username}};
-              ws.send(stringy(data))
-            }}
-            >
-              <div className="login-box-content">
-                <h1 className="title">Create a account</h1>
-                <label htmlFor="email">E-mail</label>
-                <input 
-                onKeyUp={(e) => setEmail((e.target as any).value)}
-                type="text" id="email" autoComplete="off"/>
-                <label htmlFor="email">Username</label>
-                <input 
-                onKeyUp={(e) => setUsername((e.target as any).value)}
-                type="text" id="email" autoComplete="off"/>
-                <label htmlFor="password">Password</label>
-                <input 
-                onKeyUp={(e) => setPassword((e.target as any).value)}
-                type="password" id="password"/>
-                <span className='error' style={{
-                  left: '27px',
-                  position: 'relative'
-                }}>{ error && message }</span>
-                <p><a className="register" href="#">Forgot your password?</a></p>
-                <button>Register</button>
-                <p>Have a account? <Link 
-                  to={'/login'}
-                  className="register">Login</Link>
-                </p>
-              </div>
-            </form>
-          </div>
-      </div>
-      </div>
+      <>
+        { error && <MyAlertDialog open={dialog} message={message} error="I made a mistake" setDialog={setDialog}/> }
+        <div className="App">
+          <div className="login-container">
+            <div className={`login-box ${(error ? 'error': '')}`}>
+              <form
+              onSubmit={(e: any) => {
+                e.preventDefault();
+                const data = {type: 'userRegister', data: {email, password, username}};
+                ws.send(stringy(data))
+              }}
+              >
+                <div className="login-box-content">
+                  <h1 className="title">Create a account</h1>
+                  <label htmlFor="email">E-mail</label>
+                  <input 
+                  onKeyUp={(e) => setEmail((e.target as any).value)}
+                  type="text" id="email" autoComplete="off"/>
+                  <label htmlFor="email">Username</label>
+                  <input 
+                  onKeyUp={(e) => setUsername((e.target as any).value)}
+                  type="text" id="email" autoComplete="off"/>
+                  <label htmlFor="password">Password</label>
+                  <input 
+                  onKeyUp={(e) => setPassword((e.target as any).value)}
+                  type="password" id="password"/>
+                  <span className='error' style={{
+                    left: '27px',
+                    position: 'relative'
+                  }}>{ error && message }</span>
+                  <p><a className="register" href="#">Forgot your password?</a></p>
+                  <button>Register</button>
+                  <p>Have a account? <Link 
+                    to={'/login'}
+                    className="register">Login</Link>
+                  </p>
+                </div>
+              </form>
+            </div>
+        </div>
+        </div>
+      </>
     )
 }
 

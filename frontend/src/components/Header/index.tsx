@@ -1,45 +1,34 @@
-import { useState, useEffect } from "react";
+import React from 'react';
+import { Toolbar, ToolbarButton, Icon, Input } from 'react-onsenui';
+import { Link } from 'react-router-dom';
 
-import { Link } from "react-router-dom";
-
-declare global {
-    interface Window {
-        MyNamespace: any;
-    }
+interface HeaderProps {
+  user: {
+    username: string;
+    profileImage: string;
+  };
 }
 
-import { io, Socket } from "socket.io-client";
-var socket: Socket;
-
-function Header({ user }: any) {
-    const [loading, setLoading] = useState(false);
-    useEffect(() => {
-        setTimeout(() => {
-            socket = io("localhost:9090");
-            setTimeout(() => {
-                emited({}, "connected", socket);
-            }, 1000);
-            socket.on("connected", (message: any) => {
-                setLoading(true);
-            });
-        }, 1000);
-    }, []);
-
-    const emited = (data: any, type: any, socket: any) => {
-        socket.emit("message", {
-            data: {
-                type: type,
-                receive: data,
-                token: window.localStorage.getItem("token"),
-            },
-        });
-    };
-
-    return (
-        <div className="Header">
-            <h1>Isso aqui é um header</h1>
-        </div>
-    );
-}
+const Header: React.FC<HeaderProps> = ({ user }) => {
+  return (
+    <Toolbar className="header">
+      <div className="left">
+        
+      </div>
+      <div className="center">
+        <Link to="/" className="logo">
+          Tumblr
+        </Link>
+      </div>
+      <div className="right">
+        <img src={user.profileImage} alt="Profile" className="profile-image" />
+      </div>
+      <div className="search-bar">
+        <Input type="search" placeholder="Search Tumblr" className="search-input" />
+        <Icon icon="md-search" className="search-icon" />
+      </div>
+    </Toolbar>
+  );
+};
 
 export default Header;

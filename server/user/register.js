@@ -159,7 +159,8 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
           about: '',
           language: 'en',
           beta: '1',
-          banned: '0'
+          banned: '0',
+          website: ""
         }).then(() => {
           ws.send(
               JSON.stringify({

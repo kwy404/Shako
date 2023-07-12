@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "onsenui": "^2.12.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-onsenui": "^1.13.3",
     "react-router-dom": "^5.3.0",
     "react-use-websocket": "^4.2.0",
     "socket.io": "^4.5.3",
