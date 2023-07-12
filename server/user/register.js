@@ -60,7 +60,7 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
         redirectUrl: "/register",
         sucess: false,
         redirect: false,
-        message: "A senha não é forte. Ela deve conter pelo menos um caractere especial e um número, e ter no mínimo 8 caracteres de comprimento."
+        message: "The password is not strong. It must contain at least one special character and one number, and be at least 8 characters long."
     }))
     return;
     }

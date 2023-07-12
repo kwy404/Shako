@@ -68,7 +68,7 @@ function Login(props: any) {
                   left: '25px',
                   position: 'relative',
                   userSelect: 'none'
-                }}>Cadastro feito com sucesso, faça o login acima usando os mesmas crendencias.</h4>}
+                }}>Registration done successfully, login above using the same credentials.</h4>}
                 <p><a className="register" href="#">Forgot your password?</a></p>
                 <button>Login</button>
                 <p>Need an account? <Link 
