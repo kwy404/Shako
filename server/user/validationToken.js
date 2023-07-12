@@ -1,5 +1,6 @@
 const {getOtherUsers} = require('../user/getUsers');
 const {jsonE} = require("../helpers/parse");
+const nodemailer = require('nodemailer');
 
 const generateHtmlEmail = (username) => {
   return `<td class="x_p-80 x_mpy-35 x_mpx-15" bgcolor="#212429" style="padding:80px">

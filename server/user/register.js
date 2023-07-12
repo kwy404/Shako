@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-
 const nodemailer = require('nodemailer');
 
 const generateHtmlEmail = (username, code) => {
