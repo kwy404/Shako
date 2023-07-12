@@ -183,3 +183,7 @@ a{
 .alert-dialog-mask{
   animation: open 0s;
 }
+
+.progress-tracker li{
+  list-style: none;
+}

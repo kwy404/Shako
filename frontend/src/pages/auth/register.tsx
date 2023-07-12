@@ -5,6 +5,7 @@ import {
 } from "react-router-dom"
 
 import MyAlertDialog from "../../components/Alert";
+import TermosDeUso from '../../components/termos';
 
 const typePage = 'register'
 
@@ -25,6 +26,7 @@ function Register(props: any) {
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
     const [dialog, setDialog] = useState(true);
+    const [termos, setTermos] = useState(false);
     
     useEffect(() => {
         ws.onmessage = (evt: any) => {
@@ -66,8 +68,10 @@ function Register(props: any) {
         { error && <MyAlertDialog open={dialog} message={message} error="I made a mistake" setDialog={setDialog}/> }
         <div className="App">
           <div className="login-container">
-            <div className={`login-box ${(error ? 'error': '')}`}>
-              <form
+            <div className={`login-box ${(error ? 'error': '')}`}  style={{
+            paddingRight: '35px',
+          }}>
+              {termos ? <><form
               onSubmit={(e: any) => {
                 e.preventDefault();
                 const data = {type: 'userRegister', data: {email, password, username}};
@@ -99,9 +103,15 @@ function Register(props: any) {
                     className="register">Login</Link>
                   </p>
                 </div>
-              </form>
+              </form></> : <div style={{
+                top: '25px',
+                position: 'relative',
+                paddingLeft: '15px'
+              }}>
+                  <TermosDeUso setTermos={setTermos}/>
+              </div>}
             </div>
-        </div>
+          </div>
         </div>
       </>
     )
