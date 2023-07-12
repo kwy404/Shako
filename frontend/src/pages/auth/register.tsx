@@ -71,7 +71,29 @@ function Register(props: any) {
             <div className={`login-box ${(error ? 'error': '')}`}  style={{
             paddingRight: '35px',
           }}>
-              {termos ? <><form
+              {termos ? <>
+                <div className="form-container" style={{
+                'maxWidth': '450px',
+                'padding': '0px',
+                'paddingBottom': '0px',
+                'margin': '50px auto',
+                'height': '3px'
+                }}>
+                <div className="simple_form">
+                  <ol className="progress-tracker">
+                      <li className="active">
+                      <div className="circle"></div>
+                      <div className="label">Accept rules</div>
+                      </li>
+                      <li className="separator"></li>
+                      <li className="active">
+                      <div className="circle"></div>
+                      <div className="label">Your details</div>
+                      </li>
+                  </ol>
+                  </div>
+              </div>
+              <form
               onSubmit={(e: any) => {
                 e.preventDefault();
                 const data = {type: 'userRegister', data: {email, password, username}};

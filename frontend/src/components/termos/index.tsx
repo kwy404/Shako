@@ -21,7 +21,6 @@ const TermosDeUso: React.FC<TermosDeUsoProps> = ({ setTermos }) => {
                 <div className="label">Your details</div>
                 </li>
             </ol>
-
             <h1 className="title">Some ground rules.</h1>
             <p className="lead">These are set and enforced by the Shako moderators.</p>
 

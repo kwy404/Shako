@@ -83,7 +83,7 @@ code {
   inset-inline-start: 0;
 }
 .simple_form .input.boolean label a {
-  color: #8c8dff;
+  color: #563bc6;
   text-decoration: underline;
 }
 .simple_form .input.boolean label a:hover, .simple_form .input.boolean label a:active, .simple_form .input.boolean label a:focus {
@@ -121,7 +121,7 @@ code {
   margin-bottom: 15px;
 }
 .simple_form .lead a {
-  color: #8c8dff;
+  color: #563bc6;
 }
 .simple_form .rules-list {
   font-size: 17px;
@@ -132,7 +132,7 @@ code {
   color: #9baec8;
 }
 .simple_form .hint a {
-  color: #8c8dff;
+  color: #563bc6;
 }
 .simple_form .hint code {
   border-radius: 3px;
@@ -340,7 +340,7 @@ code {
 .simple_form .input.static .label_input__wrapper {
   font-size: 16px;
   padding: 10px;
-  border: 1px solid #606984;
+  border: 1px solid #795fe7bd;
   border-radius: 4px;
 }
 .simple_form input[type=text],
@@ -412,7 +412,7 @@ code {
 .simple_form input[type=datetime-local]:focus,
 .simple_form textarea:active,
 .simple_form textarea:focus {
-  border-color: #8c8dff;
+  border-color: #563bc6;
   background: #17191f;
 }
 .simple_form input[type=text]:focus:invalid:not(:placeholder-shown), .simple_form input[type=text]:required:invalid:not(:placeholder-shown),
@@ -466,7 +466,7 @@ code {
   width: 100%;
   border: 0;
   border-radius: 4px;
-  background: #6364ff;
+  background: #563bc6;
   color: #ffffff;
   font-size: 18px;
   line-height: inherit;
@@ -551,7 +551,7 @@ code {
   padding: 10px;
   padding-bottom: 9px;
   font-size: 16px;
-  color: #606984;
+  color: #795fe7bd;
   font-family: inherit;
   pointer-events: none;
   cursor: default;
@@ -718,7 +718,7 @@ code {
   margin-inline-end: 10px;
 }
 .quick-nav a {
-  color: #8c8dff;
+  color: #563bc6;
   text-transform: uppercase;
   text-decoration: none;
   font-weight: 700;
@@ -1032,11 +1032,11 @@ code {
 }
 .progress-tracker .separator {
   height: 2px;
-  background: #606984;
+  background: #795fe7bd;
   flex: 1 1 auto;
 }
 .progress-tracker .separator.completed {
-  background: #8c8dff;
+  background: #563bc6;
 }
 .progress-tracker .circle {
   box-sizing: border-box;
@@ -1044,7 +1044,7 @@ code {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 2px solid #606984;
+  border: 2px solid #795fe7bd;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -1077,22 +1077,22 @@ code {
   transform: none;
 }
 .progress-tracker .active .circle {
-  border-color: #8c8dff;
+  border-color: #563bc6;
 }
 .progress-tracker .active .circle::before {
   content: "";
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #8c8dff;
+  background: #563bc6;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .progress-tracker .completed .circle {
-  border-color: #8c8dff;
-  background: #8c8dff;
+  border-color: #563bc6;
+  background: #563bc6;
 }
 
 body {
@@ -1255,7 +1255,7 @@ button:focus {
 }
 .error-boundary a,
 .app-holder noscript a {
-  color: #8c8dff;
+  color: #563bc6;
 }
 .error-boundary a:hover, .error-boundary a:focus, .error-boundary a:active,
 .app-holder noscript a:hover,
@@ -1265,19 +1265,19 @@ button:focus {
 }
 .error-boundary__footer,
 .app-holder noscript__footer {
-  color: #606984;
+  color: #795fe7bd;
   font-size: 13px;
 }
 .error-boundary__footer a,
 .app-holder noscript__footer a {
-  color: #606984;
+  color: #795fe7bd;
 }
 .error-boundary button,
 .app-holder noscript button {
   display: inline;
   border: 0;
   background: transparent;
-  color: #606984;
+  color: #795fe7bd;
   font: inherit;
   padding: 0;
   margin: 0;
@@ -1551,7 +1551,7 @@ article .__ns__pop2top {
   color: #9baec8;
 }
 .account__header__fields a {
-  color: #8c8dff;
+  color: #563bc6;
   text-decoration: none;
 }
 .account__header__fields a:hover, .account__header__fields a:focus, .account__header__fields a:active {
@@ -1595,7 +1595,7 @@ article .__ns__pop2top {
 }
 
 .batch-table__row--muted {
-  color: #606984;
+  color: #795fe7bd;
 }
 
 .batch-table__row--muted .pending-account__header,
@@ -1607,7 +1607,7 @@ article .__ns__pop2top {
 .batch-table__row--muted .name-tag,
 .batch-table__row--muted .name-tag a,
 .batch-table__row--muted .name-tag strong {
-  color: #606984;
+  color: #795fe7bd;
 }
 
 .batch-table__row--muted .name-tag .avatar {
@@ -1615,7 +1615,7 @@ article .__ns__pop2top {
 }
 
 .batch-table__row--muted .accounts-table tbody td.accounts-table__extra, .batch-table__row--muted .accounts-table__count, .batch-table__row--muted .accounts-table__count small {
-  color: #606984;
+  color: #795fe7bd;
 }
 
 .batch-table__row--attention {
@@ -1666,7 +1666,7 @@ article .__ns__pop2top {
   background: #282c37;
 }
 .table a {
-  color: #8c8dff;
+  color: #563bc6;
   text-decoration: underline;
 }
 .table a:hover {
@@ -1835,7 +1835,7 @@ a.table-action-link:first-child {
   background: transparent;
   border: 0;
   font: inherit;
-  color: #8c8dff;
+  color: #563bc6;
   border-radius: 4px;
   font-weight: 700;
   padding: 8px;

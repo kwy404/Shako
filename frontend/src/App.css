@@ -187,3 +187,7 @@ a{
 .progress-tracker li{
   list-style: none;
 }
+
+.login-box-content{
+  animation: 0.4s;
+}
