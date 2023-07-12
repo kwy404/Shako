@@ -11,7 +11,7 @@ const typePage = 'register'
 const ws = new WebSocket('ws://localhost:9000/ws/register')
 
 function getRandomChoicePhoto() {
-  const choices = ['geek', 'anime', 'photo', 'cinema'];
+  const choices = ['geek', 'anime', 'photo', 'cinema', 'error', 'space'];
   const randomIndex = Math.floor(Math.random() * choices.length);
   return choices[randomIndex];
 }
