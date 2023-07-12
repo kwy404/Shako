@@ -6,6 +6,7 @@ import Loading from "./loading";
 import Online from "../ws/ping";
 
 import { Link } from "react-router-dom";
+import Header from "./header";
 
 const typePage = "dashboard";
 
@@ -46,6 +47,7 @@ function Dashboard({ user }: any) {
         <div className="App">
             {loading ? (
                 <>
+                    <Header user={user}></Header>
                     <Online user={user} socket={socket} emited={emited} />
                 </>
             ) : (

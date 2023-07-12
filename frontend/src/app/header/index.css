@@ -1,0 +1,118 @@
+.Header{
+    width: 100%;
+    position: fixed;
+    height: 40px;
+    background: #202020;
+    box-shadow: 2px 2px 10px 0px #101012;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: flex-end;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+.search-bar{
+    width: 400px;
+    background-color: #343434 !important;
+    right: 335px;
+    position: relative;
+    color: rgba(255,255,255,.7) !important;
+}
+
+.search-bar::placeholder{
+    color: rgba(255,255,255,.5) !important;
+    position: relative;
+    left: 2px;
+}
+
+.absolute{
+    position: absolute;
+}
+
+.Header .left{
+    left: 10px;
+}
+
+.Header .left h1{
+    position: relative;
+    margin-left: 10px;
+    font-size: 25px;
+    color: rgba(255,255,255,.7);
+    cursor: pointer;
+}
+
+.Header .left h1:hover{
+    color: rgba(255,255,255,.9);
+}
+
+.Header .right{
+    right: 50px;
+}
+
+.Header .right .profile:hover{
+    background: rgba(0,0,0,.50);
+    box-shadow: 2px 2px 10px 0px #101012;
+    opacity: 1;
+}
+
+.Header .right .profile{
+    width: 200px;
+    background: rgba(0,0,0,.20);
+    height: 100%;
+    position: absolute;
+    right: -25px;
+    top: -11px;
+    padding: 11px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.Header .right .profile .avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.Header .right .profile .username{
+    top: -15px;
+    position: relative;
+    left: 10px;
+}
+
+.icon{
+    position: absolute;
+    width: 30px;
+    height: 15px;
+    object-fit: cover;
+    transform: scale(0.5);
+}
+
+.expand{
+    right: 10px;
+    top: 20px;
+}
+
+.search-input{
+    z-index: 10;
+    width: 4px;
+    height: 37px;
+    object-fit: fill;
+    transform: scale(1);
+    background-color: #343434;
+    left: -371px;
+    top: 0px;
+    position: absolute;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+    z-index: 10;
+}
+
+.search-bar::-ms-value{
+    color: black;
+}
