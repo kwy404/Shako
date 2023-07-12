@@ -88,7 +88,7 @@ function Login(props: any) {
                   <button>Login</button>
                   <p>Need an account? <Link 
                     to={'/register'}
-                    className="register">Register</Link></p>
+                    className="register">Register</Link>.</p>
                 </div>
               </form>
             </div>

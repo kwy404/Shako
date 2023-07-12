@@ -71,7 +71,11 @@ function Ativar(props: any) {
               >
                 <div className="login-box-content">
                   <h1 className="title">I'm glad to you are here</h1>
-                  <h4 className="subtitle">🥰Activate your account 😍 </h4>
+                  <h4 className="subtitle" style={{
+                    marginLeft: '35px'
+                  }}>Activate your account, i send code to <span style={{
+                    color: 'rgba(255,255,255,.7)'
+                  }}>{props.user.email}.</span></h4>
                   <label htmlFor="code">Code</label>
                   <input 
                   onKeyUp={(e) => setEmail((e.target as any).value)}
@@ -79,13 +83,13 @@ function Ativar(props: any) {
                   <span className='error'>{ error && message }</span>
                   <br></br>
                   <button>Validate</button>
-                  <p>Its not you? <Link
+                  <p>I'ts not you? <Link
                     onClick={() => {
                       window.localStorage.setItem("token", "")
                       location.reload()
                     }}
                     to={'/'}
-                    className="register">Logout</Link></p>
+                    className="register">Logout</Link>.</p>
                 </div>
               </form>
             </div>
