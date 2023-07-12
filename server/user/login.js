@@ -17,6 +17,7 @@ const userLogin = async ({email, password}, knex, ws) => {
       }).select('*').then(function(rows) {
         if(rows.length > 0){
             rows[0].password = undefined
+            rows[0].code_activate = undefined
             ws.send(
                 JSON.stringify({
                   type: "login",

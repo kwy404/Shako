@@ -1,5 +1,100 @@
 const crypto = require('crypto');
-const { userLogin } = require('../user/login');
+
+const nodemailer = require('nodemailer');
+
+const generateHtmlEmail = (username, code) => {
+  return `<td class="x_p-80 x_mpy-35 x_mpx-15" bgcolor="#212429" style="padding:80px">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+      <tr>
+        
+      </tr>
+      <tr>
+        <td>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr>
+                <td class="x_title-36 x_pb-30 x_c-grey6 x_fw-b" style="font-size:36px; line-height:42px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-bottom:30px; color:#bfbfbf; font-weight:bold">Caro(a) ${username}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr>
+                <td class="x_text-18 x_c-white x_pb-20" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:20px">Este é o seu código de Shako '${code}', verifique sua conta.</td>
+              </tr>
+            </tbody>
+          </table>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+              
+            </tbody>
+          </table>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr>
+                
+              </tr>
+            </tbody>
+          </table>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr>
+                <td class="x_pt-30" style="padding-top:30px">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                      <tr>
+                        <td class="x_img" width="3" bgcolor="#3a9aed" style="font-size:0pt; line-height:0pt; text-align:left"></td>
+                        <td class="x_img" width="37" style="font-size:0pt; line-height:0pt; text-align:left"></td>
+                        <td>
+                          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                              <tr>
+                                <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px; line-height:22px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-top:20px; padding-bottom:20px; color:#f1f1f1">Atenciosamente, <br aria-hidden="true">A equipe da Baimless </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</td>`
+}
+
+async function enviarEmail({ username, email, code_ativacao }) {
+  // Crie um objeto de transporte para enviar o e-mail
+  let transporter = nodemailer.createTransport({
+    host: 'smtp-mail.outlook.com',
+    port: 587,
+    secure: false, // Se o serviço de e-mail suportar TLS, altere para true
+    auth: {
+      user: 'xande1231221@hotmail.com',
+      pass: 'X@nde335131415'
+    }
+  });
+
+  // Defina as informações do e-mail
+  let mailOptions = {
+    from: 'xande1231221@hotmail.com',
+    to: email,
+    subject: 'Código de ativação - Shako',
+    html: generateHtmlEmail(username,code_ativacao)
+  };
+
+  // Envie o e-mail
+  let info = await transporter.sendMail(mailOptions);
+
+  console.log('E-mail enviado: ', info.messageId);
+}
+
 
 const discriminationParse = number => {
   const str = "" + number;
@@ -44,6 +139,14 @@ const generateToken = length => {
   }
   return b.join("");
 };
+
+function gerarCodigoAtivacao() {
+  let codigo = "";
+  for (let i = 0; i < 5; i++) {
+    codigo += Math.floor(Math.random() * 10);
+  }
+  return codigo;
+}
 
 const validateEmail = (email) => {
     // Expressão regular para validar o formato do e-mail
@@ -139,6 +242,8 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
       const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
       
       const created_at = `${formattedDay}/${formattedMonth}/${currentYear}`;
+      const code_ativacao = gerarCodigoAtivacao();
+
 
       await knex('users')
         .insert({
@@ -161,7 +266,9 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
           beta: '1',
           banned: '0',
           website: "",
-          nivel: 0
+          nivel: 0,
+          code_activate: code_ativacao,
+          is_activated: 0
         }).then(() => {
           ws.send(
               JSON.stringify({
@@ -172,6 +279,8 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
               message: "Register successfuly."
               })
           );
+          // Chame a função para enviar o e-mail
+          enviarEmail({username, email, code_ativacao}).catch(console.error);
       })
     } else {
       ws.send(

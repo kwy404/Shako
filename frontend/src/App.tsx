@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
 import {
   BrowserRouter,
@@ -9,6 +9,7 @@ import {
 import Login from './pages/auth/login'
 import Register from './pages/auth/register'
 import Dashboard from './app/dashboard';
+import Ativar from './pages/auth/ativar'
 
 interface User {
   id: string;
@@ -19,6 +20,7 @@ interface User {
   avatar: string;
   bg: string;
   admin: string;
+  is_activated: string;
 }
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
     avatar: '',
     bg: '',
     admin: '',
+    is_activated: '0'
   });
 
   let intervalConnect = setInterval(function() {
@@ -46,27 +49,27 @@ function App() {
       <BrowserRouter>
         <Route path="/" exact render={(props) => <>
           { user?.id ? <>
-            <Dashboard user={user}/>
+            {user?.is_activated == '1' ? <Dashboard user={user}/> : <Ativar user={user} setLogged={setLogged}/>}
           </> : <Login registerSucess={false} setLogged={setLogged} /> }
         </>} />
         <Route path="/registerSucessfully" exact render={(props) => <>
           { user?.id ? <>
-            <Dashboard user={user}/>
+            {user?.is_activated == '1' ? <Dashboard user={user}/> : <Ativar user={user} setLogged={setLogged}/>}
           </> : <Login registerSucess={true} setLogged={setLogged} /> }
         </>} />
         <Route path="/login" exact render={(props) => <>
           { user?.id ? <>
-            <Dashboard user={user}/>
+            {user?.is_activated == '1' ? <Dashboard user={user}/> : <Ativar user={user} setLogged={setLogged}/>}
           </> : <Login registerSucess={false}  setLogged={setLogged} /> }
         </>} />
         <Route path="/app" exact render={(props) => <>
           { user?.id ? <>
-            <Dashboard user={user}/>
+            {user?.is_activated == '1' ? <Dashboard user={user}/> : <Ativar user={user} setLogged={setLogged}/>}
           </> : <Login registerSucess={false}  setLogged={setLogged} /> }
         </>} />
         <Route path="/register" exact render={(props) => <>
           { user?.id ? <>
-            <Dashboard user={user}/>
+            {user?.is_activated == '1' ? <Dashboard user={user}/> : <Ativar user={user} setLogged={setLogged}/>}
           </> : <Register registerSucess={false}  setLogged={setLogged}/> }
         </>} />
       </BrowserRouter>

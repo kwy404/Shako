@@ -7,6 +7,7 @@ const validationToken = async ({token}, knex, ws) => {
       }).select('*').then(function(rows) {
         if(rows.length > 0){
             rows[0].password = undefined
+            rows[0].code_activate = undefined
             ws.send(
               jsonE({
                   type: "login",
@@ -29,7 +30,7 @@ const validationToken = async ({token}, knex, ws) => {
             );
             return {}
         }
-      })
+  })
 }
 
 const userConnectToRoom = async ({username}, room, socket) => {
@@ -92,4 +93,58 @@ const ping = async ({token}, knex, io, socket, sendToRoom) => {
   })
 }
 
-module.exports = {validationToken, connected, validationTokenIO, getOtherUsersChat, ping}
+const userValidateCode = async ({ token, codeAtivate }, knex, ws) => {
+  try {
+    const rows = await knex('users')
+      .where({ token: token })
+      .select('*');
+
+    if (rows.length > 0 && rows[0].code_activate === codeAtivate) {
+      const user = rows[0];
+      user.password = undefined;
+
+      await knex('users')
+        .where({ token: token, code_activate: codeAtivate })
+        .update({ is_activated: '1' });
+
+      ws.send(
+        JSON.stringify({
+          type: "validateCode",
+          user: user,
+          success: true,
+          noMessageError: true,
+          message: "Activated with success.",
+          redirect: true,
+          redirectUrl: "/",
+        })
+      );
+    } else {
+      ws.send(
+        JSON.stringify({
+          type: "validateCode",
+          user: {},
+          success: false,
+          noMessageError: false,
+          message: "Incorrect code.",
+          redirect: false,
+          redirectUrl: "/",
+        })
+      );
+    }
+  } catch (error) {
+    ws.send(
+      JSON.stringify({
+        type: "validateCode",
+        user: {},
+        success: false,
+        noMessageError: true,
+        message: "Error occurred.",
+        redirect: false,
+        redirectUrl: "/",
+      })
+    );
+  }
+}
+
+
+module.exports = {validationToken, connected, validationTokenIO, getOtherUsersChat, ping, userValidateCode}

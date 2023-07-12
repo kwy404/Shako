@@ -22,6 +22,9 @@ const up = function (knex) {
       table.string("beta", 255).notNullable();
       table.string("banned", 255).notNullable();
       table.string("created_at", 255).notNullable();
+      table.string("code_activate", 255).notNullable();
+      // Validate code
+      table.string("is_activated", 255).notNullable();
       //Nivel
       table.string("nivel", 255).notNullable();
       // Website
