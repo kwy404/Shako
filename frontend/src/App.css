@@ -144,7 +144,7 @@ a{
 }
 
 .ons-page, .ons-navigator, .ons-tabbar, .ons-dialog, .ons-alert-dialog, .ons-action-sheet, .ons-toast {
-  z-index: 2;
+  z-index: 20;
 }
 
 .ons-navigator, .ons-tabbar, .ons-splitter, .ons-action-sheet, .ons-dialog, .ons-toast, .ons-alert-dialog {
