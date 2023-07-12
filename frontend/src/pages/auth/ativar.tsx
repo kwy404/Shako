@@ -79,8 +79,12 @@ function Ativar(props: any) {
                   <span className='error'>{ error && message }</span>
                   <br></br>
                   <button>Validate</button>
-                  <p>Its not you? <Link 
-                    to={'/register'}
+                  <p>Its not you? <Link
+                    onClick={() => {
+                      window.localStorage.setItem("token", "")
+                      location.reload()
+                    }}
+                    to={'/'}
                     className="register">Logout</Link></p>
                 </div>
               </form>
