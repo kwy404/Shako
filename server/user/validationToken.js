@@ -22,7 +22,7 @@ const generateHtmlEmail = (username) => {
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody>
               <tr>
-                <td class="x_text-18 x_c-white x_pb-20" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:20px">Muito obrigado por ativar a sua conta! Estou aqui para ajudar e tornar a sua experiência incrível. Sinta-se à vontade para explorar e desfrutar de todos os recursos que o Shako tem a oferecer. Se precisar de alguma ajuda ou tiver alguma dúvida, estou sempre à disposição. Divirta-se ao máximo!</td>
+                <td class="x_text-18 x_c-white x_pb-20" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:20px">Muito obrigado por ativar a sua conta! Estou aqui para ajudar e tornar a sua experiência incrível. <br>Sinta-se à vontade para explorar e desfrutar de todos os recursos que o Shako tem a oferecer.<br> Se precisar de alguma ajuda ou tiver alguma dúvida, estou sempre à disposição. Divirta-se ao máximo!</td>
               </tr>
             </tbody>
           </table>
