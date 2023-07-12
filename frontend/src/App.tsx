@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import {
   BrowserRouter,
@@ -11,6 +11,8 @@ import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
+
+const ws = new WebSocket('ws://localhost:9000/ws/login')
 
 interface User {
   id: string;
@@ -25,6 +27,7 @@ interface User {
 }
 
 function App() {
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User>({
     id: '',
     username: '',
@@ -37,13 +40,34 @@ function App() {
     is_activated: '1',
   });
 
+  useEffect(() => {
+    ws.onmessage = (evt: any) => {
+        // listen to data sent from the websocket server
+        const message = JSON.parse(evt.data)
+        if(message.user?.id){
+          window.localStorage.setItem('token', message.user.token)
+          setLogged(message.user)
+        } 
+        else if(message.type == 'validateToken'){
+        //Validate token and logged if sucess
+        const data = {type: 'validationToken', data: {token: window.localStorage.getItem('token')?window.localStorage.getItem('token'): 'undefined'}};
+        ws.send(stringy(data))
+      }
+    }
+}, []);
+
+const stringy = (json: object) => {
+  return JSON.stringify(json)
+}
+
   const setLogged = (user: User) => {
     setUser(user);
+    setLoading(true);
   };
 
   return (
     <div className="App dark-mode theme-default no-reduce-motion">
-      <BrowserRouter>
+      { loading && <BrowserRouter>
         <Switch>
           <Route path="/login" exact>
             {user.id ? (
@@ -92,7 +116,7 @@ function App() {
             <Redirect to="/" />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </BrowserRouter>}
     </div>
   );
 }
