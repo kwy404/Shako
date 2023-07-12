@@ -16,6 +16,8 @@ function getRandomChoicePhoto() {
   return choices[randomIndex];
 }
 
+const randPhoto = getRandomChoicePhoto();
+
 function Register(props: any) {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -60,7 +62,7 @@ function Register(props: any) {
   
     return (
       <>
-        <img className='background--image' src={`https://source.unsplash.com/random/1920%C3%971080/?${getRandomChoicePhoto()}`}/>
+        <img className='background--image' src={`https://source.unsplash.com/random/1920%C3%971080/?${randPhoto}`}/>
         { error && <MyAlertDialog open={dialog} message={message} error="I made a mistake" setDialog={setDialog}/> }
         <div className="App">
           <div className="login-container">
