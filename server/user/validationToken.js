@@ -106,7 +106,7 @@ const validationToken = async ({ token }, knex, ws) => {
       user.code_activate = undefined;
       user.exp_to_next_level = calcularExpProximoNivel(user.nivel + 1);
 
-      if (user.banned === 1) {
+      if (user.banned == 1) {
         ws.send(
           JSON.stringify({
             type: "login",
