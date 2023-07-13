@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@svgr/webpack": "^8.0.1",
+    "crypto-js": "^4.1.1",
     "onsenui": "^2.12.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,6 +23,7 @@
     "socket.io-client": "^4.5.4"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
     "@types/jest": "^29.2.2",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
