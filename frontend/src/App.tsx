@@ -12,7 +12,7 @@ import Register from './pages/auth/register';
 import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
 
-const ws = new WebSocket('ws://localhost:9001/ws/login')
+const ws = new WebSocket('ws://localhost:9005/ws/login')
 
 interface User {
   id: string;

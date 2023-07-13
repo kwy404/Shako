@@ -9,7 +9,7 @@ import TermosDeUso from '../../components/termos';
 
 const typePage = 'register'
 
-const ws = new WebSocket('ws://localhost:9001/ws/register')
+const ws = new WebSocket('ws://localhost:9005/ws/register')
 
 function getRandomChoicePhoto() {
   const choices = ['geek', 'anime', 'rock', 'error', 'space', 'place', 'music'];
