@@ -80,8 +80,8 @@ function Profile({ user, emited, params, socket }: Props) {
         getProfileE();
         clearInterval(timeFor);
       }
-    }, 100);
-  }, [params, socket, emited]);
+    }, 400);
+  }, [params, socket, emited, window.location.pathname, cachedUsers]);
 
   useEffect(() => {
     const encryptedCache = localStorage.getItem("cachedUsers");
@@ -102,7 +102,14 @@ function Profile({ user, emited, params, socket }: Props) {
   useEffect(() => {
     const encryptedCache = CryptoJS.AES.encrypt(JSON.stringify(cachedUsers), "kaway404_secret_admin").toString();
     localStorage.setItem("cachedUsers", encryptedCache);
-  }, [cachedUsers]);
+    if(params.username != profile.username && params.discrimination != profile.discrimination){
+        if (!socket) {
+            // Handle the case when socket is null
+            return;
+        }
+        emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
+    }
+  }, [cachedUsers, params, socket, emited]);
 
   const getProfileE = () => {
     if (params.username && params.discrimination) {
