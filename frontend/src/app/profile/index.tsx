@@ -83,7 +83,6 @@ function Profile({ user, emited, params, socket }: Props) {
         // Handle the case when socket is null
         return;
       }
-      console.log(location.pathname)
       emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
     }
   }, [location.pathname, params, socket, emited]);
@@ -106,17 +105,35 @@ function Profile({ user, emited, params, socket }: Props) {
   }, []);
 
   socket?.on('profile', (receive: any) => {
-    setFound(receive.success);
-    setMessageError(receive.message)
-    if (receive.user) {
-      const cachedUser: CachedUser = {
-        id: `${receive.user.id}`,
-        profile: receive.user,
-        timestamp: Date.now(),
-      };
-      setProfile(receive.user);
-      setCachedUsers(prevState => ({ ...prevState, [cachedUser.id]: cachedUser }));
+    try {
+      if(receive.user.username == params.username && params.discrimination == receive.user.discrimination){
+        console.log(receive.user)
+        setProfile(receive.user);
+        // setCachedUsers(prevState => ({ ...prevState, [cachedUser.id]: cachedUser }));
+        setFound(receive.success);
+        setMessageError(receive.message)
+      } else{
+        setFound(receive.success);
+        setMessageError(receive.message)
+      }
+    } catch (error) {
+      setProfile({
+        id: '',
+        username: params.username,
+        token: '',
+        email: '',
+        discrimination: params.discrimination,
+        avatar: '',
+        bg: '',
+        admin: '',
+        is_activated: '1',
+        created_at: '01/01/1999',
+        verificado: '0'
+      });
+      setFound(false);
+      setMessageError(receive.message)
     }
+    
   });
 
   const getCachedProfile = (username: string, discrimination: string) => {
