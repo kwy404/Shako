@@ -69,7 +69,13 @@ function Ativar(props: any) {
               }}
               >
                 <div className="login-box-content">
-                  <div className="login-box-content-line"/>
+                  <div className="login-box-content-line"
+                  style={{
+                    width: 'calc(100% + 80px)',
+                    position: 'relative',
+                    top: '-50px'
+                  }}
+                  />
                   <h1 className="title">I'm glad to you are here</h1>
                   <h4 className="subtitle" style={{
                     marginLeft: '35px'
