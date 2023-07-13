@@ -30,7 +30,6 @@ function Ativar(props: any) {
           const message = JSON.parse(evt.data)
           if(message.type === typePage){
             if(message?.redirect){
-              console.log('aaa', message)
               window.location.pathname = `${message?.redirectUrl}`
             }
             if(!message?.noMessageError){
@@ -78,7 +77,7 @@ function Ativar(props: any) {
                   }}>{props.user.email}.</span></h4>
                   <label htmlFor="code">Code</label>
                   <input 
-                  onKeyUp={(e) => setEmail((e.target as any).value)}
+                  onKeyDown={(e) => setEmail((e.target as any).value)}
                   type="text" id="email" autoComplete="off"/>
                   <span className='error'>{ error && message }</span>
                   <br></br>
