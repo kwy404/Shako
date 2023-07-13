@@ -1,6 +1,4 @@
 const {calcularExpProximoNivel} = require('./exp');
-const {validationTokenProfile} = require('../user/validationToken');
-
 
 const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
     const token = data.token;
