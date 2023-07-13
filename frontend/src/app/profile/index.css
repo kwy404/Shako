@@ -138,3 +138,18 @@
     width: calc(100% + 1.5px);
     margin-left: 0px;
 }
+
+.badge--profile{
+    position: relative;
+    display: inline;
+    width: 17px;
+    margin-left: 5px;
+    height: 17px;
+}
+
+.badge--profile img{
+    position: relative;
+    width: 17px;
+    object-fit: cover;
+    height: 17px;
+}
