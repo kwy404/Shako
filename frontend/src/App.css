@@ -249,7 +249,7 @@ a{
   top: 0px;
   background: transparent;
   padding: 5px;
-  height: 100%;
+  height: calc(100% - 50px);
   width: 100%;
   display: flex;
   padding: 10px;

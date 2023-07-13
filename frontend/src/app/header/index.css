@@ -1,7 +1,7 @@
 .Header{
     width: calc(100% - 20px);
     position: fixed;
-    height: 40px;
+    height: 60px;
     background: #010108;
     border-bottom: 1px solid rgba(0,0,0,.80);
     padding: 15px;
@@ -13,6 +13,7 @@
     align-items: center;
     padding: 10px;
     z-index: 20;
+    top: -20px;
 }
 
 .search-bar{
@@ -45,7 +46,7 @@
     font-size: 25px;
     color: rgba(255,255,255,.7);
     cursor: pointer;
-    top: -5px;
+    top: -10px;
 }
 
 .Header .left h1:hover{
@@ -68,7 +69,7 @@
     height: 40px;
     position: absolute;
     right: -25px;
-    top: -11px;
+    top: -20px;
     padding: 11px;
     cursor: pointer;
     opacity: 0.6;
@@ -79,10 +80,12 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    top: 5px;
+    position: relative;
 }
 
 .Header .right .profile .username{
-    top: -15px;
+    top: -10px;
     position: relative;
     left: 10px;
 }
@@ -104,7 +107,7 @@
 
 .expand{
     right: 10px;
-    top: 20px;
+    top: 30px;
 }
 
 .search-input{
