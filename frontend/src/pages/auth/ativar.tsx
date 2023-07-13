@@ -77,7 +77,7 @@ function Ativar(props: any) {
                   }}>{props.user.email}.</span></h4>
                   <label htmlFor="code">Code</label>
                   <input 
-                  onKeyDown={(e) => setEmail((e.target as any).value)}
+                  onKeyDown={(e) => setTimeout(() => setEmail((e.target as any).value), 100)}
                   type="text" id="email" autoComplete="off"/>
                   <span className='error'>{ error && message }</span>
                   <br></br>

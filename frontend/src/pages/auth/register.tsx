@@ -107,15 +107,15 @@ function Register(props: any) {
                   <h1 className="title">Create an account</h1>
                   <label htmlFor="email">E-mail</label>
                   <input 
-                  onKeyDown={(e) => setEmail((e.target as any).value)}
+                  onKeyDown={(e) => setTimeout(() => setEmail((e.target as any).value), 100)}
                   type="text" id="email" autoComplete="off"/>
                   <label htmlFor="email">Username</label>
                   <input 
-                  onKeyDown={(e) => setUsername((e.target as any).value)}
+                  onKeyDown={(e) => setTimeout(() => setUsername((e.target as any).value), 100)}
                   type="text" id="email" autoComplete="off"/>
                   <label htmlFor="password">Password</label>
                   <input 
-                  onKeyDown={(e) => setPassword((e.target as any).value)}
+                  onKeyDown={(e) => setTimeout(() => setPassword((e.target as any).value), 100)}
                   type="password" id="password"/>
                   <span className='error' style={{
                     left: '27px',

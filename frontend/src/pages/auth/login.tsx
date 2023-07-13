@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import MyAlertDialog from "../../components/Alert";
-import { Helmet } from 'react-helmet';
+
 
 import {
   Link
@@ -71,11 +71,11 @@ function Login(props: any) {
                   <h4 className="subtitle">We're so excited to see you again!</h4>
                   <label htmlFor="email">E-mail</label>
                   <input 
-                  onKeyDown={(e) => setEmail((e.target as any).value)}
+                  onKeyDown={(e) => setTimeout(() => setEmail((e.target as any).value), 100)}
                   type="text" id="email" autoComplete="off"/>
                   <label htmlFor="password">Password</label>
                   <input 
-                  onKeyDown={(e) => setPassword((e.target as any).value)}
+                  onKeyDown={(e) => setTimeout(() => setPassword((e.target as any).value), 100)}
                   type="password" id="password"/>
                   <span className='error'>{ error && message }</span>
                   { props.registerSucess && <h4 className="error subtitle" style={{
