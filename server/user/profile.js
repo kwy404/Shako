@@ -13,6 +13,7 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
               rows[0].password = undefined;
               rows[0].code_activate = undefined;
               rows[0].exp_to_next_level = calcularExpProximoNivel(rows[0].nivel + 1);
+              rows[0].token = undefined;
         
               io.emit('profile', {
                 type: "profile",
