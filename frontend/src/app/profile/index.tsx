@@ -5,6 +5,7 @@ import CryptoJS from "crypto-js";
 
 const typePage = "profile";
 
+
 declare global {
   interface Window {
     MyNamespace: any;
@@ -29,7 +30,7 @@ interface User {
 }
 
 interface Props {
-  socket: Socket<DefaultEventsMap, DefaultEventsMap>,
+  socket: Socket<DefaultEventsMap, DefaultEventsMap> | null,
   user: User,
   emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
   params: any
@@ -115,9 +116,13 @@ function Profile({ user, emited, params, socket }: Props) {
         }
         return;
       }
+      if (!socket) {
+        // Handle the case when socket is null
+        return;
+      }
       emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
     }
-    socket.on('profile', (receive: any) => {
+    socket?.on('profile', (receive: any) => {
       setFound(receive.success);
       if (receive.user) {
         const cachedUser: CachedUser = {
@@ -182,10 +187,14 @@ function Profile({ user, emited, params, socket }: Props) {
         )}
 
         {!found && (
-          <h1 className="notfoundprofile">
-            This account doesn’t exist
-            <h2>Try searching for another.</h2>
-          </h1>
+        <>
+            <h1 className="notfoundprofile">
+                This account doesn’t exist
+                <br/><br/>
+                <span>Try searching for another.</span>
+            </h1>
+            
+        </>
         )}
       </div>
     </div>
