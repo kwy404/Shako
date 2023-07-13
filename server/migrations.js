@@ -71,6 +71,69 @@ const up = function (knex) {
       table.timestamp('updated_at').defaultTo(knex.fn.now());
     })
   ]);
+
+  Promise.all([
+    knex.schema.createTableIfNotExists('communities', (table) => {
+      table.increments('id').primary();
+      table.string('name').notNullable();
+      table.string('avatar').notNullable();
+      table.string('bg').notNullable();
+      table.string('descricao').notNullable();
+      table.string('verificado').notNullable();
+      table.integer('creator_id').unsigned().notNullable();
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.timestamp('updated_at').defaultTo(knex.fn.now());
+    })
+  ]);
+
+  Promise.all([
+    knex.schema.createTableIfNotExists('user_community', (table) => {
+        table.integer('user_id').unsigned().notNullable();
+        table.integer('community_id').unsigned().notNullable();
+        table.primary(['user_id', 'community_id']);
+    })
+  ]);
+
+  Promise.all([
+    knex.schema.createTableIfNotExists('posts', (table) => {
+      table.increments('id').primary();
+      table.integer('community_id').unsigned().notNullable();
+      table.string('content').notNullable();
+      table.integer('votes').defaultTo(0);
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.timestamp('updated_at').defaultTo(knex.fn.now());
+    })
+  ]);
+
+  Promise.all([
+    knex.schema.createTableIfNotExists('post_votes', (table) => {
+      table.integer('post_id').unsigned().notNullable();
+      table.integer('community_id').unsigned().notNullable();
+      table.integer('user_id').unsigned().notNullable();
+      table.enum('vote', ['upvote', 'downvote']).notNullable();
+      table.primary(['post_id', 'community_id', 'user_id']);
+    })
+  ]);
+
+  Promise.all([
+    knex.schema.createTableIfNotExists('user_posts', (table) => {
+      table.increments('id').primary();
+      table.integer('user_id').unsigned().notNullable();
+      table.string('content').notNullable();
+      table.string('photo').notNullable();
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.timestamp('updated_at').defaultTo(knex.fn.now());
+    })
+  ]);
+
+  Promise.all([
+    knex.schema.createTableIfNotExists('post_votes_profile', (table) => {
+      table.increments('id').primary();
+      table.integer('post_id').unsigned().notNullable();
+      table.integer('user_id').unsigned().notNullable();
+      table.enum('vote', ['upvote', 'downvote']).notNullable();
+    })
+  ]);
 };
 
 //Migrations
