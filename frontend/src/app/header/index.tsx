@@ -23,11 +23,7 @@ function Header({ user }: any) {
         <div className="Header">
             <div className="center">
                 <div className="absolute left">
-                    <Link 
-                    onClick={() => {
-                        window.document.title = "Shako"
-                    }}
-                    to={"/"}><h1>Shako</h1></Link>
+                    <Link to={"/"}><h1>Shako</h1></Link>
                 </div>
                 <div className="absolute right">
                     <img className="icon search-input" src={search_icon}/>

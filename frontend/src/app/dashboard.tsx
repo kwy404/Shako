@@ -8,6 +8,7 @@ import Header from "./header";
 import Left from "./left";
 import { io, Socket } from "socket.io-client";
 import Profile from "./profile";
+import { Helmet } from 'react-helmet';
 
 declare global {
     interface Window {
@@ -33,7 +34,6 @@ function Dashboard({ user, isProfile }: any) {
 
         socket.on("connected", (message: any) => {
             setLoading(true);
-            isProfileTitle();
         });
         
         return () => {
@@ -46,16 +46,6 @@ function Dashboard({ user, isProfile }: any) {
             socket.off("connected");
         };
     }, []);
-
-    useEffect(() => {
-        isProfileTitle();
-    }, [location.pathname])
-
-    const isProfileTitle = () => {
-        if (isProfile) {
-            window.document.title = `${params?.username} (u/${params?.username}/${params?.discrimination} - Shako)`;
-        }
-    }
 
     const emited = (data: any, type: any, socket: any) => {
         socket.emit("message", {
@@ -80,16 +70,20 @@ function Dashboard({ user, isProfile }: any) {
                     <Loading />
                 </>
             )}
-            {params?.username && params?.discrimination && (
+            {params?.username && params?.discrimination ? <>
                 <div className="container">
                     <div className="center">
                        <Left>
-                            
                        </Left>
                        <Profile params={params} socket={socket} emited={emited} user={user}/>
                     </div>
                 </div>
-            )}
+            </> : <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Shako</title>
+            </Helmet>
+            </>}
         </div>
     );
 }

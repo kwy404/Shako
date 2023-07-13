@@ -130,7 +130,7 @@ const validationToken = async ({token}, knex, ws) => {
 const userConnectToRoom = async ({username}, room, socket) => {
   //Connect to room using socket
   socket.join(room);
-  console.log(`Usuario ${username} entrou na sala ${room} privada.`)
+  // console.log(`Usuario ${username} entrou na sala ${room} privada.`)
   socket.emit('connected', {'user': username, 'sucess': true})
 }
 
