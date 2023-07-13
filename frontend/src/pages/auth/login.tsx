@@ -70,11 +70,11 @@ function Login(props: any) {
                   <h4 className="subtitle">We're so excited to see you again!</h4>
                   <label htmlFor="email">E-mail</label>
                   <input 
-                  onKeyUp={(e) => setEmail((e.target as any).value)}
+                  onKeyDown={(e) => setEmail((e.target as any).value)}
                   type="text" id="email" autoComplete="off"/>
                   <label htmlFor="password">Password</label>
                   <input 
-                  onKeyUp={(e) => setPassword((e.target as any).value)}
+                  onKeyDown={(e) => setPassword((e.target as any).value)}
                   type="password" id="password"/>
                   <span className='error'>{ error && message }</span>
                   { props.registerSucess && <h4 className="error subtitle" style={{

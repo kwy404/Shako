@@ -227,7 +227,7 @@ a{
 }
 
 .container{
-  height: calc(100% - 60px);
+  height: calc(100% - 40px);
   position: fixed;
   top: 40px;
   width: 100%;
