@@ -77,6 +77,17 @@ button {
   border-radius: 2px;
   color: white;
   cursor: pointer;
+  transition: 0.4s;
+}
+
+.button:hover{
+  filter: brightness(0.8);
+  transition: 0.15s;
+}
+
+.button:active {
+  filter: brightness(1);
+  transform: scale(1.04);
 }
 
 button:hover {
@@ -86,6 +97,7 @@ button:hover {
 
 button:active {
   filter: brightness(1);
+  transform: scale(1.04);
 }
 
 input[type=text], input[type=password] {
@@ -257,4 +269,9 @@ a{
   height: 10px;
   position: sticky;
   background-color: var(--purple);
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,.3));
+}
+
+div, input, li{
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
 }
