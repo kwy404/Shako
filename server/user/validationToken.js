@@ -94,51 +94,92 @@ async function enviarEmail({ username, email }) {
   let info = await transporter.sendMail(mailOptions);
 }
 
-const validationToken = async ({token}, knex, ws) => {
-    knex('users').where({
-        token: token
-      }).select('*').then(function(rows) {
-        if(rows.length > 0){
-            rows[0].password = undefined
-            rows[0].code_activate = undefined
-            rows[0].exp_to_next_level = calcularExpProximoNivel(rows[0].nivel+1)
-            if(rows[0].banned == 1){
-              ws.send(
-                JSON.stringify({
-                  type: "login",
-                  user: {},
-                  sucess: false,
-                  noMessageError: false,
-                  message: "Your account is banned."
-                })
-              );
-              return;
-            }
-            ws.send
-            ws.send(
-              jsonE({
-                  type: "login",
-                  user: rows[0],
-                  sucess: true,
-                  noMessageError: true,
-                  message: ""
-                })
-            );
-            return rows[0]
-        } else{
-            ws.send(
-                jsonE({
-                  type: "login",
-                  user: {},
-                  sucess: false,
-                  noMessageError: true,
-                  message: ""
-                })
-            );
-            return {}
-        }
-  })
-}
+const validationToken = async ({ token }, knex, ws) => {
+  try {
+    const user = await knex('users')
+      .where({ token: token })
+      .select('*')
+      .first();
+
+    if (user) {
+      user.password = undefined;
+      user.code_activate = undefined;
+      user.exp_to_next_level = calcularExpProximoNivel(user.nivel + 1);
+
+      if (user.banned === 1) {
+        ws.send(
+          JSON.stringify({
+            type: "login",
+            user: {},
+            success: false,
+            noMessageError: false,
+            message: "Your account is banned."
+          })
+        );
+        return;
+      }
+
+      const followers = await knex('followers')
+      .join('users', 'users.id', '=', 'followers.sender_id')
+      .where({ 'followers.receiver_id': user.id })
+      .select('users.id', 'users.username', 'users.email');
+
+      const followersYouFollowBack = await knex('followers')
+        .join('users', 'users.id', '=', 'followers.sender_id')
+        .where({ 'followers.receiver_id': user.id })
+        .whereIn('followers.sender_id', followers.map(follower => follower.id))
+        .select('users.id', 'users.username', 'users.email');
+
+      const followersWithFollowMe = followersYouFollowBack.map(follower => ({
+        id: follower.id,
+        username: follower.username,
+        email: follower.email,
+        follow_me: true
+      }));
+
+      const followersCount = await knex('followers')
+        .where({ receiver_id: user.id })
+        .count('sender_id as count')
+        .first();
+
+      const followingCount = await knex('followers')
+        .where({ sender_id: user.id })
+        .count('receiver_id as count')
+        .first();
+
+      user.followers = followersWithFollowMe;
+      user.followersCount = followersCount.count || 0;
+      user.followingCount = followingCount.count || 0;
+
+      ws.send(
+        JSON.stringify({
+          type: "login",
+          user: user,
+          success: true,
+          noMessageError: true,
+          message: ""
+        })
+      );
+
+      return user;
+    } else {
+      ws.send(
+        JSON.stringify({
+          type: "login",
+          user: {},
+          success: false,
+          noMessageError: true,
+          message: ""
+        })
+      );
+      return {};
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to validate token');
+  }
+};
+
 
 const userConnectToRoom = async ({username}, room, socket) => {
   //Connect to room using socket

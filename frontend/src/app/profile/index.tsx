@@ -34,6 +34,10 @@ interface User {
   verificado: string;
   banned: string;
   epic: string;
+  followingCount: string;
+  followersCount: string;
+  isFollow: string;
+  followBack: any;
 }
 
 interface Props {
@@ -80,7 +84,11 @@ function Profile({ user, emited, params, socket }: Props) {
     created_at: '01/01/1999',
     verificado: '0',
     banned: '0',
-    epic: '0'
+    epic: '0',
+    followingCount: '0',
+    followersCount: '0',
+    isFollow: '0',
+    followBack: {}
   });
   const [found, setFound] = useState(true);
   const [cachedUsers, setCachedUsers] = useState<{ [key: string]: CachedUser }>({});
@@ -137,7 +145,11 @@ function Profile({ user, emited, params, socket }: Props) {
         created_at: '23/06/1999',
         verificado: '0',
         banned: '0',
-        epic: '0'
+        epic: '0',
+        followingCount: '0',
+        followersCount: '0',
+        isFollow: '0',
+        followBack: {}
       });
       setFound(false);
       setMessageError(receive.message)
@@ -149,6 +161,14 @@ function Profile({ user, emited, params, socket }: Props) {
         }
       }
       return
+    } else if(receive.type == 'follower'){
+      if(profile.id){
+        if (!socket) {
+          // Handle the case when socket is null
+          return;
+        }
+        emited({ username: params.username, discrimination: params.discrimination, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
+      }
     }
   });
   return (
@@ -237,6 +257,9 @@ function Profile({ user, emited, params, socket }: Props) {
                 </g>
               </svg>
               Joined {convertDate(profile.created_at)}
+              <br></br>
+              <p className="followers"><span className="count">{profile?.followingCount}</span> <span>Following</span></p>
+              <p className="followers"><span className="count">{profile?.followersCount}</span> <span>Followers</span></p>
             </h3>
           )}
           {!found && (
@@ -271,7 +294,8 @@ function Profile({ user, emited, params, socket }: Props) {
               }
               emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'follow', socket);
             }}>
-              Seguir</button>
+              {profile.followBack && profile.followBack.sender_id == profile.id ? 'seguir devolta' : profile.isFollow ? 'deseguir' : 'seguir'}
+              </button>
           </> }
         </div>
       </div>

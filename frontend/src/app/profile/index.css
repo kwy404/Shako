@@ -159,7 +159,7 @@
     width: fit-content;
     height: 45px;
     font-size: 13px;
-    right: 145px;
+    right: 175px;
     top: -90px;
     background: black;
     border: 1px solid #ffffff59;
@@ -191,5 +191,20 @@
     padding-left: 10px;
     background: white;
     color: #030303;
-    width: 130px;
+    width: 170px;
+}
+
+.followers{
+    display: inline-flex;
+    left: -10px;
+    position: relative;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.followers .count{
+    font-weight: 900;
+    color: white;
+    margin-left: 2px;
+    margin-right: 5px;
 }
