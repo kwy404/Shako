@@ -5,13 +5,35 @@
 :root{
   --danger: #ff4e4e;
   --purple: #563BC6;
-  --login-box: #1D1D1F;
+  --login-box: #010108;
+}
+
+html{
+  background: #0000 !important;
+}
+
+button, .button{
+  color: #000000; /* Black */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 
 body {
   overflow: hidden;
-  background: #030303 !important;
+  background: #030308 !important;
   filter: brightness(1.2) drop-shadow(2px 4px 6px black);
+  width: calc(100% - 10px);
+  position: fixed;
+  height: calc(100% - 1px);
+  left: 5px !important;
+  top: 5px !important;
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.60);
+}
+
+.avatar, .cover{
+  filter: none !important;
 }
 
 .login-container {
@@ -101,7 +123,6 @@ button:active {
 }
 
 input[type=text], input[type=password] {
-  background-color: #23272a;
   color: white;
   border-radius: 1px;
   padding: 10px;
@@ -151,7 +172,7 @@ a{
   object-fit: cover;
   position: fixed;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 20px);
   z-index: 0;
   opacity: 0.2;
   filter: blur(2px);
@@ -214,7 +235,7 @@ a{
 }
 
 .login-box-content input{
-  background-color: rgba(0,0,0,.25) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .Header .left a{
@@ -274,4 +295,16 @@ a{
 
 div, input, li{
   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+}
+
+body::before{
+  content: '';
+  width: 100%;
+  height: 3px;
+  position: fixed;
+  background-color: var(--purple);
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,.3));
+  top: 0;
+  opacity: 0.6;
+  z-index: 21;
 }

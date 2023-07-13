@@ -6,7 +6,7 @@ const cors = require('cors')
 const {parseMessage} = require('./webrtc/parse');
 const {knex} = require('./migrations');
 const {dashboard} = require('./app/dashboard')
-const port = process.env.PORT || 9001;
+const port = process.env.PORT || 9100;
 
 //initialize a http server
 const server = http.createServer(app);

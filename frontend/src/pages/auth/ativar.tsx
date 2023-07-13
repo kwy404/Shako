@@ -7,7 +7,7 @@ import {
 
 const typePage = 'validateCode'
 
-const ws = new WebSocket('ws://localhost:9001/ws/validateCode')
+const ws = new WebSocket('ws://localhost:9100/ws/validateCode')
 
 function getRandomChoicePhoto() {
   const choices = ['geek', 'anime', 'rock', 'error', 'space', 'place', 'music'];

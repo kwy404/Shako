@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import './index.css';
-import { Link } from "react-router-dom";
+import { Link, useLocation  } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import {Helmet} from "react-helmet";
 
@@ -59,6 +59,8 @@ function convertDate(dateString: string) {
 }
 
 function Profile({ user, emited, params, socket }: Props) {
+  const location = useLocation();
+  const [messageError, setMessageError] = useState("");
   const [profile, setProfile] = useState<User>({
     id: '',
     username: '',
@@ -74,15 +76,18 @@ function Profile({ user, emited, params, socket }: Props) {
   });
   const [found, setFound] = useState(true);
   const [cachedUsers, setCachedUsers] = useState<{ [key: string]: CachedUser }>({});
-
+  
   useEffect(() => {
-    let timeFor = setInterval(() => {
-      if (socket) {
-        getProfileE();
-        clearInterval(timeFor);
+    if (socket) {
+      if (!socket) {
+        // Handle the case when socket is null
+        return;
       }
-    }, 400);
-  }, [params, socket, emited, window.location.pathname, cachedUsers]);
+      console.log(location.pathname)
+      emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
+    }
+  }, [location.pathname, params, socket, emited]);
+  
 
   useEffect(() => {
     const encryptedCache = localStorage.getItem("cachedUsers");
@@ -100,49 +105,19 @@ function Profile({ user, emited, params, socket }: Props) {
     }
   }, []);
 
-  useEffect(() => {
-    const encryptedCache = CryptoJS.AES.encrypt(JSON.stringify(cachedUsers), "kaway404_secret_admin").toString();
-    localStorage.setItem("cachedUsers", encryptedCache);
-    if(params.username != profile.username && params.discrimination != profile.discrimination){
-        if (!socket) {
-            // Handle the case when socket is null
-            return;
-        }
-        emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
+  socket?.on('profile', (receive: any) => {
+    setFound(receive.success);
+    setMessageError(receive.message)
+    if (receive.user) {
+      const cachedUser: CachedUser = {
+        id: `${receive.user.id}`,
+        profile: receive.user,
+        timestamp: Date.now(),
+      };
+      setProfile(receive.user);
+      setCachedUsers(prevState => ({ ...prevState, [cachedUser.id]: cachedUser }));
     }
-  }, [cachedUsers, params, socket, emited]);
-
-  const getProfileE = () => {
-    if (params.username && params.discrimination) {
-      const cachedUser = getCachedProfile(params.username, params.discrimination);
-      if (cachedUser) {
-        setProfile(cachedUser);
-        if(cachedUser?.id){
-            setFound(true);
-          } else{
-            setFound(false);
-        }
-        return;
-      }
-      if (!socket) {
-        // Handle the case when socket is null
-        return;
-      }
-      emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
-    }
-    socket?.on('profile', (receive: any) => {
-      setFound(receive.success);
-      if (receive.user) {
-        const cachedUser: CachedUser = {
-          id: `${receive.user.id}`,
-          profile: receive.user,
-          timestamp: Date.now(),
-        };
-        setProfile(receive.user);
-        setCachedUsers(prevState => ({ ...prevState, [cachedUser.id]: cachedUser }));
-      }
-    });
-  };
+  });
 
   const getCachedProfile = (username: string, discrimination: string) => {
     const cachedUser = Object.values(cachedUsers).find(user => user.profile.username === username && user.profile.discrimination === discrimination);
@@ -219,9 +194,9 @@ function Profile({ user, emited, params, socket }: Props) {
           {!found && (
           <>
               <h1 className="notfoundprofile">
-                  This account doesn’t exist
+                  {messageError}
                   <br/><br/>
-                  <span>Try searching for another.</span>
+                  <span>Try searching for another user.</span>
               </h1>
               
           </>
