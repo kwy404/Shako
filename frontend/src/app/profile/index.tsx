@@ -126,7 +126,7 @@ function Profile({ user, emited, params, socket }: Props) {
         bg: '',
         admin: '',
         is_activated: '1',
-        created_at: '01/01/1999',
+        created_at: '23/06/1999',
         verificado: '0'
       });
       setFound(false);

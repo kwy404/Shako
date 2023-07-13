@@ -20,6 +20,18 @@ const userLogin = async ({email, password}, knex, ws) => {
             rows[0].password = undefined
             rows[0].code_activate = undefined
             rows[0].exp_to_next_level = calcularExpProximoNivel(rows[0].nivel+1)
+            if(rows[0].banned == 1){
+              ws.send(
+                JSON.stringify({
+                  type: "login",
+                  user: {},
+                  sucess: false,
+                  noMessageError: false,
+                  message: "Your account is banned."
+                })
+              );
+              return;
+            }
             ws.send(
                 JSON.stringify({
                   type: "login",
