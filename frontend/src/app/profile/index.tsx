@@ -216,7 +216,6 @@ function Profile({ user, emited, params, socket }: Props) {
               Joined {convertDate(profile.created_at)}
             </h3>
           )}
-
           {!found && (
           <>
               <h1 className="notfoundprofile">

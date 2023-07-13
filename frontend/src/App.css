@@ -239,8 +239,8 @@ a{
 }
 
 .container{
-  height: calc(100% - 40px);
-  position: fixed;
+  height: fit-content;
+  position: relative;
   top: 40px;
   width: 100%;
   overflow: auto;
