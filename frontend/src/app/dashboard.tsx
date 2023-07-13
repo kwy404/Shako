@@ -40,7 +40,7 @@ function Dashboard({ user, isProfile }: any) {
         socket.on("profile", (message: any) => {
             if(message.type == 'profileBanned'){
                 if(message.user == user.id){
-                    location.reload()
+                    window.location.pathname = "/login"
                 }
             }
         })
