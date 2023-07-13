@@ -5,6 +5,7 @@ import CryptoJS from "crypto-js";
 import {Helmet} from "react-helmet";
 import adminBadge from "../../resources/images/admin.png";
 import banHammer from "../../resources/images/ban-hammer.png";
+import nitroBadge from "../../resources/images/nitro_badge.webp";
 import { Tooltip } from '@mui/material';
 
 const typePage = "profile";
@@ -32,6 +33,7 @@ interface User {
   created_at: string;
   verificado: string;
   banned: string;
+  epic: string;
 }
 
 interface Props {
@@ -77,7 +79,8 @@ function Profile({ user, emited, params, socket }: Props) {
     is_activated: '1',
     created_at: '01/01/1999',
     verificado: '0',
-    banned: '0'
+    banned: '0',
+    epic: '0'
   });
   const [found, setFound] = useState(true);
   const [cachedUsers, setCachedUsers] = useState<{ [key: string]: CachedUser }>({});
@@ -133,7 +136,8 @@ function Profile({ user, emited, params, socket }: Props) {
         is_activated: '1',
         created_at: '23/06/1999',
         verificado: '0',
-        banned: '0'
+        banned: '0',
+        epic: '0'
       });
       setFound(false);
       setMessageError(receive.message)
@@ -186,9 +190,9 @@ function Profile({ user, emited, params, socket }: Props) {
             ) : (
               params.username
             )}
-            #{profile.discrimination ? (
+            {profile.discrimination ? (
               <>
-                {profile.discrimination}
+                <span className="discrimination">#{profile.discrimination}</span>
                 {profile?.verificado === '1' && (
                   <>
                   <Tooltip title="Verified profile.">
@@ -199,7 +203,6 @@ function Profile({ user, emited, params, socket }: Props) {
                     </svg>
                   </Tooltip>
                   </>
-                  
                 )}
                 {profile?.admin === '1' && (
                   <>
@@ -210,9 +213,20 @@ function Profile({ user, emited, params, socket }: Props) {
                     </Tooltip>
                   </>
                 )}
+                {profile?.epic == '1' && (
+                  <>
+                    <Tooltip title="Epic User.">
+                      <div className="badge--profile">
+                        <img src={nitroBadge}/>
+                      </div>
+                    </Tooltip>
+                  </>
+                )}
               </>
             ) : (
-              params.discrimination
+              <>
+                <span className="discrimination">#{params.discrimination}</span>
+              </>
             )}
           </h3>
           {profile.username && (

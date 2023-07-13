@@ -79,7 +79,7 @@ function Dashboard({ user, isProfile }: any) {
                     <Header user={user} />
                 </>
             )}
-            {params?.username && params?.discrimination ? <>
+        {params?.username && params?.discrimination ? <>
                 <div className="container">
                     <div className="center">
                        <Left>

@@ -34,7 +34,9 @@ function Header({ user }: any) {
                         <div className="profile">
                             <img className="icon expand" src={expand_icon}/>
                             <img className="avatar" src="https://www.redditstatic.com/avatars/avatar_default_12_545452.png"/>
-                            <span className="username">{user.username}#{user.discrimination}</span>
+                            <span className="username">{user.username}
+                            <span className="discrimination">#{user.discrimination}</span>
+                            </span>
                         </div>
                     </Link>
                 </div>
