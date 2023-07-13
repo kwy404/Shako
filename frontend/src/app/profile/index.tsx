@@ -297,7 +297,7 @@ function Profile({ user, emited, params, socket }: Props) {
               {
                 profile.followBack && profile.followBack.sender_id == profile.id 
                   ? (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Seguindo' : 'Seguir de volta')
-                  : (profile.isFollow && profile.isFollow.receiver_id == user.id ? 'Deixar de seguir' : 'Seguir')
+                  : (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Deixar de seguir' : 'Seguir')
               }
               </button>
           </> }
