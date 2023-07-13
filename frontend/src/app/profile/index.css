@@ -157,9 +157,9 @@
 .banned_button{
     position: absolute;
     width: fit-content;
-    height: fit-content;
+    height: 45px;
     font-size: 13px;
-    right: 24px;
+    right: 115px;
     top: -90px;
     background: black;
     border: 1px solid #ffffff59;
@@ -167,7 +167,7 @@
     border-radius: 40px;
     padding: 13px;
     font-style: oblique;
-    font-weight: 500;
+    font-weight: 900;
     padding-left: 40px;
 }
 
@@ -177,5 +177,12 @@
     height: 17px;
     position: absolute;
     left: 15px;
-    top: 10px;
+    top: 13px;
+}
+
+.follow_button{
+    right: 24px;
+    padding-left: 10px;
+    background: white;
+    color: #030303;
 }

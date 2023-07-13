@@ -261,6 +261,18 @@ function Profile({ user, emited, params, socket }: Props) {
               <img src={banHammer}/>
               {profile.banned == '1' ? `DESBAN ${profile.username}` : `BAN ${profile.username}`}</button>
           </> }
+          { found && user.id != profile.id && <>
+            <button 
+            className="banned_button follow_button"
+            onClick={() => {
+              if (!socket) {
+                // Handle the case when socket is null
+                return;
+              }
+              emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'follow', socket);
+            }}>
+              Seguir</button>
+          </> }
         </div>
       </div>
     </>
