@@ -58,6 +58,19 @@ const up = function (knex) {
       table.string("status").notNullable();
     }),
   ]);
+
+  //Create table interesses
+  Promise.all([
+    knex.schema.createTableIfNotExists('interests', (table) => {
+      table.increments('id').primary();
+      table.integer('user_id').notNullable();
+      table.string('name').notNullable();
+      table.string('category').notNullable();
+      table.integer('popularity').notNullable();
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.timestamp('updated_at').defaultTo(knex.fn.now());
+    })
+  ]);
 };
 
 //Migrations
