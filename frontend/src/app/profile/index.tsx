@@ -107,7 +107,6 @@ function Profile({ user, emited, params, socket }: Props) {
   socket?.on('profile', (receive: any) => {
     try {
       if(receive.user.username == params.username && params.discrimination == receive.user.discrimination){
-        console.log(receive.user)
         setProfile(receive.user);
         // setCachedUsers(prevState => ({ ...prevState, [cachedUser.id]: cachedUser }));
         setFound(receive.success);
@@ -133,7 +132,6 @@ function Profile({ user, emited, params, socket }: Props) {
       setFound(false);
       setMessageError(receive.message)
     }
-    
   });
 
   const getCachedProfile = (username: string, discrimination: string) => {
