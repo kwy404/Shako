@@ -87,7 +87,6 @@ function Profile({ user, emited, params, socket }: Props) {
     if (encryptedCache) {
       try {
         const decryptedCache = CryptoJS.AES.decrypt(encryptedCache, "kaway404_secret_admin").toString(CryptoJS.enc.Utf8);
-        const json = JSON.parse(decryptedCache);
         if (decryptedCache) {
           const parsedCache = JSON.parse(decryptedCache);
           setCachedUsers(parsedCache);
@@ -109,6 +108,11 @@ function Profile({ user, emited, params, socket }: Props) {
       const cachedUser = getCachedProfile(params.username, params.discrimination);
       if (cachedUser) {
         setProfile(cachedUser);
+        if(cachedUser?.id){
+            setFound(true);
+          } else{
+            setFound(false);
+        }
         return;
       }
       emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
