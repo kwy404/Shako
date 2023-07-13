@@ -234,7 +234,7 @@ function Profile({ user, emited, params, socket }: Props) {
               </h1>
           </>
           )}
-          { found && user.admin == '1' && user.id != user.id && <>
+          { found && user.admin == '1' && user.id != profile.id && <>
             <button 
             className="banned_button"
             onClick={() => {
