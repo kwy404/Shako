@@ -36,7 +36,7 @@ interface User {
   epic: string;
   followingCount: string;
   followersCount: string;
-  isFollow: string;
+  isFollow: any;
   followBack: any;
 }
 
@@ -294,7 +294,11 @@ function Profile({ user, emited, params, socket }: Props) {
               }
               emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'follow', socket);
             }}>
-              {profile.followBack && profile.followBack.sender_id == profile.id ? 'seguir devolta' : profile.isFollow ? 'deseguir' : 'seguir'}
+              {
+                profile.followBack && profile.followBack.sender_id == profile.id 
+                  ? (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Seguindo' : 'Seguir de volta')
+                  : (profile.isFollow && profile.isFollow.receiver_id == user.id ? 'Deixar de seguir' : 'Seguir')
+              }
               </button>
           </> }
         </div>
