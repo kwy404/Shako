@@ -85,7 +85,7 @@ function Profile({ user, emited, params, socket }: Props) {
       }
       emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
     }
-  }, [location.pathname, params, socket, emited]);
+  }, [user, location.pathname, params, socket, emited]);
   
 
   useEffect(() => {
