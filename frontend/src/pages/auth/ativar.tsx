@@ -69,6 +69,7 @@ function Ativar(props: any) {
               }}
               >
                 <div className="login-box-content">
+                  <div className="login-box-content-line"/>
                   <h1 className="title">I'm glad to you are here</h1>
                   <h4 className="subtitle" style={{
                     marginLeft: '35px'

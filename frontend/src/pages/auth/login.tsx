@@ -59,6 +59,7 @@ function Login(props: any) {
         <div className="App">
           <div className="login-container">
             <div className={`login-box ${(error ? 'error': '')}`}>
+              <div className="login-box-content-line"/>
               <form
               onSubmit={(e: any) => {
                 e.preventDefault();

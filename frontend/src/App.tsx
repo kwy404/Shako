@@ -55,6 +55,7 @@ function App() {
       }
     }
     window.localStorage.getItem('token')?window.localStorage.getItem('token'): setLoading(true);
+    setLoading(true);
 }, []);
 
 const stringy = (json: object) => {
@@ -72,23 +73,35 @@ const stringy = (json: object) => {
         <Switch>
           <Route path="/login" exact>
             {user.id ? (
-              <Redirect to="/" />
+              user.is_activated === '1' ? (
+                <Dashboard isProfile={false} user={user} />
+              ) : (
+                <Ativar user={user} setLogged={setLogged} />
+              )
             ) : (
               <Login registerSucess={false} setLogged={setLogged} />
             )}
           </Route>
           <Route path="/register" exact>
-            {user.id ? (
-              <Redirect to="/" />
+          {user.id ? (
+              user.is_activated === '1' ? (
+                <Dashboard isProfile={false} user={user} />
+              ) : (
+                <Ativar user={user} setLogged={setLogged} />
+              )
             ) : (
               <Register registerSucess={false} setLogged={setLogged} />
             )}
           </Route>
-          <Route path="/registerSuccessfully" exact>
+          <Route path="/registerSucessfully" exact>
             {user.id ? (
-              <Redirect to="/" />
+              user.is_activated === '1' ? (
+                <Dashboard isProfile={false} user={user} />
+              ) : (
+                <Ativar user={user} setLogged={setLogged} />
+              )
             ) : (
-              <Register registerSucess={true} setLogged={setLogged} />
+              <Login registerSucess={true} setLogged={setLogged} />
             )}
           </Route>
           <Route path="/u/:username/:discrimination" exact>
@@ -99,7 +112,7 @@ const stringy = (json: object) => {
                 <Ativar user={user} setLogged={setLogged} />
               )
             ) : (
-              <Redirect to="/login" />
+              <Login registerSucess={false} setLogged={setLogged} />
             )}
           </Route>
           <Route path="/" exact>

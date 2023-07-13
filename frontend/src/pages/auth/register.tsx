@@ -71,6 +71,9 @@ function Register(props: any) {
             <div className={`login-box ${(error ? 'error': '')}`}  style={{
             paddingRight: '20px',
           }}>
+              <div className="login-box-content-line" style={{
+                width: 'calc(100% + 20px)'
+              }}/>
               {termos ? <>
                 <div className="form-container" style={{
                 'maxWidth': '450px',
