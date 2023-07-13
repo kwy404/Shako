@@ -4,6 +4,7 @@ import { Link, useLocation  } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import {Helmet} from "react-helmet";
 import adminBadge from "../../resources/images/admin.png";
+import banHammer from "../../resources/images/ban-hammer.png";
 import { Tooltip } from '@mui/material';
 
 const typePage = "profile";
@@ -242,7 +243,9 @@ function Profile({ user, emited, params, socket }: Props) {
                 return;
               }
               emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'banUser', socket);
-            }}>{profile.banned == '1' ? 'Desbanir' : 'Banir'}</button>
+            }}>
+              <img src={banHammer}/>
+              {profile.banned == '1' ? `DESBAN ${profile.username}` : `BAN ${profile.username}`}</button>
           </> }
         </div>
       </div>

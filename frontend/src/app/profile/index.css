@@ -158,7 +158,24 @@
     position: absolute;
     width: fit-content;
     height: fit-content;
-    font-size: 10px;
+    font-size: 13px;
     right: 24px;
     top: -90px;
+    background: black;
+    border: 1px solid #ffffff59;
+    color: #ff4f53;
+    border-radius: 40px;
+    padding: 13px;
+    font-style: oblique;
+    font-weight: 500;
+    padding-left: 40px;
+}
+
+.banned_button img{
+    display: flex;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    left: 15px;
+    top: 10px;
 }
