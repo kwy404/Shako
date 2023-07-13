@@ -260,10 +260,11 @@ a{
 }
 
 .container{
-  height: fit-content;
   position: relative;
   top: 40px;
-  width: 100%;
+  width: 100vw;
+  overflow: auto;
+  height: calc(100vh - 50px);
   overflow: auto;
 }
 
