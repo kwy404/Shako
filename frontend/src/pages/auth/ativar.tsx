@@ -7,7 +7,7 @@ import {
 
 const typePage = 'validateCode'
 
-const ws = new WebSocket('ws://localhost:9100/ws/validateCode')
+const ws = new WebSocket('ws://localhost:9001/ws/validateCode')
 
 function getRandomChoicePhoto() {
   const choices = ['geek', 'anime', 'rock', 'error', 'space', 'place', 'music'];
@@ -19,7 +19,6 @@ const randPhoto = getRandomChoicePhoto();
 
 function Ativar(props: any) {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
     const [dialog, setDialog] = useState(true);

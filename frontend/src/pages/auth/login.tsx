@@ -8,7 +8,7 @@ import {
 
 const typePage = 'login'
 
-const ws = new WebSocket('ws://localhost:9100/ws/login')
+const ws = new WebSocket('ws://localhost:9001/ws/login')
 
 function getRandomChoicePhoto() {
   const choices = ['geek', 'anime', 'rock', 'error', 'space', 'place', 'music'];
