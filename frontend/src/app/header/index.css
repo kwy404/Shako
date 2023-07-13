@@ -18,12 +18,13 @@
 
 .search-bar{
     width: 400px;
-    background-color: rgba(0,0,0,.20) !important;
+    background-color: rgba(255,255,255,.12) !important;
     right: 335px;
     position: relative;
     color: rgba(255,255,255,.7) !important;
     font-size: 12px;
     height: 15px;
+    top: -5px;
 }
 
 .search-bar::placeholder{
@@ -46,7 +47,7 @@
     font-size: 25px;
     color: rgba(255,255,255,.7);
     cursor: pointer;
-    top: -10px;
+    top: -15px;
 }
 
 .Header .left h1:hover{
@@ -99,6 +100,7 @@
     transition: 0.4s;
     opacity: 0.4;
     cursor: pointer;
+    top: -5px;
 }
 
 .icon:hover{
@@ -116,9 +118,9 @@
     height: 37px;
     object-fit: fill;
     transform: scale(1);
-    background-color: rgba(0,0,0,.20) !important;
+    background-color: rgba(255,255,255,.12) !important;
     left: -371px;
-    top: 0px;
+    top: -5px;
     position: absolute;
     border-top: 1px solid black;
     border-left: 1px solid black;
@@ -153,7 +155,7 @@
     transform: scale(0.8);
     filter: contrast(-0) drop-shadow(2px 4px 6px rgba(0,0,0,.1));
     cursor: pointer;
-    top: -2px;
+    top: -7px;
 }
 
 .chat-icon:hover{
