@@ -36,7 +36,15 @@ function Dashboard({ user, isProfile }: any) {
         socket.on("connected", (message: any) => {
             setLoading(true);
         });
-        
+
+        socket.on("profile", (message: any) => {
+            if(message.type == 'profileBanned'){
+                if(message.user == user.id){
+                    location.reload()
+                }
+            }
+        })
+
         return () => {
             // Mantenha a conexão aberta se for a primeira montagem ou se o componente estiver sendo desmontado
             if (initialMount.current || !socket) {

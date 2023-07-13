@@ -30,6 +30,7 @@ interface User {
   is_activated: string;
   created_at: string;
   verificado: string;
+  banned: string;
 }
 
 interface Props {
@@ -74,7 +75,8 @@ function Profile({ user, emited, params, socket }: Props) {
     admin: '',
     is_activated: '1',
     created_at: '01/01/1999',
-    verificado: '0'
+    verificado: '0',
+    banned: '0'
   });
   const [found, setFound] = useState(true);
   const [cachedUsers, setCachedUsers] = useState<{ [key: string]: CachedUser }>({});
@@ -85,7 +87,7 @@ function Profile({ user, emited, params, socket }: Props) {
         // Handle the case when socket is null
         return;
       }
-      emited({ username: params.username, discrimination: params.discrimination }, 'getProfile', socket);
+      emited({ username: params.username, discrimination: params.discrimination, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
     }
   }, [user, location.pathname, params, socket, emited]);
   
@@ -129,21 +131,21 @@ function Profile({ user, emited, params, socket }: Props) {
         admin: '',
         is_activated: '1',
         created_at: '23/06/1999',
-        verificado: '0'
+        verificado: '0',
+        banned: '0'
       });
       setFound(false);
       setMessageError(receive.message)
     }
-  });
-
-  const getCachedProfile = (username: string, discrimination: string) => {
-    const cachedUser = Object.values(cachedUsers).find(user => user.profile.username === username && user.profile.discrimination === discrimination);
-    if (cachedUser && Date.now() - cachedUser.timestamp <= 2 * 60 * 60 * 1000) {
-      return cachedUser.profile;
+    if(receive.type == 'profileBanned'){
+      if(profile.id){
+        if(receive.user == profile.id){
+            profile.banned = receive.banned;
+        }
+      }
+      return
     }
-    return null;
-  };
-
+  });
   return (
     <>
       <Helmet>
@@ -229,9 +231,19 @@ function Profile({ user, emited, params, socket }: Props) {
                   <br/><br/>
                   <span>Try searching for another user.</span>
               </h1>
-              
           </>
           )}
+          { found && user.admin == '1' && <>
+            <button 
+            className="banned_button"
+            onClick={() => {
+              if (!socket) {
+                // Handle the case when socket is null
+                return;
+              }
+              emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'banUser', socket);
+            }}>{profile.banned == '1' ? 'Desbanir' : 'Banir'}</button>
+          </> }
         </div>
       </div>
     </>

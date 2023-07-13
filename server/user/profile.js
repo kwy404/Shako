@@ -19,7 +19,7 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                     rows[0].code_activate = undefined;
                     rows[0].exp_to_next_level = calcularExpProximoNivel(rows[0].nivel + 1);
                     rows[0].token = undefined;
-                    if(rows[0].banned == 1){
+                    if(rows[0].banned == 1 && myProfile[0].admin == 0){
                       io.emit('profile', {
                         type: "profile",
                         user: rows[0],
@@ -29,7 +29,7 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                       })
                       return {};
                     } else if(rows[0].private == 1){
-                      if(`${myProfile[0].username}#${myProfile[0].discrimination}` != `${rows[0].username}#${rows[0].discrimination}`){
+                      if(`${myProfile[0].username}#${myProfile[0].discrimination}` != `${rows[0].username}#${rows[0].discrimination}` && myProfile[0].admin == 0){
                         io.emit('profile', {
                           type: "profile",
                           user: rows[0],
