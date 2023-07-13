@@ -88,6 +88,20 @@ function Dashboard({ user, isProfile }: any) {
                     </div>
                 </div>
             </> : <>
+            {user?.username && <>
+                
+                <div className="container">
+                    <div className="center">
+                        <Left>
+                        </Left>
+                        <div className="Profile fullScreen">
+                            <div className="feed">
+                                <h1>Home</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>}
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>Shako</title>

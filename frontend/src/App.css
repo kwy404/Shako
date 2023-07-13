@@ -309,3 +309,13 @@ body::before{
   opacity: 0.6;
   z-index: 21;
 }
+
+.fullScreen{
+  height: fit-content !important;
+  position: relative;
+  top: 0px !important;
+}
+
+.feed{
+  padding: 15px;
+}
