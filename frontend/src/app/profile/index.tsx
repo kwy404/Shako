@@ -79,7 +79,7 @@ function Profile({ user, emited, params, socket }: Props) {
         getProfileE();
         clearInterval(timeFor);
       }
-    }, 200);
+    }, 100);
   }, [params, socket, emited]);
 
   useEffect(() => {
