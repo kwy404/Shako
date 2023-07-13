@@ -20,7 +20,6 @@ let socket: Socket | null = null;
 
 function Dashboard({ user, isProfile }: any) {
     const params = useParams<{ username?: string; discrimination?: string }>();
-    const location = useLocation();
     const [loading, setLoading] = useState(false);
     const initialMount = useRef(true);
 
@@ -30,6 +29,8 @@ function Dashboard({ user, isProfile }: any) {
             setTimeout(() => {
                 emited({}, "connected", socket!);
             }, 1000);
+        } else{
+            setLoading(true);
         }
 
         socket.on("connected", (message: any) => {

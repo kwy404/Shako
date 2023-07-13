@@ -28,6 +28,7 @@ interface User {
 
 function App() {
   const [loading, setLoading] = useState(false);
+  const [localStorageItem, setLocalStorageItem] = useState<string | null>(null);
   const [user, setUser] = useState<User>({
     id: '',
     username: '',
@@ -41,22 +42,55 @@ function App() {
   });
 
   useEffect(() => {
-    ws.onmessage = (evt: any) => {
-        // listen to data sent from the websocket server
-        const message = JSON.parse(evt.data)
-        if(message.user?.id){
-          window.localStorage.setItem('token', message.user.token)
-          setLogged(message.user)
-        } 
-        else if(message.type == 'validateToken'){
+      setLoading(true);
+      ws.onmessage = (evt: any) => {
+          // listen to data sent from the websocket server
+          const message = JSON.parse(evt.data)
+          if(message.user?.id){
+            window.localStorage.setItem('token', message.user.token)
+            setLogged(message.user)
+          } else{
+            setUser({
+              id: '',
+              username: '',
+              token: '',
+              email: '',
+              discrimination: '',
+              avatar: '',
+              bg: '',
+              admin: '',
+              is_activated: '1',
+            });
+          } 
+          if(message.type == 'validateToken'){
+            //Validate token and logged if sucess
+            const data = {type: 'validationToken', data: {token: window.localStorage.getItem('token')?window.localStorage.getItem('token'): 'undefined'}};
+            ws.send(stringy(data))
+          }
+      }
+      window.localStorage.getItem('token')?window.localStorage.getItem('token'): setLoading(true);
+      setLoading(true);
+  }, []);
+
+  useEffect(() => {
+    // Function to handle the storage event
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'token') {
+        setLocalStorageItem(event.newValue);
         //Validate token and logged if sucess
         const data = {type: 'validationToken', data: {token: window.localStorage.getItem('token')?window.localStorage.getItem('token'): 'undefined'}};
         ws.send(stringy(data))
       }
-    }
-    window.localStorage.getItem('token')?window.localStorage.getItem('token'): setLoading(true);
-    setLoading(true);
-}, []);
+    };
+
+    // Add event listener for the storage event
+    window.addEventListener('storage', handleStorageChange);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []); // Empty dependency array to run the effect only once
 
 const stringy = (json: object) => {
   return JSON.stringify(json)
