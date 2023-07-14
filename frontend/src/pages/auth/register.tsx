@@ -9,7 +9,7 @@ import TermosDeUso from '../../components/termos';
 
 const typePage = 'register'
 
-const ws = new WebSocket('ws://localhost:9005/ws/register')
+const ws = new WebSocket('ws://localhost:9010/ws/register')
 
 function getRandomChoicePhoto() {
   const choices = ['geek', 'anime', 'rock', 'error', 'space', 'place', 'music'];
@@ -42,7 +42,7 @@ function Register(props: any) {
               props.setLogged(message.user)
             } 
           } else if(message.type === typePage){
-            setError(!message.sucess)
+            setError(message.sucess)
             setDialog(true)
             setMessage(message.message)
             if(message?.sucess){

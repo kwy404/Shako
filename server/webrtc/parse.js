@@ -4,7 +4,11 @@ const {validationToken, userValidateCode} = require('../user/validationToken')
 
 const parseMessage = async ({type, data}, ws, knex, app, io) => {
     try {
-        await types[type](data, knex, ws)
+        if(type != 'validationToken' && type != 'userValidateCode'){
+            await new types[type](data, knex, ws)
+        } else{
+            await types[type](data, knex, ws)
+        }
     } catch (error) {
         //Pass, no code here
     }

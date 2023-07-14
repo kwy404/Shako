@@ -13,7 +13,7 @@ import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
 import LandingPage from './pages/LandingPage';
 
-const ws = new WebSocket('ws://localhost:9005/ws/login')
+const ws = new WebSocket('ws://localhost:9010/ws/login')
 
 interface User {
   id: string;
@@ -117,6 +117,17 @@ const stringy = (json: object) => {
               <Login registerSucess={false} setLogged={setLogged} />
             )}
           </Route>
+          <Route path="/dashboard" exact>
+            {user.id ? (
+              user.is_activated === '1' ? (
+                <Dashboard isProfile={false} user={user} />
+              ) : (
+                <Ativar user={user} setLogged={setLogged} />
+              )
+            ) : (
+              <Login registerSucess={false} setLogged={setLogged} />
+            )}
+          </Route>
           <Route path="/register" exact>
           {user.id ? (
               user.is_activated === '1' ? (
@@ -128,7 +139,7 @@ const stringy = (json: object) => {
               <Register registerSucess={false} setLogged={setLogged} />
             )}
           </Route>
-          <Route path="/registerSucessfully" exact>
+          <Route path="/registerSuccessfully" exact>
             {user.id ? (
               user.is_activated === '1' ? (
                 <Dashboard isProfile={false} user={user} />

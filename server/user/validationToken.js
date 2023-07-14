@@ -237,7 +237,7 @@ const userValidateCode = async ({ token, codeAtivate }, knex, ws) => {
           noMessageError: true,
           message: "Activated with success.",
           redirect: true,
-          redirectUrl: "/",
+          redirectUrl: "/dashboard",
         })
       );
       const username = user.username;
