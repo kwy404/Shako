@@ -91,7 +91,7 @@ function Header({ user, emited, socket }: Props) {
                     { searchFound.users.length > 0 && <div className="foundUsers">
                         { searchFound?.users.length > 0 && searchFound?.users.map((user => (
                             <Link to={`/u/${user.username}/${user.discrimination}`}>
-                                <li>
+                                <li key={user.id}>
                                     <img className="avatar" src="https://www.redditstatic.com/avatars/avatar_default_12_545452.png"/>
                                     <span className="username">{user?.username}</span>
                                     <span className="discrimination">#{user?.discrimination}</span>
