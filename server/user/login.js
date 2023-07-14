@@ -4,7 +4,7 @@ const { calcularExpProximoNivel } = require('./exp');
 class userLogin {
   constructor(data, knex, ws) {
     if (!data || typeof data !== 'object') {
-      throw new Error('Invalid data object. It must contain email and password properties.');
+      return;
     }
 
     this.email = data.email;
