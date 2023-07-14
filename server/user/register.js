@@ -156,6 +156,25 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
         return;
     }
 
+    //Return erro e-mail already exist.
+    knex('users')
+    .select()
+    .where('email', email)
+    .then(function(rows) {
+        if (rows.length > 0) {
+            ws.send(
+                JSON.stringify({
+                    type: "register",
+                    redirectUrl: "/register",
+                    sucess: false,
+                    redirect: false,
+                    message: "E-mail already exist. Try again with other e-mail."
+                })
+            )
+            return;
+        }
+    })
+
     if(!isStrongPassword(password).strong){
       ws.send(JSON.stringify({
         type: "register",
@@ -202,24 +221,6 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
         return;
       }
 
-      //Return erro e-mail already exist.
-      knex('users')
-      .select()
-      .where('email', email)
-      .then(function(rows) {
-          if (rows.length > 0) {
-              ws.send(
-                  JSON.stringify({
-                      type: "register",
-                      redirectUrl: "/register",
-                      sucess: false,
-                      redirect: false,
-                      message: "E-mail already exist. Try again with other e-mail."
-                  })
-              )
-              return;
-          }
-      })
       const currentDate = new Date();
       const currentDay = currentDate.getDate();
       const currentMonth = currentDate.getMonth() + 1;  // Os meses são indexados de 0 a 11
