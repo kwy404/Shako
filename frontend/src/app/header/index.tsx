@@ -59,7 +59,7 @@ function Header({ user, emited, socket }: Props) {
         <div className="Header">
             <div className="center">
                 <div className="absolute left">
-                    <Link to={"/"}><h1>Shako</h1></Link>
+                    <Link to={"/dashboard"}><h1>Shako</h1></Link>
                 </div>
                 <div className="absolute right">
                     <img className="icon search-input" src={search_icon}/>

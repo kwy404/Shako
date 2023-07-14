@@ -181,7 +181,7 @@ function Profile({ user, emited, params, socket }: Props) {
       <div className="Profile">
         <div className="Header-Profile blur"/>
         <div className="Header-Profile">
-          <Link to="/">
+          <Link to="/dashboard">
             <button className="back-icon">
               <svg
               viewBox="0 0 24 24"
