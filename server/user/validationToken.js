@@ -1,8 +1,8 @@
 const {getOtherUsers} = require('../user/getUsers');
 const {jsonE} = require("../helpers/parse");
 const {calcularExpProximoNivel} = require('./exp');
-const nodemailer = require('nodemailer');
 const {enviarEmail} = require('../helpers/enviar_email');
+require('dotenv').config();
 
 const generateHtmlEmail = (username) => {
   return `<td class="x_p-80 x_mpy-35 x_mpx-15" bgcolor="#212429" style="padding:80px">
@@ -23,7 +23,7 @@ const generateHtmlEmail = (username) => {
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody>
               <tr>
-                <td class="x_text-18 x_c-white x_pb-20" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:20px">Muito obrigado por ativar a sua conta! Estou aqui para ajudar e tornar a sua experiência incrível. <br>Sinta-se à vontade para explorar e desfrutar de todos os recursos que o Shako tem a oferecer.<br> Se precisar de alguma ajuda ou tiver alguma dúvida, estou sempre à disposição. Divirta-se ao máximo!</td>
+                <td class="x_text-18 x_c-white x_pb-20" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:20px">Muito obrigado por ativar a sua conta! Estou aqui para ajudar e tornar a sua experiência incrível. <br>Sinta-se à vontade para explorar e desfrutar de todos os recursos que o ${process.env.NAME} tem a oferecer.<br> Se precisar de alguma ajuda ou tiver alguma dúvida, estou sempre à disposição. Divirta-se ao máximo!</td>
               </tr>
             </tbody>
           </table>
@@ -52,7 +52,7 @@ const generateHtmlEmail = (username) => {
                           <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
                               <tr>
-                                <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px; line-height:22px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-top:20px; padding-bottom:20px; color:#f1f1f1">Atenciosamente, <br aria-hidden="true">A equipe da Baimless </td>
+                                <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px; line-height:22px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-top:20px; padding-bottom:20px; color:#f1f1f1">Atenciosamente, <br aria-hidden="true">A equipe da ${process.env.NAME}. </td>
                               </tr>
                             </tbody>
                           </table>

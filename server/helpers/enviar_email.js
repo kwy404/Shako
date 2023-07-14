@@ -1,6 +1,7 @@
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-async function enviarEmail({ username, email, code_ativacao, subject, generateHtmlEmail }) {
+async function enviarEmail({ username, email, code_ativacao, subject }, generateHtmlEmail) {
     // Crie um objeto de transporte para enviar o e-mail
     let transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
@@ -14,7 +15,7 @@ async function enviarEmail({ username, email, code_ativacao, subject, generateHt
   
     // Defina as informações do e-mail
     let mailOptions = {
-      from: `"Shako - Baimless 👻" <${process.env.EMAIL_USER}>`,
+      from: `"${process.env.NAME} - ${process.env.NAME} 👻" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: subject,
       html: generateHtmlEmail({username,code_ativacao})
@@ -38,9 +39,9 @@ async function enviarEmailBanned({ username, email }, banned, generateHtmlEmail)
   
     // Defina as informações do e-mail
     let mailOptions = {
-      from: `"Shako - Baimless 👻" <${process.env.EMAIL_USER}>`,
+      from: `"${process.env.NAME} - ${process.env.NAME} 👻" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: `${banned == 1 ? 'Você foi banido' : 'Você foi desbanido'} - Shako`,
+      subject: `${banned == 1 ? 'Você foi banido' : 'Você foi desbanido'} - ${process.env.NAME}`,
       html: generateHtmlEmail(username, banned)
     };
   

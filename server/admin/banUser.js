@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+require('dotenv').config();
 const {enviarEmailBanned} = require('../helpers/enviar_email');
 
 const generateHtmlEmail = (username, banned) => {
@@ -51,7 +51,7 @@ const generateHtmlEmail = (username, banned) => {
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                               <tbody>
                                 <tr>
-                                  <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px; line-height:22px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-top:20px; padding-bottom:20px; color:#f1f1f1">Atenciosamente, <br aria-hidden="true">A equipe da Baimless </td>
+                                  <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px; line-height:22px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; padding-top:20px; padding-bottom:20px; color:#f1f1f1">Atenciosamente, <br aria-hidden="true">A equipe da ${process.env.NAME} </td>
                                 </tr>
                               </tbody>
                             </table>

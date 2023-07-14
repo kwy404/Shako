@@ -1,6 +1,6 @@
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
 const {enviarEmail} = require('../helpers/enviar_email');
+require('dotenv').config();
 
 const generateHtmlEmail = (username, code) => {
   return `<table width="100%" border="0" cellspacing="0" cellpadding="0" 
@@ -18,7 +18,7 @@ const generateHtmlEmail = (username, code) => {
            <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tbody>
                  <tr>
-                    <td class="x_text-18 x_c-grey4 x_pb-30" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:30px">Aqui está o código do Shako exigido para iniciar a sessão com a conta ${username}:</td>
+                    <td class="x_text-18 x_c-grey4 x_pb-30" style="font-size:18px; line-height:25px; font-family:Arial,sans-serif,'Motiva Sans'; text-align:left; color:#dbdbdb; padding-bottom:30px">Aqui está o código do ${process.env.NAME} exigido para iniciar a sessão com a conta ${username}:</td>
                  </tr>
               </tbody>
            </table>
@@ -66,7 +66,7 @@ const generateHtmlEmail = (username, code) => {
                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                       <tbody>
                                          <tr>
-                                            <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px;line-height:22px;font-family:Arial,sans-serif,'Motiva Sans';text-align:left;padding-top:20px;padding-bottom:20px;color:#f1f1f1;">Atenciosamente,<br aria-hidden="true">A equipe do <span data-markjs="true" class="marklg6kiz2p7" data-ogac="" data-ogab="" data-ogsc="" data-ogsb="">Shako</span> </td>
+                                            <td class="x_text-16 x_py-20 x_c-grey4 x_fallback-font" style="font-size:16px;line-height:22px;font-family:Arial,sans-serif,'Motiva Sans';text-align:left;padding-top:20px;padding-bottom:20px;color:#f1f1f1;">Atenciosamente,<br aria-hidden="true">A equipe do <span data-markjs="true" class="marklg6kiz2p7" data-ogac="" data-ogab="" data-ogsc="" data-ogsb="">${process.env.NAME}</span> </td>
                                          </tr>
                                       </tbody>
                                    </table>
@@ -269,7 +269,7 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
               })
           );
           // Chame a função para enviar o e-mail
-          enviarEmail({username, email, code_ativacao, subject: 'Código de ativação - Shako'}).catch(console.error);
+          enviarEmail({username, email, code_ativacao, subject: `Código de ativação - ${process.env.NAME}`}, generateHtmlEmail).catch(console.error);
       })
     } else {
       ws.send(
