@@ -79,17 +79,16 @@ function Dashboard({ user, isProfile }: any) {
                     <Header user={user} emited={emited} socket={socket} />
                 </>
             )}
-        {params?.username && params?.discrimination ? <>
-                <div className="container">
-                    <div className="center">
-                       <Left>
-                       </Left>
-                       <Profile params={params} socket={socket} emited={emited} user={user}/>
+            {params?.username && params?.discrimination ? <>
+                    <div className="container">
+                        <div className="center">
+                        <Left>
+                        </Left>
+                        <Profile params={params} socket={socket} emited={emited} user={user}/>
+                        </div>
                     </div>
-                </div>
             </> : <>
             {user?.username && <>
-                
                 <div className="container">
                     <div className="center">
                         <Left>
