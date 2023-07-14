@@ -66,7 +66,9 @@ function Header({ user, emited, socket }: Props) {
                     <input
                     onBlur={(e) => {
                         (e.target as any).value = ""
-                        setSearchFound({users: []})
+                        setTimeout(() => {
+                            setSearchFound({users: []})
+                        }, 200)
                     }}
                     onKeyUp={(e) => {
                         if (!socket) {
