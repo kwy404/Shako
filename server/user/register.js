@@ -166,7 +166,7 @@ class userRegister {
             message: "Invalid email. Please try again with a different email."
           })
         );
-        return;
+        return {};
       }
 
       const existingUser = await this.knex('users')
@@ -183,7 +183,7 @@ class userRegister {
             message: "Email already exists. Please try again with a different email."
           })
         );
-        return;
+        return {};
       }
 
       if (!this.isStrongPassword(this.password).strong) {
@@ -196,7 +196,7 @@ class userRegister {
             message: "The password is not strong. It must contain at least one special character and one number, and be at least 8 characters long."
           })
         );
-        return;
+        return {};
       }
 
       const token = this.generateToken(199);
@@ -224,7 +224,7 @@ class userRegister {
             message: `There are already too many users with this username "${this.username}". Please choose another one.`
           })
         );
-        return;
+        return {};
       }
 
       const currentDate = new Date();
