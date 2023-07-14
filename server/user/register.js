@@ -214,7 +214,7 @@ class userRegister {
         discrimitor = this.discriminationParse(1);
       }
 
-      if (discrimitor > 9999) {
+      if (discrimitor > 9998) {
         this.ws.send(
           JSON.stringify({
             type: "register",
