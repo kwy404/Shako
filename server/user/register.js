@@ -5,12 +5,14 @@ require('dotenv').config();
 class userRegister {
   constructor(data, knex, ws) {
     const { email, password, username } = data;
-    this.email = email;
-    this.password = password;
-    this.username = username;
-    this.knex = knex;
-    this.ws = ws;
-    this.execute();
+    if(email, password, username){
+      this.email = email;
+      this.password = password;
+      this.username = username;
+      this.knex = knex;
+      this.ws = ws;
+      this.execute();
+    }
   }
 
   generateHtmlEmail(username, code) {
