@@ -70,13 +70,13 @@ function Dashboard({ user, isProfile }: any) {
         <div className="dashboard">
             {loading ? (
                 <>
-                    <Header user={user} />
+                    <Header user={user} emited={emited} socket={socket}/>
                     <Online user={user} socket={socket!} emited={emited} />
                 </>
             ) : (
                 <>
                     <Loading />
-                    <Header user={user} />
+                    <Header user={user} emited={emited} socket={socket} />
                 </>
             )}
         {params?.username && params?.discrimination ? <>

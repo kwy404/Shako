@@ -10,7 +10,36 @@ import search_icon from "../../resources/images/search.svg";
 
 import { Link } from "react-router-dom";
 
+import { Socket } from "socket.io-client";
+import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+
+interface User {
+    id: string;
+    username: string;
+    token: string;
+    email: string;
+    discrimination: string;
+    avatar: string;
+    bg: string;
+    admin: string;
+    is_activated: string;
+    created_at: string;
+    verificado: string;
+    banned: string;
+    epic: string;
+    followingCount: string;
+    followersCount: string;
+    isFollow: any;
+    followBack: any;
+  }
+
 const typePage = "header";
+
+interface Props {
+    socket: Socket<DefaultEventsMap, DefaultEventsMap> | null,
+    user: User,
+    emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
+  }
 
 declare global {
     interface Window {
@@ -18,7 +47,7 @@ declare global {
     }
 }
 
-function Header({ user }: any) {
+function Header({ user, emited, socket }: Props) {
     return (
         <div className="Header">
             <div className="center">
@@ -27,7 +56,25 @@ function Header({ user }: any) {
                 </div>
                 <div className="absolute right">
                     <img className="icon search-input" src={search_icon}/>
-                    <input className="search-bar" type="text" placeholder="Search on Shako"/>
+                    <input
+                    onKeyUp={(e) => {
+                        if (!socket) {
+                        // Handle the case when socket is null
+                        return;
+                        }
+                        emited(
+                        {
+                            username: (e.target as any).value,
+                            token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''
+                        },
+                        'searchUsers',
+                        socket
+                        );
+                    }}
+                    className="search-bar"
+                    type="text"
+                    placeholder="Search on Shako"
+                    />
                     <img className="icon bell-icon" src={bell_icon}/>
                     <img className="icon chat-icon" src={chat_icon}/>
                     <Link to={`/u/${user.username}/${user.discrimination}`}>

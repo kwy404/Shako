@@ -2,6 +2,7 @@ const {connected, getOtherUsersChat, ping} = require('../user/validationToken');
 const {getUserProfile} = require('../user/profile');
 const {banUser} = require('../admin/banUser');
 const {followUser} = require("../user/follower");
+const {searchUsers} = require('../user/search');
 
 const dashboard = async (socket, knex, io) => {
     const socket_id = socket.id
@@ -32,7 +33,8 @@ const types = {
   'ping': ping,
   'getProfile': getUserProfile,
   'banUser': banUser,
-  'follow': followUser
+  'follow': followUser,
+  'searchUsers': searchUsers
 }
 
 module.exports = {dashboard}
