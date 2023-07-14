@@ -11,6 +11,7 @@ import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
+import LandingPage from './pages/LandingPage';
 
 const ws = new WebSocket('ws://localhost:9005/ws/login')
 
@@ -150,15 +151,7 @@ const stringy = (json: object) => {
             )}
           </Route>
           <Route path="/" exact>
-            {user.id ? (
-              user.is_activated === '1' ? (
-                <Dashboard isProfile={false} user={user} />
-              ) : (
-                <Ativar user={user} setLogged={setLogged} />
-              )
-            ) : (
-              <Login registerSucess={false} setLogged={setLogged} />
-            )}
+            <LandingPage />
           </Route>
           <Route>
             <Redirect to="/" />
