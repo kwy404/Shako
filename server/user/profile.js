@@ -29,7 +29,7 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                       })
                       return {};
                     } else if(rows[0].private == 1){
-                      if(`${myProfile[0].username}#${myProfile[0].discrimination}` != `${rows[0].username}#${rows[0].discrimination}` && myProfile[0].admin == 0){
+                      if(myProfile[0].id != rows[0].id && myProfile[0].admin == 0){
                         io.emit('profile', {
                           type: "profile",
                           user: rows[0],

@@ -258,8 +258,8 @@ function Profile({ user, emited, params, socket }: Props) {
               </svg>
               Joined {convertDate(profile.created_at)}
               <br></br>
-              <p className="followers"><span className="count">{profile?.followingCount}</span> <span>Following</span></p>
-              <p className="followers"><span className="count">{profile?.followersCount}</span> <span>Followers</span></p>
+              <p className="followers"><span className="count">{profile?.followingCount ? profile?.followingCount : '0'}</span> <span>Following</span></p>
+              <p className="followers"><span className="count">{profile?.followersCount ? profile?.followersCount : '0'}</span> <span>Followers</span></p>
             </h3>
           )}
           {!found && (
