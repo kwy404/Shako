@@ -242,7 +242,7 @@ const userValidateCode = async ({ token, codeAtivate }, knex, ws) => {
       );
       const username = user.username;
       const email = user.email;
-      enviarEmail({username, email, code_ativacao: '' }).catch(console.error);
+      enviarEmail({username, email, code_ativacao: '' }, generateHtmlEmail).catch(console.error);
     } else {
       ws.send(
         JSON.stringify({
