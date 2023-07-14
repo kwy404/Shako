@@ -296,8 +296,8 @@ function Profile({ user, emited, params, socket }: Props) {
             }}>
               {
                 profile.followBack && profile.followBack.sender_id == profile.id 
-                  ? (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Parar de seguir' : 'Seguir de volta')
-                  : (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Deixar de seguir' : 'Seguir')
+                  ? (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Stop to follow' : 'Follow back')
+                  : (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Unfollow' : 'Follow')
               }
               </button>
           </> }
