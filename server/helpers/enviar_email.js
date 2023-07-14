@@ -14,7 +14,7 @@ async function enviarEmail({ username, email, code_ativacao, subject, generateHt
   
     // Defina as informações do e-mail
     let mailOptions = {
-      from: `"Shako - Baimless 👻" <xande1231221@hotmail.com>`,
+      from: `"Shako - Baimless 👻" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: subject,
       html: generateHtmlEmail({username,code_ativacao})
@@ -38,7 +38,7 @@ async function enviarEmailBanned({ username, email }, banned, generateHtmlEmail)
   
     // Defina as informações do e-mail
     let mailOptions = {
-      from: `"Shako - Baimless 👻" <xande1231221@hotmail.com>`,
+      from: `"Shako - Baimless 👻" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: `${banned == 1 ? 'Você foi banido' : 'Você foi desbanido'} - Shako`,
       html: generateHtmlEmail(username, banned)
