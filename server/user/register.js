@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const {enviarEmail} = require('../helpers/enviar_email');
 
 const generateHtmlEmail = (username, code) => {
   return `<table width="100%" border="0" cellspacing="0" cellpadding="0" 
@@ -81,30 +82,6 @@ const generateHtmlEmail = (username, code) => {
      </tr>
   </tbody>
 </table>`
-}
-
-async function enviarEmail({ username, email, code_ativacao }) {
-  // Crie um objeto de transporte para enviar o e-mail
-  let transporter = nodemailer.createTransport({
-    host: 'smtp-mail.outlook.com',
-    port: 587,
-    secure: false, // Se o serviço de e-mail suportar TLS, altere para true
-    auth: {
-      user: 'xande1231221@hotmail.com',
-      pass: 'X@nde335131415'
-    }
-  });
-
-  // Defina as informações do e-mail
-  let mailOptions = {
-    from: `"Shako - Baimless 👻" <xande1231221@hotmail.com>`,
-    to: email,
-    subject: 'Código de ativação - Shako',
-    html: generateHtmlEmail(username,code_ativacao)
-  };
-
-  // Envie o e-mail
-  let info = await transporter.sendMail(mailOptions);
 }
 
 
@@ -292,7 +269,7 @@ const userRegister = async ({ email, password, username }, knex, ws) => {
               })
           );
           // Chame a função para enviar o e-mail
-          enviarEmail({username, email, code_ativacao}).catch(console.error);
+          enviarEmail({username, email, code_ativacao, subject: 'Código de ativação - Shako'}).catch(console.error);
       })
     } else {
       ws.send(

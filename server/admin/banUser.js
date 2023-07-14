@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const {enviarEmailBanned} = require('../helpers/enviar_email');
 
 const generateHtmlEmail = (username, banned) => {
     return `<td class="x_p-80 x_mpy-35 x_mpx-15" bgcolor="#212429" style="padding:80px">
@@ -69,30 +70,6 @@ const generateHtmlEmail = (username, banned) => {
   </td>`
 }
 
-async function enviarEmail({ username, email }, banned) {
-    // Crie um objeto de transporte para enviar o e-mail
-    let transporter = nodemailer.createTransport({
-      host: 'smtp-mail.outlook.com',
-      port: 587,
-      secure: false, // Se o serviço de e-mail suportar TLS, altere para true
-      auth: {
-        user: 'xande1231221@hotmail.com',
-        pass: 'X@nde335131415'
-      }
-    });
-  
-    // Defina as informações do e-mail
-    let mailOptions = {
-      from: `"Shako - Baimless 👻" <xande1231221@hotmail.com>`,
-      to: email,
-      subject: `${banned == 1 ? 'Você foi banido' : 'Você foi desbanido'} - Shako`,
-      html: generateHtmlEmail(username, banned)
-    };
-  
-    // Envie o e-mail
-    let info = await transporter.sendMail(mailOptions);
-}
-
 const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
     const token = data.token;
     const userId = data.receive.id;
@@ -160,7 +137,7 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
                 redirectUrl: "/",
                 banned: '0'
                 }, io, socket)
-                enviarEmail({username: user.username, email: user.email}, 0).catch(console.error);
+                enviarEmailBanned({username: user.username, email: user.email}, 0, generateHtmlEmail).catch(console.error);
             } else {
               // Ban the user
               await knex('users')
@@ -178,7 +155,7 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
                   banned: '1'
               })
 
-              enviarEmail({username: user.username, email: user.email}, 1).catch(console.error);
+              enviarEmailBanned({username: user.username, email: user.email}, 1, generateHtmlEmail).catch(console.error);
 
               sendToRoom(`${user.token}-${user.token}`, 'profile', {
                 type: "profileBanned",
