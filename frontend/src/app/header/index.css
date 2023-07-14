@@ -162,3 +162,54 @@
     filter: contrast(-0) drop-shadow(2px 4px 6px black);
     transform: scale(0.84);
 }
+
+.foundUsers{
+    width: 480px;
+    height: fit-content;
+    background: #010108;
+    position: absolute;
+    left: -380px;
+    display: flex;
+    box-shadow: 2px 2px 10px 0px #030303;
+    border: 1px solid #2f3336;
+    border-top: 1px solid transparent;
+}
+
+.foundUsers a{
+    text-decoration: none;
+    position: relative;
+    width: 100%;
+}
+
+.foundUsers li{
+    position: relative;
+    width: calc(100% - 20px);
+    height: 40px;
+    padding: 10px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.foundUsers li:hover{
+    background-color: rgba(255,255,255,0.1);
+}
+
+.foundUsers li .avatar{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.foundUsers li span{
+    top: -19px;
+    position: relative;
+    left: 10px;
+}
+
+.foundUsers li .badge--profile{
+    width: 20px !important;
+    height: 20px !important;
+    position: relative;
+    top: -14px;
+    left: 10px;
+}
