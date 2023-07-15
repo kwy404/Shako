@@ -128,7 +128,7 @@ function Header({ user, emited, socket }: Props) {
                     <Link to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
                         <div className="profile">
                             <img className="icon expand" src={expand_icon}/>
-                            <img className="avatar" src="https://www.redditstatic.com/avatars/avatar_default_12_545452.png"/>
+                            <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
                             <span className="username">{user.username}
                             <span className="discrimination">#{user.discrimination}</span>
                             </span>
