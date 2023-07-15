@@ -2,8 +2,9 @@ const {calcularExpProximoNivel} = require('./exp');
 
 const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
     const token = data.token;
-    const {username, discrimination} = data.receive;
-    if(username && discrimination && token){
+    const {username, discrimination, user_id} = data.receive;
+    console.log(username, discrimination, user_id)
+    if(username && discrimination && token && user_id){
         knex('users').where({
           token: token
           }).select('*').then(async function(myProfile) {
@@ -12,7 +13,8 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                 try {
                   const rows = await knex('users').where({
                     username: username,
-                    discrimination: discrimination
+                    discrimination: discrimination,
+                    id: user_id
                   }).select('*');
                   if (rows.length > 0) {
                     rows[0].password = undefined;

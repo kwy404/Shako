@@ -150,7 +150,7 @@ const stringy = (json: object) => {
               <Login registerSucess={true} setLogged={setLogged} />
             )}
           </Route>
-          <Route path="/u/:username/:discrimination" exact>
+          <Route path="/u/:username/:discrimination/:user_id" exact>
             {user.id ? (
               user.is_activated == '1' ? (
                 <Dashboard isProfile={true} user={user} />

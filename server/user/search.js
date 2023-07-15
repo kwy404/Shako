@@ -12,7 +12,7 @@ const searchUsers = async (data, knex, io, socket, sendToRoom, receive) => {
         if (username) {
           try {
             const users = await knex('users')
-              .select('username', 'discrimination', 'nivel', 'lumis', 'epic', 'verificado', 'admin', 'avatar')
+              .select('username', 'discrimination', 'nivel', 'lumis', 'epic', 'verificado', 'admin', 'avatar', 'id')
               .where('username', 'like', `%${username}%`)
               .whereNot('id', myId) // Exclua o seu perfil da lista
               .orderBy('discrimination', 'asc')

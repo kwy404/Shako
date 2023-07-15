@@ -99,7 +99,8 @@ function Profile({ user, emited, params, socket }: Props) {
         // Handle the case when socket is null
         return;
       }
-      emited({ username: params.username, discrimination: params.discrimination, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
+      console.log(params.user_id)
+      emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
     }
   }, [user, location.pathname, params, socket, emited]);
   

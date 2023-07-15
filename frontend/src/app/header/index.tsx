@@ -90,7 +90,7 @@ function Header({ user, emited, socket }: Props) {
                     />
                     { searchFound.users.length > 0 && <div className="foundUsers">
                         { searchFound?.users.length > 0 && searchFound?.users.map((user => (
-                            <Link to={`/u/${user.username}/${user.discrimination}`}>
+                            <Link to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
                                 <li key={user.id}>
                                     <img className="avatar" src="https://www.redditstatic.com/avatars/avatar_default_12_545452.png"/>
                                     <span className="username">{user?.username}</span>
@@ -125,7 +125,7 @@ function Header({ user, emited, socket }: Props) {
                     </div> }
                     <img className="icon bell-icon" src={bell_icon}/>
                     <img className="icon chat-icon" src={chat_icon}/>
-                    <Link to={`/u/${user.username}/${user.discrimination}`}>
+                    <Link to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
                         <div className="profile">
                             <img className="icon expand" src={expand_icon}/>
                             <img className="avatar" src="https://www.redditstatic.com/avatars/avatar_default_12_545452.png"/>
