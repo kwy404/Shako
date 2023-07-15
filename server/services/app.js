@@ -8,10 +8,20 @@ const {knex} = require('../migrations');
 const port = process.env.PORT || 9010;
 
 //initialize a http server
+const serverWSS = http.createServer(app);
+
+//initialize a http server
 const server = http.createServer(app);
 
 //initialize the WebSocket server instance
 const wss = new WebSocket.Server({ server });
+
+const io = require('socket.io')(serverWSS, {
+  cors: {
+    origin: '*',
+  }
+});
+
 
 wss.on("connection", ws => {
   ws.on("message", msg => {

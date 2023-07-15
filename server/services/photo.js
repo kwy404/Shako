@@ -75,6 +75,8 @@ const upload = multer({ dest: 'temp/' });
 
 // Rota para lidar com o upload de arquivos
 app.post('/uploadAvatar', upload.single('photo'), handleUpload);
+// Rota para lidar com o upload de arquivos
+app.post('/uploadCover', upload.single('photo'), handleUpload);
 
 // Função para verificar se o token é válido
 async function verifyToken(token) {
