@@ -18,7 +18,7 @@ declare global {
 
 let socket: Socket | null = null;
 
-function Dashboard({ user, isProfile }: any) {
+function Dashboard({ user, isProfile, setUser }: any) {
     const params = useParams<{ username?: string; discrimination?: string }>();
     const [loading, setLoading] = useState(false);
     const initialMount = useRef(true);
@@ -70,13 +70,13 @@ function Dashboard({ user, isProfile }: any) {
         <div className="dashboard">
             {loading ? (
                 <>
-                    <Header user={user} emited={emited} socket={socket}/>
+                    <Header user={user} emited={emited} setUser={() => {}} socket={socket}/>
                     <Online user={user} socket={socket!} emited={emited} />
                 </>
             ) : (
                 <>
                     <Loading />
-                    <Header user={user} emited={emited} socket={socket} />
+                    <Header user={user} emited={emited} setUser={() => {}}  socket={socket} />
                 </>
             )}
             {params?.username && params?.discrimination ? <>
@@ -84,7 +84,7 @@ function Dashboard({ user, isProfile }: any) {
                         <div className="center">
                         <Left>
                         </Left>
-                        <Profile params={params} socket={socket} emited={emited} user={user}/>
+                        <Profile setUser={setUser} params={params} socket={socket} emited={emited} user={user}/>
                         </div>
                     </div>
             </> : <>

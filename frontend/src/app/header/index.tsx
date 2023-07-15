@@ -42,6 +42,7 @@ interface Props {
     socket: Socket<DefaultEventsMap, DefaultEventsMap> | null,
     user: User,
     emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
+    setUser: (data: any) => void,
   }
 
 declare global {
@@ -50,7 +51,7 @@ declare global {
     }
 }
 
-function Header({ user, emited, socket }: Props) {
+function Header({ user, emited, socket, setUser }: Props) {
     const [searchFound, setSearchFound] = useState<{ users: User[] }>({ users: [] });
     socket?.on('search', (found: any) => {
         setSearchFound(found);

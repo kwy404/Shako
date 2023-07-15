@@ -109,7 +109,7 @@ const stringy = (json: object) => {
           <Route path="/login" exact>
             {user.id ? (
               user.is_activated === '1' ? (
-                <Dashboard isProfile={false} user={user} />
+                <Dashboard isProfile={false} setUser={setUser} user={user} />
               ) : (
                 <Ativar user={user} setLogged={setLogged} />
               )
@@ -120,7 +120,7 @@ const stringy = (json: object) => {
           <Route path="/dashboard" exact>
             {user.id ? (
               user.is_activated === '1' ? (
-                <Dashboard isProfile={false} user={user} />
+                <Dashboard isProfile={false} setUser={setUser} user={user} />
               ) : (
                 <Ativar user={user} setLogged={setLogged} />
               )
@@ -131,7 +131,7 @@ const stringy = (json: object) => {
           <Route path="/register" exact>
           {user.id ? (
               user.is_activated === '1' ? (
-                <Dashboard isProfile={false} user={user} />
+                <Dashboard isProfile={false} setUser={setUser} user={user} />
               ) : (
                 <Ativar user={user} setLogged={setLogged} />
               )
@@ -142,7 +142,7 @@ const stringy = (json: object) => {
           <Route path="/registerSuccessfully" exact>
             {user.id ? (
               user.is_activated === '1' ? (
-                <Dashboard isProfile={false} user={user} />
+                <Dashboard isProfile={false} setUser={setUser} user={user} />
               ) : (
                 <Ativar user={user} setLogged={setLogged} />
               )
@@ -153,7 +153,7 @@ const stringy = (json: object) => {
           <Route path="/u/:username/:discrimination/:user_id" exact>
             {user.id ? (
               user.is_activated == '1' ? (
-                <Dashboard isProfile={true} user={user} />
+                <Dashboard isProfile={true} setUser={setUser} user={user} />
               ) : (
                 <Ativar user={user} setLogged={setLogged} />
               )

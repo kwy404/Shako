@@ -45,6 +45,7 @@ interface Props {
   socket: Socket<DefaultEventsMap, DefaultEventsMap> | null,
   user: User,
   emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
+  setUser: (data: any) => void,
   params: any
 }
 
@@ -69,7 +70,7 @@ function convertDate(dateString: string) {
   return `${monthString} ${year}`;
 }
 
-function Profile({ user, emited, params, socket }: Props) {
+function Profile({ user, emited, params, socket, setUser }: Props) {
   const location = useLocation();
   const [messageError, setMessageError] = useState("");
   const [profile, setProfile] = useState<User>({
@@ -198,6 +199,14 @@ function Profile({ user, emited, params, socket }: Props) {
           'Content-Type': 'multipart/form-data',
         },
       });
+      if(response.data.avatar){
+        const oldProfile = {...profile};
+        oldProfile.avatar = response.data.avatar;
+        setProfile(oldProfile);
+        const oldUser = {...user};
+        oldUser.avatar = response.data.avatar;
+        setUser(oldUser);
+      }
     } catch (error) {
       // console.error(error);
     }
