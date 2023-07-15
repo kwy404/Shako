@@ -7,6 +7,7 @@ import adminBadge from "../../resources/images/admin.png";
 import banHammer from "../../resources/images/ban-hammer.png";
 import nitroBadge from "../../resources/images/nitro_badge.webp";
 import { Tooltip } from '@mui/material';
+import axios from 'axios';
 
 const typePage = "profile";
 
@@ -99,7 +100,6 @@ function Profile({ user, emited, params, socket }: Props) {
         // Handle the case when socket is null
         return;
       }
-      console.log(params.user_id)
       emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
     }
   }, [user, location.pathname, params, socket, emited]);
@@ -172,6 +172,36 @@ function Profile({ user, emited, params, socket }: Props) {
       }
     }
   });
+
+  const handleFileChangeAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      changeAvatar(event.target.files[0]);
+    }
+  };
+
+  const changeAvatar = async (selectedFile: File | null) => {
+    const token = window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '';
+    if (!selectedFile || !token) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('photo', selectedFile);
+    formData.append('token', token);
+    
+
+    try {
+      const response = await axios.post('http://localhost:7500/uploadAvatar', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <Helmet>
@@ -200,7 +230,13 @@ function Profile({ user, emited, params, socket }: Props) {
         <div className="background">
           <div className="transparent"></div>
           <img className="cover" src="https://images.hdqwalls.com/wallpapers/reddit-cartoon-4k-io.jpg" alt="Cover" />
-          <img className="avatar" src="https://www.redditstatic.com/avatars/avatar_default_12_545452.png" alt="Avatar" />
+          <form>
+            <img className="avatar" src={`${profile?.avatar ? profile?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />
+            <div className="changeAvatar-photo">
+              <label htmlFor="file">Foto:</label>
+              <input style={{display: 'none'}} type="file" id="file" accept="image/*" onChange={handleFileChangeAvatar} />
+            </div>
+          </form>
         </div>
         <div className="info">
           <h3>

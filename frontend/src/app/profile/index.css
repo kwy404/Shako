@@ -208,3 +208,10 @@
     margin-left: 2px;
     margin-right: 5px;
 }
+
+.changeAvatar-photo{
+    position: absolute;
+    z-index: 190;
+    background-color: black;
+    top: 240px;
+}
