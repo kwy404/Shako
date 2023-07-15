@@ -1,10 +1,11 @@
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '.env' });
 
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
+
 const knex = require('knex')({
   client: 'mysql',
   connection: {
@@ -82,7 +83,9 @@ app.post('/uploadCover', upload.single('photo'), handleUpload);
 async function verifyToken(token) {
   try {
     const user = await knex('users').where('token', token).first();
-    return !!user;
+    if(user.id){
+        return true;
+    }
   } catch (error) {
     console.log(error);
     return false;
