@@ -230,8 +230,8 @@ function Profile({ user, emited, params, socket }: Props) {
         <div className="background">
           <div className="transparent"></div>
           <img className="cover" src="https://images.hdqwalls.com/wallpapers/reddit-cartoon-4k-io.jpg" alt="Cover" />
+          <img className="avatar" src={`${profile?.avatar ? profile?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />
           { profile.id == user.id && <form>
-            <img className="avatar" src={`${profile?.avatar ? profile?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />
             <div className="changeAvatar-photo">
               <label htmlFor="file">Foto:</label>
               <input style={{display: 'none'}} type="file" id="file" accept="image/*" onChange={handleFileChangeAvatar} />
