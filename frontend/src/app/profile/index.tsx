@@ -168,7 +168,9 @@ function Profile({ user, emited, params, socket }: Props) {
           // Handle the case when socket is null
           return;
         }
-        emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
+        setTimeout(() => {
+          emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
+        }, 1000)
       }
     }
   });
@@ -196,10 +198,8 @@ function Profile({ user, emited, params, socket }: Props) {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      console.log(response.data);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
   return (
