@@ -168,7 +168,7 @@ function Profile({ user, emited, params, socket }: Props) {
           // Handle the case when socket is null
           return;
         }
-        emited({ username: params.username, discrimination: params.discrimination, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
+        emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
       }
     }
   });
@@ -176,8 +176,8 @@ function Profile({ user, emited, params, socket }: Props) {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`${params?.username} (u/${params?.username}/${params?.discrimination} - Shako)`}</title>
-        <meta property="og:title" content={`${params?.username}#${params?.discrimination} - Shako`} />
+        <title>{`${params?.username} (u/${params?.username}/${params?.discrimination}/${params?.user_id}) - Shako`}</title>
+        <meta property="og:title" content={`${params?.username}#${params?.discrimination}/${params?.user_id}) - Shako`} />
       </Helmet>
       <div className="Profile">
         <div className="Header-Profile blur"/>
