@@ -160,7 +160,6 @@ function Dashboard({ user, isProfile, setUser }: any) {
                         <div className="Profile fullScreen">
                             <div className="feed">
                                 <h1>Home</h1>
-                                <h1>Conectar via Spofiy</h1>
                             </div>
                         </div>
                     </div>
