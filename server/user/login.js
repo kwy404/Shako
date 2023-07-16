@@ -89,6 +89,9 @@ class userLogin {
         .count('receiver_id as count')
         .first();
 
+      if(typeof rows[0].spotify_object == 'object'){
+        rows[0].spotify_object = JSON.parse(rows[0].spotify_object);
+      }
       rows[0].followers = followersWithFollowMe;
       rows[0].followersCount = followersCount.count || 0;
       rows[0].followingCount = followingCount.count || 0;

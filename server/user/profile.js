@@ -1,5 +1,14 @@
 const {calcularExpProximoNivel} = require('./exp');
 
+function isValidJson(jsonString) {
+  try {
+    JSON.parse(jsonString);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
     const token = data.token;
     const {username, discrimination, user_id} = data.receive;
@@ -21,10 +30,10 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                     rows[0].exp_to_next_level = calcularExpProximoNivel(rows[0].nivel + 1);
                     rows[0].token = undefined;
                     rows[0].spotify = undefined;
-                    try {
+                    if (isValidJson(rows[0].spotify_object)) {
                       rows[0].spotify_object = JSON.parse(rows[0].spotify_object);
-                    } catch (error) {
-                      
+                    } else{
+                      rows[0].spotify_object = {}
                     }
                     if(rows[0].banned == 1 && myProfile[0].admin == 0){
                       io.emit('profile', {

@@ -224,6 +224,10 @@ const userValidateCode = async ({ token, codeAtivate }, knex, ws) => {
     if (rows.length > 0 && rows[0].code_activate === codeAtivate) {
       const user = rows[0];
       user.password = undefined;
+      
+      if(typeof rows[0].spotify_object == 'object'){
+        user.spotify_object = JSON.parse(user.spotify_object);
+      }
 
       await knex('users')
         .where({ token: token, code_activate: codeAtivate })

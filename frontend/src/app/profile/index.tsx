@@ -111,9 +111,9 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
       }
       setTimeout(() => {
         emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
-      }, 1000)
+      }, 500)
     }
-  }, [user, location.pathname, params, socket, emited, url]);
+  }, [user, location.pathname, params, socket, emited]);
   
 
   useEffect(() => {
@@ -333,15 +333,17 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           </>
           )}
            { found && user.id == profile.id && <>
-            {user?.spotify && user?.spotify.trim().length == 0 ? <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=dcbdff61d5a443afaba5b0b242893915&scope=user-read-currently-playing%20user-read-playback-state&redirect_uri=http://localhost:5173/spotify">
+            {user?.spotify && user?.spotify.trim().length > 0 ?
               <button 
               className="banned_button spotify_button">
                 <img src={spotify}/>
                 {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>
-            </a> : <button 
+             : <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=dcbdff61d5a443afaba5b0b242893915&scope=user-read-currently-playing%20user-read-playback-state&redirect_uri=http://localhost:5173/spotify">
+              <button 
               className="banned_button spotify_button">
                 <img src={spotify}/>
-                {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>}
+                {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>
+            </a>}
           </> }
           { found && user.admin == '1' && user.id != profile.id && <>
             <button 
