@@ -3,12 +3,13 @@
     width: 240px;
     height: 260px;
     position: absolute;
-    top: 80px;
+    top: 75px;
     left: 20px;
     border-radius: 5px;
     box-shadow: 2px 6px 7px 7px rgb(0 0 0 / 58%);
     z-index: 50px;
     z-index: 200;
+    padding: 5px;
 }
 
 .spotify_card .avatar{
@@ -20,7 +21,7 @@
 
 .spotify_card .subCard{
     position: absolute;
-    width: 100%;
+    width: calc(100% - 5px);
     height: 120px;
     background-color: #00b441;
     bottom: 0;
