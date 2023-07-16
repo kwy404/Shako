@@ -39,6 +39,87 @@ const updateSpotifyObject = async (currentSong, token) => {
   }
 };
 
+const spotifyCall = async (code, user) => {
+  try {
+    const clientId = 'dcbdff61d5a443afaba5b0b242893915';
+    const clientSecret = 'bc31a0ced0134e95a4e2263e2ab83ba6';
+    const params = new URLSearchParams();
+    params.append('grant_type', 'authorization_code');
+    params.append('code', code);
+    params.append('redirect_uri', 'http://localhost:5173/spotify');
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+      },
+    };
+
+    try {
+      const response = await axios.post('https://accounts.spotify.com/api/token', params, config);
+      console.log('Response:', response.data);
+      const access_token = response.data.access_token
+      const refresh_token = response.data.refresh_token // Obtenha o token de atualização do response
+      if (access_token) {
+        if (!socket) {
+          return;
+        }
+        socket.emit("message", {
+          data: {
+            type: 'spotify',
+            receive: { 'access_token': access_token, 'spotify_refresh_token': refresh_token, 'code': code, token: window.localStorage.getItem("token") }
+          },
+        });
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // O token expirou, então solicite um novo usando o token de atualização
+        const refreshTokenParams = new URLSearchParams();
+        refreshTokenParams.append('grant_type', 'refresh_token');
+        refreshTokenParams.append('refresh_token', user.spotify_refresh_token);
+        refreshTokenParams.append('client_id', clientId);
+
+        try {
+          const refreshTokenResponse = await axios.post('https://accounts.spotify.com/api/token', refreshTokenParams, config);
+          const newAccessToken = refreshTokenResponse.data.access_token;
+          if(!socket){
+            return;
+          }
+          if(user.token && user.access_token && user.spotify_refresh_token, code){
+            try {
+              await knex('users')
+                .where('token', token)
+                .update({ spotify: user.access_token, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code});
+          
+              // 3. Envie uma resposta de sucesso
+              const response = {
+                success: true,
+                message: 'Sucess!',
+              };
+              socket.emit('spotifyResponse', response);
+            } catch (error) {
+                //
+            }
+          }
+
+          // Faça algo com o novo token de acesso
+
+        } catch (refreshTokenError) {
+          //
+        }
+      } else {
+        // Lide com outros erros
+        window.location.search = "error=1";
+        setTimeout(() => {
+          window.location.pathname = "/dashboard";
+        }, 200);
+      }
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};         
+
 // Configuração do Socket.IO
 io.on('connection', socket => {
   // Evento para solicitar o token de acesso do usuário
@@ -93,7 +174,9 @@ io.on('connection', socket => {
           clearInterval(intervalId);
         });
       } catch (error) {
+        const user = await knex('users').where('token', token).first();
         //console.error('Erro ao buscar o token de acesso do usuário:', error);
+        spotifyCall(user.spotify_code, user)
       }
     }
   });
