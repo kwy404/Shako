@@ -219,6 +219,10 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         const oldUser = {...user};
         oldUser.avatar = response.data.avatar;
         setUser(oldUser);
+        if(!socket){
+          return;
+        }
+        emited({}, "connected", socket!);
       }
     } catch (error) {
       // console.error(error);

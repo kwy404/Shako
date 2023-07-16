@@ -77,12 +77,12 @@ io.on('connection', socket => {
             // Envia as informações da música atual para o cliente
             socket.emit('currentSong', currentSong);
           } catch (error) {
-            //console.error('Erro ao obter a música atual:', error);
+            console.error('Erro ao obter a música atual:', error);
           }
         };
 
         // Intervalo para atualizar as informações da música atual
-        const updateInterval = 2000; // Atualiza a cada 5 segundos
+        const updateInterval = 2000; // Atualiza a cada 2 segundos
         const intervalId = setInterval(getCurrentSong, updateInterval);
 
         // Evento de desconexão do cliente

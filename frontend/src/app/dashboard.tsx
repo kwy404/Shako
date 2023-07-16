@@ -104,7 +104,6 @@ function Dashboard({ user, isProfile, setUser }: any) {
                 const access_token = response.data.access_token
                 const refresh_token = response.data.refresh_token // Obtenha o token de atualização do response
                 setRefreshToken(refresh_token)
-          
                 if (access_token) {
                   if (!socket) {
                     return;
@@ -112,7 +111,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
                   socket.emit("message", {
                     data: {
                       type: 'spotify',
-                      receive: { 'access_token': access_token, 'spotify_refresh_token': refresh_token, token: window.localStorage.getItem("token") }
+                      receive: { 'access_token': access_token, 'spotify_refresh_token': refresh_token, 'code': code, token: window.localStorage.getItem("token") }
                     },
                   });
                 }
