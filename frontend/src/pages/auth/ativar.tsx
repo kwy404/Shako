@@ -93,7 +93,7 @@ function Ativar(props: any) {
                       window.localStorage.setItem("token", "")
                       location.reload()
                     }}
-                    to={'/'}
+                    to={'/login'}
                     className="register">Logout</Link>.</p>
                 </div>
               </form>

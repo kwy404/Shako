@@ -3,12 +3,14 @@ import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 import Loading from "./loading";
 import Online from "../ws/ping";
-import { Link, useParams, useLocation } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import Header from "./header";
 import Left from "./left";
 import { io, Socket } from "socket.io-client";
 import Profile from "./profile";
 import { Helmet } from 'react-helmet';
+import { Buffer } from 'buffer';
+import axios from 'axios';
 
 declare global {
     interface Window {
@@ -17,12 +19,13 @@ declare global {
 }
 
 let socket: Socket | null = null;
+let socketSpotfiy: Socket | null = null;
 
 function Dashboard({ user, isProfile, setUser }: any) {
     const params = useParams<{ username?: string; discrimination?: string }>();
     const [loading, setLoading] = useState(false);
     const initialMount = useRef(true);
-
+ 
     useEffect(() => {
         if (!socket) {
             socket = io("localhost:9090");
@@ -66,6 +69,67 @@ function Dashboard({ user, isProfile, setUser }: any) {
         });
     };
 
+    useEffect(() => {
+        socketSpotfiy = io("localhost:4100");
+        setTimeout(() => {
+            emited({}, "connected", socketSpotfiy!);
+        }, 1000);
+
+        socketSpotfiy.on("currentSong", (song: any) => {
+            const oldProfile = {...user};
+            oldProfile.spotify_object = song.current_song;
+            setUser(oldProfile);
+        })
+
+        const spotifyCall = async (code: any) => {
+          try {
+            const clientId = 'dcbdff61d5a443afaba5b0b242893915';
+            const clientSecret = 'bc31a0ced0134e95a4e2263e2ab83ba6';
+            const params = new URLSearchParams();
+            params.append('grant_type', 'authorization_code');
+            params.append('code', code);
+            params.append('redirect_uri', 'http://localhost:5173/spotify');
+    
+            const config = {
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+              },
+            };
+    
+            try {
+              const response = await axios.post('https://accounts.spotify.com/api/token', params, config);
+              console.log('Response:', response.data);
+              const access_token = response.data.access_token
+              if(access_token){
+                if(!socket){
+                    return;
+                }
+                socket.emit("message", {
+                    data: {
+                        type: 'spotify',
+                        receive: {'access_token': access_token, token: window.localStorage.getItem("token")}
+                    },
+                });
+              }
+              // Do something with the access token
+            } catch (error) {
+              // Handle the error
+              window.location.search = "error=1"
+              setTimeout(() => {
+                window.location.pathname = "/dashboard"
+              }, 200)
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        };
+    
+        if(window.location.search.split("code=")[1]){
+            spotifyCall(window.location.search.split("code=")[1]);
+        }
+      }, []);
+
     return (
         <div className="dashboard">
             {loading ? (
@@ -96,6 +160,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
                         <div className="Profile fullScreen">
                             <div className="feed">
                                 <h1>Home</h1>
+                                <h1>Conectar via Spofiy</h1>
                             </div>
                         </div>
                     </div>

@@ -260,7 +260,8 @@ class userRegister {
           nivel: 0,
           code_activate: code_ativacao,
           is_activated: 0,
-          exp: 0
+          exp: 0,
+          spotify: ''
         })
         .then(() => {
           this.ws.send(

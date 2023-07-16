@@ -47,7 +47,7 @@ const TermosDeUso: React.FC<TermosDeUsoProps> = ({ setTermos }) => {
                 onClick={() => setTermos(true)}
                 >Accept</a>
                 <br/>
-                <a className="button button-tertiary" href="/">Back</a>
+                <a className="button button-tertiary" href="/login">Back</a>
             </div>
             </div>
         </div>

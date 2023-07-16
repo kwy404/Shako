@@ -3,6 +3,7 @@ const {getUserProfile} = require('../user/profile');
 const {banUser} = require('../admin/banUser');
 const {followUser} = require("../user/follower");
 const {searchUsers} = require('../user/search');
+const {spotify} = require("../user/spotify");
 
 const dashboard = async (socket, knex, io) => {
     const socket_id = socket.id
@@ -34,7 +35,8 @@ const types = {
   'getProfile': getUserProfile,
   'banUser': banUser,
   'follow': followUser,
-  'searchUsers': searchUsers
+  'searchUsers': searchUsers,
+  'spotify': spotify
 }
 
 module.exports = {dashboard}

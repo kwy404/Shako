@@ -16,6 +16,8 @@
     "@types/axios": "^0.14.0",
     "@types/react-helmet": "^6.1.6",
     "axios": "^1.4.0",
+    "btoa": "^1.2.1",
+    "buffer": "^6.0.3",
     "crypto-js": "^4.1.1",
     "onsenui": "^2.12.8",
     "react": "^18.2.0",
@@ -30,6 +32,7 @@
     "socket.io-client": "^4.5.4"
   },
   "devDependencies": {
+    "@types/btoa": "^1.2.3",
     "@types/crypto-js": "^4.1.1",
     "@types/jest": "^29.2.2",
     "@types/node": "^18.11.9",

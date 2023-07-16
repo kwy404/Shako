@@ -25,6 +25,7 @@ interface User {
   bg: string;
   admin: string;
   is_activated: string;
+  spotify_object: any;
 }
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
     bg: '',
     admin: '',
     is_activated: '1',
+    spotify_object: {name: "", artist: "", album: ""}
   });
 
   useEffect(() => {
@@ -61,6 +63,7 @@ function App() {
               bg: '',
               admin: '',
               is_activated: '1',
+              spotify_object: {name: "", artist: "", album: ""}
             });
           } 
           if(message.type == 'validateToken'){
@@ -93,9 +96,9 @@ function App() {
     };
   }, []); // Empty dependency array to run the effect only once
 
-const stringy = (json: object) => {
-  return JSON.stringify(json)
-}
+  const stringy = (json: object) => {
+    return JSON.stringify(json)
+  }
 
   const setLogged = (user: User) => {
     setUser(user);
@@ -118,6 +121,17 @@ const stringy = (json: object) => {
             )}
           </Route>
           <Route path="/dashboard" exact>
+            {user.id ? (
+              user.is_activated === '1' ? (
+                <Dashboard isProfile={false} setUser={setUser} user={user} />
+              ) : (
+                <Ativar user={user} setLogged={setLogged} />
+              )
+            ) : (
+              <Login registerSucess={false} setLogged={setLogged} />
+            )}
+          </Route>
+          <Route path="/spotify" exact>
             {user.id ? (
               user.is_activated === '1' ? (
                 <Dashboard isProfile={false} setUser={setUser} user={user} />

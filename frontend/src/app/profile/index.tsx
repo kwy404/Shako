@@ -5,9 +5,11 @@ import CryptoJS from "crypto-js";
 import {Helmet} from "react-helmet";
 import adminBadge from "../../resources/images/admin.png";
 import banHammer from "../../resources/images/ban-hammer.png";
+import spotify from "../../resources/images/spotify.png";
 import nitroBadge from "../../resources/images/nitro_badge.webp";
 import { Tooltip } from '@mui/material';
 import axios from 'axios';
+import SpotifyPlayerProfile from './SpotifyPlayerProfile';
 
 const typePage = "profile";
 
@@ -39,6 +41,8 @@ interface User {
   followersCount: string;
   isFollow: any;
   followBack: any;
+  spotify_object: any;
+  spotify: string;
 }
 
 interface Props {
@@ -90,7 +94,9 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
     followingCount: '0',
     followersCount: '0',
     isFollow: '0',
-    followBack: {}
+    followBack: {},
+    spotify_object: {},
+    spotify: ''
   });
   const [found, setFound] = useState(true);
   const [cachedUsers, setCachedUsers] = useState<{ [key: string]: CachedUser }>({});
@@ -151,7 +157,9 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         followingCount: '0',
         followersCount: '0',
         isFollow: '0',
-        followBack: {}
+        followBack: {},
+        spotify_object: {},
+        spotify: ''
       });
       setFound(false);
       setMessageError(receive.message)
@@ -239,10 +247,12 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         <div className="background">
           <div className="transparent"></div>
           <img className="cover" src="https://images.hdqwalls.com/wallpapers/reddit-cartoon-4k-io.jpg" alt="Cover" />
-          <img className="avatar" src={`${profile?.avatar ? profile?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />
+          { profile.spotify_object.isPlaying ? <SpotifyPlayerProfile
+          user={profile}
+          /> :  <img className="avatar" src={`${profile?.avatar ? profile?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />}
           { profile.id == user.id && <form>
-            <div className="changeAvatar-photo">
-              <label htmlFor="file">Foto:</label>
+            <div className={`changeAvatar-photo ${profile.spotify_object.isPlaying ? 'photoSpotify' : 'photoSpotifyNot'}`}>
+              <label className="mudar_foto" htmlFor="file">Alterar foto</label>
               <input style={{display: 'none'}} type="file" id="file" accept="image/*" onChange={handleFileChangeAvatar} />
             </div>
           </form> }
@@ -258,7 +268,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
             )}
             {profile.discrimination ? (
               <>
-                <span className="discrimination">#{profile.discrimination}</span>
+                <span className="discrimination">#{profile.discrimination}</span> 
                 {profile?.verificado === '1' && (
                   <>
                   <Tooltip title="Verified profile.">
@@ -317,6 +327,17 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
               </h1>
           </>
           )}
+           { found && user.id == profile.id && <>
+            {user?.spotify && user?.spotify.trim().length == 0 ? <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=dcbdff61d5a443afaba5b0b242893915&scope=user-read-currently-playing%20user-read-playback-state&redirect_uri=http://localhost:5173/spotify">
+              <button 
+              className="banned_button spotify_button">
+                <img src={spotify}/>
+                {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>
+            </a> : <button 
+              className="banned_button spotify_button">
+                <img src={spotify}/>
+                {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>}
+          </> }
           { found && user.admin == '1' && user.id != profile.id && <>
             <button 
             className="banned_button"
@@ -328,7 +349,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
               emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'banUser', socket);
             }}>
               <img src={banHammer}/>
-              {profile.banned == '1' ? `DESBAN ${profile.username}` : `BAN ${profile.username}`}</button>
+              {profile.banned == '1' ? `Conectado ${profile.username}` : `BAN ${profile.username}`}</button>
           </> }
           { found && user.id != profile.id && <>
             <button 

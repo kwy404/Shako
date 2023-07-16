@@ -22,6 +22,8 @@ const up = async function (knex) {
       table.string("display_name", 255).notNullable();
       table.string("about", 255).notNullable();
       table.string("language", 255).notNullable();
+      table.string("spotify", 255).notNullable();
+      table.text("spotify_object").notNullable();
       table.string("beta", 255).notNullable();
       table.string("banned", 255).notNullable();
       table.string("created_at", 255).notNullable();

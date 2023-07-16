@@ -212,6 +212,40 @@
 .changeAvatar-photo{
     position: absolute;
     z-index: 190;
-    background-color: black;
     top: 240px;
+}
+
+.photoSpotify{
+    top: 180px;
+    left: 25px;
+    width: fit-content;
+}
+
+.mudar_foto:hover{
+    transform: scale(1.05);
+}
+
+.mudar_foto{
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background-color: #eaeaea;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+.photoSpotifyNot{
+    top: 300px;
+    left: 25px;
+    width: fit-content;
+}
+
+.spotify_button{
+    right: 20px;
+    color: #00be44;
 }
