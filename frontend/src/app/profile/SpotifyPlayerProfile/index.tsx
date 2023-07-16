@@ -42,7 +42,8 @@ function SpotifyPlayerProfile({ user }: Props) {
                     <img src={user.spotify_object.album.images[0].url}/>
                 </div>
                 <Tooltip title={user.spotify_object.name}><h1 className="music_name">{user.spotify_object.name}</h1></Tooltip>
-                <h1 className="album_name">by {user.spotify_object.artists[0].name}</h1>
+                
+                <Tooltip title={user.spotify_object.artists[0].name}><h1 className="album_name">by {user.spotify_object.artists[0].name}</h1></Tooltip>
             </div>
         </div>
       </div>
