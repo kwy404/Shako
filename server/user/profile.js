@@ -36,7 +36,7 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                       rows[0].spotify_object = {}
                     }
                     if(rows[0].banned == 1 && myProfile[0].admin == 0){
-                      io.emit('profile', {
+                      socket.emit('profile', {
                         type: "profile",
                         user: rows[0],
                         success: false,
@@ -46,7 +46,7 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                       return {};
                     } else if(rows[0].private == 1){
                       if(myProfile[0].id != rows[0].id && myProfile[0].admin == 0){
-                        io.emit('profile', {
+                        socket.emit('profile', {
                           type: "profile",
                           user: rows[0],
                           success: false,

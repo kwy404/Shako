@@ -20,8 +20,8 @@ const searchUsers = async (data, knex, io, socket, sendToRoom, receive) => {
               .orderBy('lumis', 'desc');
   
             const count = users.length; // Contagem de resultados
-  
-            io.emit('search', {
+
+            socket.emit('search', {
               type: "profile",
               users: users,
               count: count, // Inclui a contagem nos resultados
