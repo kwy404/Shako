@@ -1,9 +1,9 @@
 const spotify = async (data, knex, io, socket, sendToRoom, receive) => {
-    const { token, access_token } = data.receive;
+    const { token, access_token, spotify_refresh_token } = data.receive;
     try {
       await knex('users')
         .where('token', token)
-        .update({ spotify: access_token });
+        .update({ spotify: access_token, spotify_refresh_token: spotify_refresh_token});
   
       // 3. Envie uma resposta de sucesso
       const response = {

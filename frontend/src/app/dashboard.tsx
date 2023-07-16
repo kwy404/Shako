@@ -25,6 +25,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
     const params = useParams<{ username?: string; discrimination?: string }>();
     const [loading, setLoading] = useState(false);
     const initialMount = useRef(true);
+    const [refresh_token_, setRefreshToken] = useState("");
  
     useEffect(() => {
         if (!socket) {
@@ -82,48 +83,81 @@ function Dashboard({ user, isProfile, setUser }: any) {
         })
 
         const spotifyCall = async (code: any) => {
-          try {
-            const clientId = 'dcbdff61d5a443afaba5b0b242893915';
-            const clientSecret = 'bc31a0ced0134e95a4e2263e2ab83ba6';
-            const params = new URLSearchParams();
-            params.append('grant_type', 'authorization_code');
-            params.append('code', code);
-            params.append('redirect_uri', 'http://localhost:5173/spotify');
-    
-            const config = {
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
-              },
-            };
-    
             try {
-              const response = await axios.post('https://accounts.spotify.com/api/token', params, config);
-              console.log('Response:', response.data);
-              const access_token = response.data.access_token
-              if(access_token){
-                if(!socket){
+              const clientId = 'dcbdff61d5a443afaba5b0b242893915';
+              const clientSecret = 'bc31a0ced0134e95a4e2263e2ab83ba6';
+              const params = new URLSearchParams();
+              params.append('grant_type', 'authorization_code');
+              params.append('code', code);
+              params.append('redirect_uri', 'http://localhost:5173/spotify');
+          
+              const config = {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                  Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+                },
+              };
+          
+              try {
+                const response = await axios.post('https://accounts.spotify.com/api/token', params, config);
+                console.log('Response:', response.data);
+                const access_token = response.data.access_token
+                const refresh_token = response.data.refresh_token // Obtenha o token de atualização do response
+                setRefreshToken(refresh_token)
+          
+                if (access_token) {
+                  if (!socket) {
                     return;
-                }
-                socket.emit("message", {
+                  }
+                  socket.emit("message", {
                     data: {
-                        type: 'spotify',
-                        receive: {'access_token': access_token, token: window.localStorage.getItem("token")}
+                      type: 'spotify',
+                      receive: { 'access_token': access_token, 'spotify_refresh_token': refresh_token, token: window.localStorage.getItem("token") }
                     },
-                });
+                  });
+                }
+              } catch (error: any) {
+                if (error.response && error.response.status === 401) {
+                  // O token expirou, então solicite um novo usando o token de atualização
+                  const refreshTokenParams = new URLSearchParams();
+                  refreshTokenParams.append('grant_type', 'refresh_token');
+                  refreshTokenParams.append('refresh_token', user?.spotify_refresh_token);
+                  refreshTokenParams.append('client_id', clientId);
+          
+                  try {
+                    const refreshTokenResponse = await axios.post('https://accounts.spotify.com/api/token', refreshTokenParams, config);
+                    const newAccessToken = refreshTokenResponse.data.access_token;
+                    if(!socket){
+                      return;
+                    }
+                    socket.emit("message", {
+                      data: {
+                        type: 'spotify',
+                        receive: { 'access_token': newAccessToken, 'spotify_refresh_token': user?.spotify_refresh_token, token: window.localStorage.getItem("token") }
+                      },
+                    });
+          
+                    // Faça algo com o novo token de acesso
+          
+                  } catch (refreshTokenError) {
+                    // Lide com o erro ao atualizar o token de acesso
+                    window.location.search = "error=1";
+                    setTimeout(() => {
+                      window.location.pathname = "/dashboard";
+                    }, 200);
+                  }
+                } else {
+                  // Lide com outros erros
+                  window.location.search = "error=1";
+                  setTimeout(() => {
+                    window.location.pathname = "/dashboard";
+                  }, 200);
+                }
               }
-              // Do something with the access token
             } catch (error) {
-              // Handle the error
-              window.location.search = "error=1"
-              setTimeout(() => {
-                window.location.pathname = "/dashboard"
-              }, 200)
+              console.error('Error:', error);
             }
-          } catch (error) {
-            console.error('Error:', error);
-          }
-        };
+          };          
     
         if(window.location.search.split("code=")[1]){
             spotifyCall(window.location.search.split("code=")[1]);
