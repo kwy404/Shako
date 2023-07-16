@@ -82,7 +82,7 @@ io.on('connection', socket => {
         };
 
         // Intervalo para atualizar as informações da música atual
-        const updateInterval = 5000; // Atualiza a cada 5 segundos
+        const updateInterval = 2000; // Atualiza a cada 5 segundos
         const intervalId = setInterval(getCurrentSong, updateInterval);
 
         // Evento de desconexão do cliente
