@@ -21,7 +21,11 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                     rows[0].exp_to_next_level = calcularExpProximoNivel(rows[0].nivel + 1);
                     rows[0].token = undefined;
                     rows[0].spotify = undefined;
-                    rows[0].spotify_object = JSON.parse(rows[0].spotify_object);
+                    try {
+                      rows[0].spotify_object = JSON.parse(rows[0].spotify_object);
+                    } catch (error) {
+                      
+                    }
                     if(rows[0].banned == 1 && myProfile[0].admin == 0){
                       io.emit('profile', {
                         type: "profile",
@@ -105,16 +109,8 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                     return {};
                   }
                 } catch (error) {
-                  // Lida com erros de consulta ao banco de dados
-                  io.emit('profile', {
-                      type: "profile",
-                      user: rows[0],
-                      success: false,
-                      noMessageError: true,
-                      message: "This account doesn’t exist."
-                  })
+                  console.log('error', error)
                   return {};
-                  console.log(error)
                 }
               }
               } else{

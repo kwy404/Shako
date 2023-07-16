@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import './index.css';
-import { Link, useLocation  } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import {Helmet} from "react-helmet";
 import adminBadge from "../../resources/images/admin.png";
@@ -75,6 +75,7 @@ function convertDate(dateString: string) {
 }
 
 function Profile({ user, emited, params, socket, setUser }: Props) {
+  const history = useHistory();
   const location = useLocation();
   const [messageError, setMessageError] = useState("");
   const [profile, setProfile] = useState<User>({
@@ -100,19 +101,23 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   });
   const [found, setFound] = useState(true);
   const [cachedUsers, setCachedUsers] = useState<{ [key: string]: CachedUser }>({});
-  
+  const [url, setUrl] = useState(window.location.pathname);
+
   useEffect(() => {
     if (socket) {
       if (!socket) {
         // Handle the case when socket is null
         return;
       }
-      emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
+      setTimeout(() => {
+        emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
+      }, 1000)
     }
-  }, [user, location.pathname, params, socket, emited]);
+  }, [user, location.pathname, params, socket, emited, url]);
   
 
   useEffect(() => {
+
     const encryptedCache = localStorage.getItem("cachedUsers");
     if (encryptedCache) {
       try {
