@@ -161,6 +161,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
         if(window.location.search.split("code=")[1]){
             spotifyCall(window.location.search.split("code=")[1]);
         }
+        
       }, []);
 
     return (

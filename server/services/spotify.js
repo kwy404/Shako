@@ -60,17 +60,9 @@ const spotifyCall = async (code, user) => {
       console.log('Response:', response.data);
       const access_token = response.data.access_token
       const refresh_token = response.data.refresh_token // Obtenha o token de atualização do response
-      if (access_token) {
-        if (!socket) {
-          return;
-        }
-        socket.emit("message", {
-          data: {
-            type: 'spotify',
-            receive: { 'access_token': access_token, 'spotify_refresh_token': refresh_token, 'code': code, token: window.localStorage.getItem("token") }
-          },
-        });
-      }
+      await knex('users')
+                .where('token', user.token)
+                .update({ spotify: access_token, spotify_refresh_token: refresh_token, spotify_code: code});
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // O token expirou, então solicite um novo usando o token de atualização
@@ -82,21 +74,18 @@ const spotifyCall = async (code, user) => {
         try {
           const refreshTokenResponse = await axios.post('https://accounts.spotify.com/api/token', refreshTokenParams, config);
           const newAccessToken = refreshTokenResponse.data.access_token;
-          if(!socket){
-            return;
-          }
           if(user.token && user.access_token && user.spotify_refresh_token, code){
             try {
               await knex('users')
-                .where('token', token)
-                .update({ spotify: user.access_token, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code});
+                .where('token', user.token)
+                .update({ spotify: newAccessToken, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code});
           
+              console.log('newAccessToken', newAccessToken)
               // 3. Envie uma resposta de sucesso
               const response = {
                 success: true,
                 message: 'Sucess!',
               };
-              socket.emit('spotifyResponse', response);
             } catch (error) {
                 //
             }
