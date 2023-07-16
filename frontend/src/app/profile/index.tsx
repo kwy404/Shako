@@ -333,17 +333,12 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           </>
           )}
            { found && user.id == profile.id && <>
-            {user?.spotify && user?.spotify.trim().length > 0 ?
+            <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=dcbdff61d5a443afaba5b0b242893915&scope=user-read-currently-playing%20user-read-playback-state&redirect_uri=http://localhost:5173/spotify">
               <button 
               className="banned_button spotify_button">
                 <img src={spotify}/>
-                {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>
-             : <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=dcbdff61d5a443afaba5b0b242893915&scope=user-read-currently-playing%20user-read-playback-state&redirect_uri=http://localhost:5173/spotify">
-              <button 
-              className="banned_button spotify_button">
-                <img src={spotify}/>
-                {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>
-            </a>}
+                Conectar</button>
+            </a>
           </> }
           { found && user.admin == '1' && user.id != profile.id && <>
             <button 
