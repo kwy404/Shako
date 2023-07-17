@@ -31,17 +31,7 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
           await knex('followers')
             .where({ sender_id: currentUserId, receiver_id: userIdToFollow })
             .del();
-        
-            socket.emit('profile', {
-                type: "follower",
-                user: userIdToFollow,
-                success: true,
-                noMessageError: true,
-                message: "User has been unfollow.",
-                follow: '0'
-            })
-            
-            sendToRoom(`${user.token}-${user.token}`, 'profile', {
+            sendToRoom(`${user.token}-${user.id}`, 'profile', {
                 type: "follower",
                 user: {'username': currentUser.usename},
                 success: true,
@@ -49,6 +39,15 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
                 message: "Unfollow you.",
                 follow: '0'
             }, io, socket)
+            
+            sendToRoom(`${currentUser.token}-${currentUser.id}`, 'profile', {
+              type: "follower",
+              user: {'username': currentUser.usename},
+              success: true,
+              noMessageError: true,
+              message: "Unfollow you.",
+              follow: '0'
+          }, io, socket)
 
           return; // Retorna para evitar a inserção do registro novamente
         }
@@ -58,24 +57,24 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
           sender_id: currentUserId,
           receiver_id: userIdToFollow,
         });
-
-        socket.emit('profile', {
-            type: "follower",
-            user: userIdToFollow,
-            success: true,
-            noMessageError: true,
-            message: "User has follow.",
-            follow: '1'
-        })
         
-        sendToRoom(`${user.token}-${user.token}`, 'profile', {
+        sendToRoom(`${user.token}-${user.id}`, 'profile', {
           type: "follower",
           user: {'username': currentUser.usename},
           success: true,
           noMessageError: true,
           message: "Follow you.",
           follow: '1'
-          }, io, socket)
+          }, io, socket);
+
+        sendToRoom(`${currentUser.token}-${currentUser.id}`, 'profile', {
+            type: "follower",
+            user: {'username': currentUser.usename},
+            success: true,
+            noMessageError: true,
+            message: "Follow you.",
+            follow: '1'
+            }, io, socket);
   
         // Aqui você pode adicionar qualquer lógica adicional que desejar, como enviar notificações, atualizar contadores, etc.
   

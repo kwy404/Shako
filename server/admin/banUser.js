@@ -81,7 +81,7 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
               .first();
         
             if (admin == 0) {
-              io.emit('profile', {
+              socket.emit('profile', {
                   type: "profileBanned",
                   user: userId,
                   success: false,
@@ -99,7 +99,7 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
               .first();
         
             if (!user) {
-              io.emit('profile', {
+              socket.emit('profile', {
                 type: "profileBanned",
                 user: userId,
                 success: false,
@@ -117,7 +117,7 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
                 .where({ id: userId })
                 .update({ banned: '0' });
       
-              io.emit('profile', {
+              socket.emit('profile', {
                   type: "profileBanned",
                   user: userId,
                   success: true,
@@ -127,7 +127,8 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
                   redirectUrl: "/",
                   banned: '0'
               })
-              sendToRoom(`${user.token}-${user.token}`, 'profile', {
+
+              sendToRoom(`${user.token}-${user.id}`, 'profile', {
                 type: "profileBanned",
                 user: userId,
                 success: true,
@@ -144,7 +145,7 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
                 .where({ id: userId })
                 .update({ banned: '1' });
       
-              io.emit('profile', {
+              socket.emit('profile', {
                   type: "profileBanned",
                   user: userId,
                   success: true,
@@ -157,7 +158,7 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
 
               enviarEmailBanned({username: user.username, email: user.email}, 1, generateHtmlEmail).catch(console.error);
 
-              sendToRoom(`${user.token}-${user.token}`, 'profile', {
+              sendToRoom(`${user.token}-${user.id}`, 'profile', {
                 type: "profileBanned",
                 user: userId,
                 success: true,
@@ -170,7 +171,7 @@ const banUser = async (data, knex, io, socket, sendToRoom, receive) => {
               
             }
           } catch (error) {
-            io.emit('profile', {
+            socket.emit('profile', {
               type: "profileBanned",
               user: userId,
               success: false,
