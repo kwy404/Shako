@@ -261,7 +261,9 @@ class userRegister {
           code_activate: code_ativacao,
           is_activated: 0,
           exp: 0,
-          spotify: ''
+          spotify: '',
+          spotify_refresh_token: '',
+          spotify_code: ''
         })
         .then(() => {
           this.ws.send(
