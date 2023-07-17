@@ -24,6 +24,7 @@ class SpotifyServer {
   constructor(port) {
     this.port = port;
     this.clientUpdateInterval = 2000;
+    this.clientSockets = new Map();
   }
 
   start() {
@@ -40,54 +41,84 @@ class SpotifyServer {
 
   configureSocketIO() {
     io.on('connection', socket => {
-      socket.on('message', async (data) => {
-        const { token } = data.data;
-        if (token) {
-          try {
-            const user = await knex('users').where('token', token).first();
-            const accessToken = user.spotify;
-
-            const getCurrentSong = async () => {
-              try {
-                const response = await axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
-                  headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                });
-
-                const responsePlay = await axios.get('https://api.spotify.com/v1/me/player', {
-                  headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                });
-
-                const { is_playing } = responsePlay.data;
-                const { item } = response.data;
-                item.isPlaying = is_playing;
-
-                const currentSong = item;
-
-                this.updateSpotifyObject(currentSong, token);
-
-                socket.emit('currentSong', currentSong);
-              } catch (error) {
-                this.spotifyCall(user.spotify_code, user);
-              }
-            };
-
-            const intervalId = setInterval(getCurrentSong, this.clientUpdateInterval);
-
-            socket.on('disconnect', () => {
-              this.spotifyCall(user.spotify_code, user);
-              clearInterval(intervalId);
-            });
-          } catch (error) {
-            const user = await knex('users').where('token', token).first();
-            this.spotifyCall(user.spotify_code, user);
-          }
-        }
-      });
+      socket.on('message', this.handleMessage.bind(this, socket));
+      socket.on('disconnect', this.handleDisconnect.bind(this, socket));
     });
+  }
+
+  async handleMessage(socket, data) {
+    const { token } = data.data;
+    if (!token) return;
+
+    try {
+      const user = await knex('users').where('token', token).first();
+      if (!user) return;
+
+      const accessToken = user.spotify;
+      this.clientSockets.set(socket, { user, accessToken });
+
+      this.startSongUpdates(socket);
+    } catch (error) {
+      console.error('Erro ao buscar o token de acesso do usuário:', error);
+    }
+  }
+
+  handleDisconnect(socket) {
+    const clientData = this.clientSockets.get(socket);
+    if (clientData) {
+      this.stopSongUpdates(socket);
+      this.spotifyCall(clientData.user.spotify_code, clientData.user);
+      this.clientSockets.delete(socket);
+    }
+  }
+
+  async startSongUpdates(socket) {
+    const clientData = this.clientSockets.get(socket);
+    if (!clientData) return;
+
+    const { user, accessToken } = clientData;
+
+    try {
+      const getCurrentSong = async () => {
+        try {
+          const [response, responsePlay] = await Promise.all([
+            axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }),
+            axios.get('https://api.spotify.com/v1/me/player', {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }),
+          ]);
+
+          const { is_playing } = responsePlay.data;
+          const { item } = response.data;
+          item.isPlaying = is_playing;
+
+          const currentSong = item;
+
+          this.updateSpotifyObject(currentSong, user.token);
+
+          socket.emit('currentSong', currentSong);
+        } catch (error) {
+          this.spotifyCall(user.spotify_code, user);
+        }
+      };
+
+      clientData.intervalId = setInterval(getCurrentSong, this.clientUpdateInterval);
+    } catch (error) {
+      console.error('Erro ao iniciar as atualizações da música:', error);
+    }
+  }
+
+  stopSongUpdates(socket) {
+    const clientData = this.clientSockets.get(socket);
+    if (clientData && clientData.intervalId) {
+      clearInterval(clientData.intervalId);
+    }
   }
 
   async updateSpotifyObject(currentSong, token) {
@@ -98,7 +129,7 @@ class SpotifyServer {
           spotify_object: JSON.stringify(currentSong)
         });
     } catch (error) {
-      // console.error('Erro ao atualizar o objeto do Spotify:', error);
+      console.error('Erro ao atualizar o objeto do Spotify:', error);
     }
   }
 
