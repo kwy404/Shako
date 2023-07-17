@@ -57,14 +57,13 @@ const spotifyCall = async (code, user) => {
 
     try {
       const response = await axios.post('https://accounts.spotify.com/api/token', params, config);
-      console.log('Response:', response.data);
       const access_token = response.data.access_token
       const refresh_token = response.data.refresh_token // Obtenha o token de atualização do response
       await knex('users')
                 .where('token', user.token)
                 .update({ spotify: access_token, spotify_refresh_token: refresh_token, spotify_code: code});
     } catch (error) {
-      if (error.response && error.response.status === 401) {
+      if (error) {
         // O token expirou, então solicite um novo usando o token de atualização
         const refreshTokenParams = new URLSearchParams();
         refreshTokenParams.append('grant_type', 'refresh_token');
@@ -74,6 +73,7 @@ const spotifyCall = async (code, user) => {
         try {
           const refreshTokenResponse = await axios.post('https://accounts.spotify.com/api/token', refreshTokenParams, config);
           const newAccessToken = refreshTokenResponse.data.access_token;
+          console.log(refreshTokenResponse.data)
           if(user.token && user.access_token && user.spotify_refresh_token, code){
             try {
               await knex('users')
@@ -81,13 +81,8 @@ const spotifyCall = async (code, user) => {
                 .update({ spotify: newAccessToken, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code});
           
               console.log('newAccessToken', newAccessToken)
-              // 3. Envie uma resposta de sucesso
-              const response = {
-                success: true,
-                message: 'Sucess!',
-              };
             } catch (error) {
-                //
+              console.log('wtf6')
             }
           }
 
@@ -95,17 +90,13 @@ const spotifyCall = async (code, user) => {
 
         } catch (refreshTokenError) {
           //
+          console.log('wtf5')
         }
-      } else {
-        // Lide com outros erros
-        window.location.search = "error=1";
-        setTimeout(() => {
-          window.location.pathname = "/dashboard";
-        }, 200);
       }
     }
   } catch (error) {
-    console.error('Error:', error);
+    //
+    console.log('wtf4')
   }
 };         
 
@@ -147,7 +138,7 @@ io.on('connection', socket => {
             // Envia as informações da música atual para o cliente
             socket.emit('currentSong', currentSong);
           } catch (error) {
-            console.error('Erro ao obter a música atual:', error);
+            spotifyCall(user.spotify_code, user)
           }
         };
 
@@ -158,7 +149,7 @@ io.on('connection', socket => {
         // Evento de desconexão do cliente
         socket.on('disconnect', () => {
           //console.log('Cliente desconectado.');
-
+          spotifyCall(user.spotify_code, user)
           // Limpa o intervalo quando o cliente desconectar
           clearInterval(intervalId);
         });
