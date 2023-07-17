@@ -134,6 +134,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   }, []);
 
   socket?.on('profile', (receive: any) => {
+    setLoaded(false);
     try {
       if(receive.user.username == params.username && params.discrimination == receive.user.discrimination){
         setProfile(receive.user);
@@ -183,9 +184,6 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           // Handle the case when socket is null
           return;
         }
-        setTimeout(() => {
-          emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
-        }, 1000)
       }
     }
   });
