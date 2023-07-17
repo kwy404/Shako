@@ -261,7 +261,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           /> :  <img className="avatar" src={`${profile?.avatar ? profile?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />}
           { profile.id == user.id && <form>
             <div className={`changeAvatar-photo ${profile.spotify_object.isPlaying ? 'photoSpotify' : 'photoSpotifyNot'}`}>
-              <label className="mudar_foto" htmlFor="file">Alterar foto</label>
+              <label className="mudar_foto" htmlFor="file">Change photo</label>
               <input style={{display: 'none'}} type="file" id="file" accept="image/*" onChange={handleFileChangeAvatar} />
             </div>
           </form> }
@@ -341,12 +341,12 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
               <button 
               className="banned_button spotify_button">
                 <img src={spotify}/>
-                {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>
+                {user?.spotify && user?.spotify.trim().length > 0 ? `Connected` : `Connect`}</button>
              : <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=dcbdff61d5a443afaba5b0b242893915&scope=user-read-currently-playing%20user-read-playback-state&redirect_uri=http://localhost:5173/spotify">
               <button 
               className="banned_button spotify_button">
                 <img src={spotify}/>
-                {user?.spotify && user?.spotify.trim().length > 0 ? `Conectado` : `Conectar`}</button>
+                {user?.spotify && user?.spotify.trim().length > 0 ? `Connected` : `Connect`}</button>
             </a>}
           </> }
           { found && user.admin == '1' && user.id != profile.id && <>
