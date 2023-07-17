@@ -61,7 +61,7 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                           user: rows[0],
                           success: false,
                           noMessageError: true,
-                          message: "This account is private, both have to be followers. "
+                          message: `This account is private.`
                         })
                         return {};
                       }

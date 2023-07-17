@@ -10,6 +10,7 @@ import nitroBadge from "../../resources/images/nitro_badge.webp";
 import { Tooltip } from '@mui/material';
 import axios from 'axios';
 import SpotifyPlayerProfile from './SpotifyPlayerProfile';
+import Loading from "../loading";
 
 const typePage = "profile";
 
@@ -102,6 +103,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   const [found, setFound] = useState(true);
   const [cachedUsers, setCachedUsers] = useState<{ [key: string]: CachedUser }>({});
   const [url, setUrl] = useState(window.location.pathname);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (socket) {
@@ -117,7 +119,6 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   
 
   useEffect(() => {
-
     const encryptedCache = localStorage.getItem("cachedUsers");
     if (encryptedCache) {
       try {
@@ -137,6 +138,9 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
     try {
       if(receive.user.username == params.username && params.discrimination == receive.user.discrimination){
         setProfile(receive.user);
+        setTimeout(() => {
+          setLoaded(true);
+        }, 1000)
         // setCachedUsers(prevState => ({ ...prevState, [cachedUser.id]: cachedUser }));
         setFound(receive.success);
         setMessageError(receive.message)
@@ -204,8 +208,6 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
     const formData = new FormData();
     formData.append('photo', selectedFile);
     formData.append('token', token);
-    
-
     try {
       const response = await axios.post('http://localhost:7500/uploadAvatar', formData, {
         headers: {
@@ -235,8 +237,11 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         <title>{`${params?.username} (u/${params?.username}/${params?.discrimination}/${params?.user_id}) - Shako`}</title>
         <meta property="og:title" content={`${params?.username}#${params?.discrimination}/${params?.user_id}) - Shako`} />
       </Helmet>
-      <div className="Profile">
-        <div className="Header-Profile blur"/>
+      {loaded}
+        <div className="Profile">
+        { !loaded && <Loading /> }
+        { loaded && <>
+          <div className="Header-Profile blur"/>
         <div className="Header-Profile">
           <Link to="/dashboard">
             <button className="back-icon">
@@ -380,6 +385,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
               </button>
           </> }
         </div>
+        </>}
       </div>
     </>
   );
