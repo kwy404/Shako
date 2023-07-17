@@ -134,7 +134,6 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   }, []);
 
   socket?.on('profile', (receive: any) => {
-    setProfile(profile);
     try {
       if(receive.user.username == params.username && params.discrimination == receive.user.discrimination){
         setProfile(receive.user);
