@@ -14,7 +14,6 @@ import Loading from "../loading";
 
 const typePage = "profile";
 
-
 declare global {
   interface Window {
     MyNamespace: any;
@@ -135,12 +134,11 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   }, []);
 
   socket?.on('profile', (receive: any) => {
+    setProfile(profile);
     try {
       if(receive.user.username == params.username && params.discrimination == receive.user.discrimination){
         setProfile(receive.user);
-        setTimeout(() => {
-          setLoaded(true);
-        }, 1000)
+        setLoaded(true);
         // setCachedUsers(prevState => ({ ...prevState, [cachedUser.id]: cachedUser }));
         setFound(receive.success);
         setMessageError(receive.message)
