@@ -29,7 +29,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
  
     useEffect(() => {
         if (!socket) {
-            socket = io("localhost:9090");
+            socket = io("localhost:9091");
             setTimeout(() => {
                 emited({}, "connected", socket!);
             }, 1000);

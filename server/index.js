@@ -6,12 +6,12 @@ const cors = require('cors')
 const {parseMessage} = require('./webrtc/parse');
 const {knex} = require('./migrations');
 const {dashboard} = require('./app/dashboard')
-const port = process.env.PORT || 9010;
+const port = process.env.PORT || 9011;
 
 //initialize a http server
 const server = http.createServer(app);
 
-const portWSS = process.env.PORT || 9090;
+const portWSS = process.env.PORT || 9091;
 
 //initialize a http server
 const serverWSS = http.createServer(app);

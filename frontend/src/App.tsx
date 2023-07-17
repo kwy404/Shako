@@ -13,7 +13,7 @@ import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
 import LandingPage from './pages/LandingPage';
 
-const ws = new WebSocket('ws://localhost:9010/ws/login')
+const ws = new WebSocket('ws://localhost:9011/ws/login')
 
 interface User {
   id: string;

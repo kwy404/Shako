@@ -11,7 +11,7 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
         // Obter o ID do usuário atual com base no token
         const currentUser = await knex('users')
           .where({ token: token })
-          .select('id')
+          .select('*')
           .first();
   
         if (!currentUser) {

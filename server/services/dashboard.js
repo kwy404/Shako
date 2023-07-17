@@ -5,7 +5,7 @@ const cors = require('cors')
 const {knex} = require('../migrations');
 const {dashboard} = require('../app/dashboard')
 
-const portWSS = process.env.PORT || 9090;
+const portWSS = process.env.PORT || 9091;
 
 //initialize a http server
 const serverWSS = http.createServer(app);
