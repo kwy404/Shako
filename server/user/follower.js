@@ -31,7 +31,7 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
           await knex('followers')
             .where({ sender_id: currentUserId, receiver_id: userIdToFollow })
             .del();
-            sendToRoom(`${user.token}-${user.id}`, 'profile', {
+            sendToRoom(user, 'profile', {
                 type: "follower",
                 user: {'username': currentUser.usename},
                 success: true,
@@ -39,8 +39,8 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
                 message: "Unfollow you.",
                 follow: '0'
             }, io, socket)
-            
-            sendToRoom(`${currentUser.token}-${currentUser.id}`, 'profile', {
+
+            sendToRoom(currentUser, 'profile', {
               type: "follower",
               user: {'username': currentUser.usename},
               success: true,
@@ -58,7 +58,7 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
           receiver_id: userIdToFollow,
         });
         
-        sendToRoom(`${user.token}-${user.id}`, 'profile', {
+        sendToRoom(user, 'profile', {
           type: "follower",
           user: {'username': currentUser.usename},
           success: true,
@@ -67,7 +67,7 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
           follow: '1'
           }, io, socket);
 
-        sendToRoom(`${currentUser.token}-${currentUser.id}`, 'profile', {
+        sendToRoom(currentUser, 'profile', {
             type: "follower",
             user: {'username': currentUser.usename},
             success: true,
