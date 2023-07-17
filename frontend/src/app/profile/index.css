@@ -175,6 +175,7 @@
     padding-left: 40px;
     width: 165px;
     transform: scale(0.85);
+    font-size: 12px;
 }
 
 .banned_button:active{

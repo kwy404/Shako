@@ -174,6 +174,10 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
       if (receive.type === 'profileBanned') {
         if (profile.id && receive.user === profile.id) {
           profile.banned = receive.banned;
+          if(!socket){
+            return;
+          }
+          emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '' }, 'getProfile', socket);
         }
       } else if (receive.type === 'follower') {
         if (profile.id) {
@@ -365,7 +369,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
               emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'banUser', socket);
             }}>
               <img src={banHammer}/>
-              {profile.banned == '1' ? `Conectado ${profile.username}` : `BAN ${profile.username}`}</button>
+              {profile.banned == '1' ? `DESBAN ${profile.username}` : `BAN ${profile.username}`}</button>
           </> }
           { found && user.id != profile.id && <>
             <button 
