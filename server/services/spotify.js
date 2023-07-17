@@ -79,7 +79,6 @@ const spotifyCall = async (code, user) => {
                 .where('token', user.token)
                 .update({ spotify: newAccessToken, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code});
           
-              // console.log('newAccessToken', newAccessToken)
             } catch (error) {
               
             }
