@@ -100,6 +100,7 @@ class SpotifyServer {
             if(user.isPlaying !== false){
               socket.emit('currentSong', {isPlaying: false});
               this.updateSpotifyObject({isPlaying: false}, user.token);
+              return;
             }
           }
           item.isPlaying = is_playing;
