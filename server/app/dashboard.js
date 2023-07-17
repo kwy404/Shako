@@ -25,7 +25,7 @@ const parseMessage = async (type, data, knex, io, socket, receive) => {
 
 const sendToRoom = async(room, event, data, io, socket) => {
   const roomD = `${room.token}-${room.id}`;
-  if(room){
+  if(roomD){
     io.sockets.in(roomD).emit(`${event}`, data);
     socket.broadcast.to(roomD).emit(`${event}`, data);
   }
