@@ -91,51 +91,55 @@ class SpotifyServer {
             return;
           }
 
-          const [response, responsePlay] = await Promise.all([
-            axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }),
-            axios.get('https://api.spotify.com/v1/me/player', {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }),
-          ]);
-
-          const { is_playing } = responsePlay.data;
-          const { item } = response.data;
-          if(typeof item == 'undefined'){
-            if(user.isPlaying !== false){
+          try {
+            const [response, responsePlay] = await Promise.all([
+              axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }),
+              axios.get('https://api.spotify.com/v1/me/player', {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }),
+            ]);
+  
+            const { is_playing } = responsePlay.data;
+            const { item } = response.data;
+            if(typeof item == 'undefined'){
+              if(user.isPlaying !== false){
+                const userMusic = await knex('users').where('token', user.token).first();
+                try {
+                  const actualMusic = JSON.parse(userMusic.spotify_object);
+                  if(actualMusic.isPlaying != false){
+                    io.emit('currentSong', {isPlaying: false});
+                    this.updateSpotifyObject({isPlaying: false}, user.token);
+                  }
+                } catch (error) {
+                  this.updateSpotifyObject({isPlaying: false}, user.token);
+                }
+                return;
+              }
+            }
+            item.isPlaying = is_playing;
+            try {
+              const currentSong = item;
               const userMusic = await knex('users').where('token', user.token).first();
               try {
                 const actualMusic = JSON.parse(userMusic.spotify_object);
-                if(actualMusic.isPlaying != false){
-                  io.emit('currentSong', {isPlaying: false});
-                  this.updateSpotifyObject({isPlaying: false}, user.token);
+                if(actualMusic.name !== currentSong.name || actualMusic.artists[0].name != currentSong.artists[0].name || actualMusic.isPlaying != currentSong.isPlaying){
+                  io.emit('currentSong', currentSong);
+                  this.updateSpotifyObject(currentSong, user.token);
                 }
               } catch (error) {
                 this.updateSpotifyObject({isPlaying: false}, user.token);
               }
-              return;
-            }
-          }
-          item.isPlaying = is_playing;
-          try {
-            const currentSong = item;
-            const userMusic = await knex('users').where('token', user.token).first();
-            try {
-              const actualMusic = JSON.parse(userMusic.spotify_object);
-              if(actualMusic.name !== currentSong.name || actualMusic.artists[0].name != currentSong.artists[0].name || actualMusic.isPlaying != currentSong.isPlaying){
-                io.emit('currentSong', currentSong);
-                this.updateSpotifyObject(currentSong, user.token);
-              }
             } catch (error) {
-              this.updateSpotifyObject({isPlaying: false}, user.token);
+              // console.log(error)
             }
           } catch (error) {
-            console.log(error)
+            // Code here
           }
           
         } catch (error) {
