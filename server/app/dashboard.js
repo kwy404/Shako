@@ -6,7 +6,6 @@ const {searchUsers} = require('../user/search');
 const {spotify} = require("../user/spotify");
 
 const dashboard = async (socket, knex, io) => {
-    const socket_id = socket.id
     socket.on('message', async msg => {
       try {
         const data = msg.data
@@ -14,12 +13,13 @@ const dashboard = async (socket, knex, io) => {
         const type = data.type
         await parseMessage(type, data, knex, io, socket, receive)
       } catch (error) {
-        
+        //Why so many codes, if your life no make sense
       }
     });
 }
 
 const parseMessage = async (type, data, knex, io, socket, receive) => {
+  // Call function from parseMessage, from socket.io
   await types[type](data, knex, io, socket, sendToRoom, receive)
 }
 
@@ -31,6 +31,7 @@ const sendToRoom = async (room, event, data, io, socket) => {
   }
 };
 
+// Object types with function call
 const types = {
   'connected': connected,
   'getFriends': getOtherUsersChat,
