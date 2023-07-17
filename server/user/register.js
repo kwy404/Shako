@@ -263,7 +263,8 @@ class userRegister {
           exp: 0,
           spotify: '',
           spotify_refresh_token: '',
-          spotify_code: ''
+          spotify_code: '',
+          spotify_object: ''
         })
         .then(() => {
           this.ws.send(
