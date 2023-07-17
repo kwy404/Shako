@@ -60,16 +60,15 @@ function Dashboard({ user, isProfile, setUser }: any) {
         };
     }, []);
 
-    const emited = (data: any, type: any, socket: any) => {
-        socket.emit("message", {
-            data: {
-                type: type,
-                receive: data,
-                token: window.localStorage.getItem("token"),
-            },
-        });
+    const emited = (data: any, type: any, socketInstance: any) => {
+      socketInstance.emit("message", {
+        data: {
+          type: type,
+          receive: data,
+          token: window.localStorage.getItem("token"),
+        },
+      });
     };
-
     useEffect(() => {
         socketSpotfiy = io("localhost:4100");
         setTimeout(() => {

@@ -23,13 +23,13 @@ const parseMessage = async (type, data, knex, io, socket, receive) => {
   await types[type](data, knex, io, socket, sendToRoom, receive)
 }
 
-const sendToRoom = async(room, event, data, io, socket) => {
+const sendToRoom = async (room, event, data, io, socket) => {
   const roomD = `${room.token}-${room.id}`;
-  if(roomD){
-    io.sockets.in(roomD).emit(`${event}`, data);
-    socket.broadcast.to(roomD).emit(`${event}`, data);
+  if (io.sockets.adapter.rooms.has(roomD)) {
+    io.sockets.in(roomD).emit(event, data);
+    socket.broadcast.to(roomD).emit(event, data);
   }
-}
+};
 
 const types = {
   'connected': connected,

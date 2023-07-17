@@ -114,7 +114,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
       }, 500)
     }
-  }, [user, location.pathname, params, socket, emited]);
+  }, [socket, emited, params]);
   
 
   useEffect(() => {
@@ -133,65 +133,63 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
     }
   }, []);
 
-  socket?.on('profile', (receive: any) => {
-    setLoaded(false);
-    try {
-      if(receive.user.username == params.username && params.discrimination == receive.user.discrimination){
-        setProfile(receive.user);
-        setLoaded(true);
-        // setCachedUsers(prevState => ({ ...prevState, [cachedUser.id]: cachedUser }));
-        setFound(receive.success);
-        setMessageError(receive.message)
-      } else{
-        setFound(receive.success);
-        setMessageError(receive.message)
+  useEffect(() => {
+    const handleProfileEvent = (receive: any) => {
+      setLoaded(false);
+      try {
+        if (receive.user.username === params.username && params.discrimination === receive.user.discrimination) {
+          setProfile(receive.user);
+          setLoaded(true);
+          setFound(receive.success);
+          setMessageError(receive.message);
+        } else {
+          setFound(receive.success);
+          setMessageError(receive.message);
+        }
+      } catch (error) {
+        setProfile({
+          id: user?.id,
+          username: params.username,
+          token: '',
+          email: '',
+          discrimination: params.discrimination,
+          avatar: '',
+          bg: '',
+          admin: '',
+          is_activated: '1',
+          created_at: '23/06/1999',
+          verificado: '0',
+          banned: '0',
+          epic: '0',
+          followingCount: '0',
+          followersCount: '0',
+          isFollow: '0',
+          followBack: {},
+          spotify_object: { isPlaying: false },
+          spotify: ''
+        });
+        setFound(false);
+        setMessageError(receive.message);
       }
-    } catch (error) {
-      setProfile({
-        id: user?.id,
-        username: params.username,
-        token: '',
-        email: '',
-        discrimination: params.discrimination,
-        avatar: '',
-        bg: '',
-        admin: '',
-        is_activated: '1',
-        created_at: '23/06/1999',
-        verificado: '0',
-        banned: '0',
-        epic: '0',
-        followingCount: '0',
-        followersCount: '0',
-        isFollow: '0',
-        followBack: {},
-        spotify_object: {isPlaying: false},
-        spotify: ''
-      });
-      setFound(false);
-      setMessageError(receive.message)
-    }
-    if(receive.type == 'profileBanned'){
-      if(profile.id){
-        if(receive.user == profile.id){
-            profile.banned = receive.banned;
+      if (receive.type === 'profileBanned') {
+        if (profile.id && receive.user === profile.id) {
+          profile.banned = receive.banned;
+        }
+      } else if (receive.type === 'follower') {
+        if (profile.id) {
+          emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '' }, 'getProfile', socket);
         }
       }
-      return
-    } else if(receive.type == 'follower'){
-      if(profile.id){
-        if (!socket) {
-          // Handle the case when socket is null
-          return;
-        }
-        setLoaded(false);
-        setTimeout(() => {
-          emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
-        }, 500)
-      }
-    }
-  });
+    };
 
+    socket?.on('profile', handleProfileEvent);
+
+    return () => {
+      socket?.off('profile', handleProfileEvent);
+    };
+  }, [socket, params, emited, user, profile.id]);
+
+  
   const handleFileChangeAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       changeAvatar(event.target.files[0]);
