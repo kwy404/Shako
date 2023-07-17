@@ -109,9 +109,13 @@ class SpotifyServer {
           if(typeof item == 'undefined'){
             if(user.isPlaying !== false){
               const userMusic = await knex('users').where('token', user.token).first();
-              const actualMusic = JSON.parse(userMusic.spotify_object);
-              if(actualMusic.isPlaying != false){
-                io.emit('currentSong', {isPlaying: false});
+              try {
+                const actualMusic = JSON.parse(userMusic.spotify_object);
+                if(actualMusic.isPlaying != false){
+                  io.emit('currentSong', {isPlaying: false});
+                  this.updateSpotifyObject({isPlaying: false}, user.token);
+                }
+              } catch (error) {
                 this.updateSpotifyObject({isPlaying: false}, user.token);
               }
               return;
@@ -121,10 +125,14 @@ class SpotifyServer {
           try {
             const currentSong = item;
             const userMusic = await knex('users').where('token', user.token).first();
-            const actualMusic = JSON.parse(userMusic.spotify_object);
-            if(actualMusic.name !== currentSong.name || actualMusic.artists[0].name != currentSong.artists[0].name || actualMusic.isPlaying != currentSong.isPlaying){
-              io.emit('currentSong', currentSong);
-              this.updateSpotifyObject(currentSong, user.token);
+            try {
+              const actualMusic = JSON.parse(userMusic.spotify_object);
+              if(actualMusic.name !== currentSong.name || actualMusic.artists[0].name != currentSong.artists[0].name || actualMusic.isPlaying != currentSong.isPlaying){
+                io.emit('currentSong', currentSong);
+                this.updateSpotifyObject(currentSong, user.token);
+              }
+            } catch (error) {
+              this.updateSpotifyObject({isPlaying: false}, user.token);
             }
           } catch (error) {
             console.log(error)
