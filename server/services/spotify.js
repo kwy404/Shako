@@ -66,7 +66,7 @@ class SpotifyServer {
   handleDisconnect(socket) {
     const clientData = this.clientSockets.get(socket);
     if (clientData) {
-      this.stopSongUpdates(socket);
+      //this.stopSongUpdates(socket);
       this.spotifyCall(clientData.user.spotify_code, clientData.user);
       this.clientSockets.delete(socket);
     }
@@ -173,7 +173,7 @@ class SpotifyServer {
                   .update({ spotify: newAccessToken, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code });
 
               } catch (error) {
-
+                //
               }
             }
           } catch (refreshTokenError) {
