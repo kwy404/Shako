@@ -98,18 +98,22 @@ class SpotifyServer {
           const { item } = response.data;
           if(typeof item == 'undefined'){
             if(user.isPlaying !== false){
-              socket.emit('currentSong', {isPlaying: false});
-              this.updateSpotifyObject({isPlaying: false}, user.token);
+              const userMusic = await knex('users').where('token', user.token).first();
+              const actualMusic = JSON.parse(userMusic.spotify_object);
+              if(actualMusic.isPlaying != false){
+                io.emit('currentSong', {isPlaying: false});
+                this.updateSpotifyObject({isPlaying: false}, user.token);
+              }
               return;
             }
           }
           item.isPlaying = is_playing;
           const currentSong = item;
           const userMusic = await knex('users').where('token', user.token).first();
-          const actualMusic = JSON.parse(userMusic.spotify_object)
+          const actualMusic = JSON.parse(userMusic.spotify_object);
           try {
             if(actualMusic.name !== currentSong.name || actualMusic.artists[0].name != currentSong.artists[0].name ||  actualMusic.isPlaying != currentSong.isPlaying){
-              socket.emit('currentSong', currentSong);
+              io.emit('currentSong', currentSong);
               this.updateSpotifyObject(currentSong, user.token);
             }
           } catch (error) {
