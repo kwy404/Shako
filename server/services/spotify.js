@@ -112,7 +112,7 @@ class SpotifyServer {
               this.updateSpotifyObject(currentSong, user.token);
             }
           } catch (error) {
-            console.log(error)
+            //console.log(error)
           }
           
         } catch (error) {
