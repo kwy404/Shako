@@ -68,7 +68,7 @@ class SpotifyServer {
     if (clientData) {
       //this.stopSongUpdates(socket);
       this.spotifyCall(clientData.user.spotify_code, clientData.user);
-      this.clientSockets.delete(socket);
+      // this.clientSockets.delete(socket);
     }
   }
 
