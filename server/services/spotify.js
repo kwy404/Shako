@@ -96,6 +96,10 @@ class SpotifyServer {
 
           const { is_playing } = responsePlay.data;
           const { item } = response.data;
+          if(typeof item == 'undefined'){
+            this.updateSpotifyObject({isPlaying: false}, user.token);
+            socket.emit('currentSong', {isPlaying: false});
+          }
           item.isPlaying = is_playing;
 
           const currentSong = item;
