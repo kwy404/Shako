@@ -73,16 +73,15 @@ const spotifyCall = async (code, user) => {
         try {
           const refreshTokenResponse = await axios.post('https://accounts.spotify.com/api/token', refreshTokenParams, config);
           const newAccessToken = refreshTokenResponse.data.access_token;
-          console.log(refreshTokenResponse.data)
           if(user.token && user.access_token && user.spotify_refresh_token, code){
             try {
               await knex('users')
                 .where('token', user.token)
                 .update({ spotify: newAccessToken, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code});
           
-              console.log('newAccessToken', newAccessToken)
+              // console.log('newAccessToken', newAccessToken)
             } catch (error) {
-              console.log('wtf6')
+              
             }
           }
 
@@ -90,13 +89,11 @@ const spotifyCall = async (code, user) => {
 
         } catch (refreshTokenError) {
           //
-          console.log('wtf5')
         }
       }
     }
   } catch (error) {
     //
-    console.log('wtf4')
   }
 };         
 
