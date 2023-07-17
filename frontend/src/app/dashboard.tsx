@@ -57,6 +57,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
             
             // Remova apenas os ouvintes do socket
             socket.off("connected");
+            
         };
     }, []);
 
@@ -69,6 +70,42 @@ function Dashboard({ user, isProfile, setUser }: any) {
         },
       });
     };
+
+    const socketURL = `wss://dealer.spotify.com/?access_token=${user.spotify}`;
+    let socketSpotfiy_: WebSocket;
+
+    useEffect(() => {
+      // Connect to the WebSocket server
+      socketSpotfiy_ = new WebSocket(socketURL);
+
+      // Event listeners for socket events
+      socketSpotfiy_.addEventListener("open", () => {
+        console.log("Connected to WebSocket server");
+        
+        // Send a ping to the server
+        sendPing();
+      });
+
+      socketSpotfiy_.addEventListener("close", () => {
+        console.log("Disconnected from WebSocket server");
+      });
+
+      // Clean up the socket connection on component unmount
+      return () => {
+        if (socketSpotfiy_) {
+          socketSpotfiy_.close();
+        }
+      };
+    }, []);
+
+    function sendPing() {
+      if (socketSpotfiy_.readyState === WebSocket.OPEN) {
+        // setInterval(() => {
+        //   socketSpotfiy_.send(JSON.stringify({"type":"ping"}));
+        // }, 1000)
+      }
+    }
+
     useEffect(() => {
         socketSpotfiy = io("localhost:4100");
         setTimeout(() => {
@@ -173,7 +210,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
             ) : (
                 <>
                     <Loading />
-                    <Header user={user} emited={emited} setUser={() => {}}  socket={socket} />
+                    <Header user={user} emited={emited} setUser={() => {}} socket={socket} />
                 </>
             )}
             {params?.username && params?.discrimination ? <>

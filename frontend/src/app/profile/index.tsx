@@ -177,6 +177,9 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         }
       } else if (receive.type === 'follower') {
         if (profile.id) {
+          if(!socket){
+            return;
+          }
           emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '' }, 'getProfile', socket);
         }
       }

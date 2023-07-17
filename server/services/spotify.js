@@ -23,14 +23,19 @@ const knex = require('knex')({
 class SpotifyServer {
   constructor(port) {
     this.port = port;
-    this.clientUpdateInterval = 2000;
+    this.clientUpdateInterval = 10000;
     this.clientSockets = new Map();
+    this.rateLimitExceeded = false;
+    this.retryAfter = 0;
+    this.rateLimitInterval = 30 * 1000; // 30 seconds
+    this.apiCallsCount = 0;
   }
 
   start() {
     this.configureRoutes();
     this.configureSocketIO();
     this.listen();
+    this.resetRateLimit();
   }
 
   configureRoutes() {
@@ -66,9 +71,9 @@ class SpotifyServer {
   handleDisconnect(socket) {
     const clientData = this.clientSockets.get(socket);
     if (clientData) {
-      //this.stopSongUpdates(socket);
+      this.stopSongUpdates(socket);
       this.spotifyCall(clientData.user.spotify_code, clientData.user);
-      // this.clientSockets.delete(socket);
+      this.clientSockets.delete(socket);
     }
   }
 
@@ -81,6 +86,11 @@ class SpotifyServer {
     try {
       const getCurrentSong = async () => {
         try {
+          if (this.rateLimitExceeded) {
+            console.log('Rate limit exceeded. Waiting for next interval...');
+            return;
+          }
+
           const [response, responsePlay] = await Promise.all([
             axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
               headers: {
@@ -108,20 +118,28 @@ class SpotifyServer {
             }
           }
           item.isPlaying = is_playing;
-          const currentSong = item;
-          const userMusic = await knex('users').where('token', user.token).first();
-          const actualMusic = JSON.parse(userMusic.spotify_object);
           try {
-            if(actualMusic.name !== currentSong.name || actualMusic.artists[0].name != currentSong.artists[0].name ||  actualMusic.isPlaying != currentSong.isPlaying){
+            const currentSong = item;
+            const userMusic = await knex('users').where('token', user.token).first();
+            const actualMusic = JSON.parse(userMusic.spotify_object);
+            if(actualMusic.name !== currentSong.name || actualMusic.artists[0].name != currentSong.artists[0].name || actualMusic.isPlaying != currentSong.isPlaying){
               io.emit('currentSong', currentSong);
               this.updateSpotifyObject(currentSong, user.token);
             }
           } catch (error) {
-            //console.log(error)
+            console.log(error)
           }
           
         } catch (error) {
-          this.spotifyCall(user.spotify_code, user);
+          if (error.response && error.response.status === 429) {
+            // Rate limit exceeded
+            this.rateLimitExceeded = true;
+            this.retryAfter = error.response.headers['retry-after'];
+            console.log(`Rate limit exceeded. Retry after ${this.retryAfter} seconds.`);
+          } else {
+            this.spotifyCall(user.spotify_code, user);
+            console.log(error);
+          }
         }
       };
 
@@ -152,8 +170,8 @@ class SpotifyServer {
 
   async spotifyCall(code, user) {
     try {
-      const clientId = 'dcbdff61d5a443afaba5b0b242893915';
-      const clientSecret = 'bc31a0ced0134e95a4e2263e2ab83ba6';
+      const clientId = process.env.CLIENT_ID;
+      const clientSecret = process.env.CLIENT_SECRET;
       const params = new URLSearchParams();
       params.append('grant_type', 'authorization_code');
       params.append('code', code);
@@ -201,6 +219,13 @@ class SpotifyServer {
     } catch (error) {
       //
     }
+  }
+
+  resetRateLimit() {
+    setInterval(() => {
+      this.apiCallsCount = 0;
+      this.rateLimitExceeded = false;
+    }, this.rateLimitInterval);
   }
 
   listen() {
