@@ -79,7 +79,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   const location = useLocation();
   const [messageError, setMessageError] = useState("");
   const [profile, setProfile] = useState<User>({
-    id: '',
+    id: params.user_id,
     username: '',
     token: '',
     email: '',
@@ -96,7 +96,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
     followersCount: '0',
     isFollow: '0',
     followBack: {},
-    spotify_object: {},
+    spotify_object: {isPlaying: false},
     spotify: ''
   });
   const [found, setFound] = useState(true);
@@ -146,7 +146,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
       }
     } catch (error) {
       setProfile({
-        id: '',
+        id: user?.id,
         username: params.username,
         token: '',
         email: '',
@@ -163,7 +163,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         followersCount: '0',
         isFollow: '0',
         followBack: {},
-        spotify_object: {},
+        spotify_object: {isPlaying: false},
         spotify: ''
       });
       setFound(false);
