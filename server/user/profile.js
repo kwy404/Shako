@@ -51,7 +51,10 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
                       const followMe = await knex('followers')
                       .where({ sender_id: rows[0].id, receiver_id: myProfile[0].id  })
                       .first();
-                      if(myProfile[0].id != rows[0].id && myProfile[0].admin == 0 && !followMe){
+                      const follow = await knex('followers')
+                      .where({ sender_id: myProfile[0].id, receiver_id: rows[0].id })
+                      .first();
+                      if(myProfile[0].id != rows[0].id && myProfile[0].admin == 0 && !followMe && !follow){
                         rows[0].spotify_object = {}
                         socket.emit('profile', {
                           type: "profile",
