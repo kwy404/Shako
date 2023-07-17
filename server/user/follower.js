@@ -32,7 +32,7 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
             .where({ sender_id: currentUserId, receiver_id: userIdToFollow })
             .del();
         
-            io.emit('profile', {
+            socket.emit('profile', {
                 type: "follower",
                 user: userIdToFollow,
                 success: true,
@@ -59,7 +59,7 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
           receiver_id: userIdToFollow,
         });
 
-        io.emit('profile', {
+        socket.emit('profile', {
             type: "follower",
             user: userIdToFollow,
             success: true,

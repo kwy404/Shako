@@ -184,6 +184,10 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           // Handle the case when socket is null
           return;
         }
+        setLoaded(false);
+        setTimeout(() => {
+          emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
+        }, 500)
       }
     }
   });
