@@ -80,10 +80,10 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   const [messageError, setMessageError] = useState("");
   const [profile, setProfile] = useState<User>({
     id: params.user_id,
-    username: '',
+    username: params.username,
     token: '',
     email: '',
-    discrimination: '',
+    discrimination: params.discrimination,
     avatar: '',
     bg: '',
     admin: '',
