@@ -169,7 +169,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
             {loading ? (
                 <>
                     <Header user={user} emited={emited} setUser={() => {}} socket={socket}/>
-                    <Online user={user} socket={socket!} emited={emited} />
+                    {/* <Online user={user} socket={socket!} emited={emited} /> */}
                 </>
             ) : (
                 <>
