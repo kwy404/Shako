@@ -71,7 +71,8 @@ class SpotifyServer {
   handleDisconnect(socket) {
     const clientData = this.clientSockets.get(socket);
     if (clientData) {
-      this.updateSpotifyObject({isPlaying: false}, user.token);
+      this.updateSpotifyObject({isPlaying: false}, clientData.user.token);
+      io.emit('currentSong', {isPlaying: false});
       this.stopSongUpdates(socket);
       this.spotifyCall(clientData.user.spotify_code, clientData.user);
       this.clientSockets.delete(socket);
