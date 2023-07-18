@@ -30,7 +30,7 @@ interface User {
   email: string;
   discrimination: string;
   avatar: string;
-  bg: string;
+  banner: string;
   admin: string;
   is_activated: string;
   created_at: string;
@@ -85,7 +85,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
     email: '',
     discrimination: params.discrimination,
     avatar: '',
-    bg: '',
+    banner: '',
     admin: '',
     is_activated: '1',
     created_at: '01/01/1999',
@@ -154,7 +154,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           email: '',
           discrimination: params.discrimination,
           avatar: '',
-          bg: '',
+          banner: '',
           admin: '',
           is_activated: '1',
           created_at: '23/06/1999',
@@ -203,6 +203,12 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
     }
   };
 
+  const handleFileChangeCover = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      changeBanner(event.target.files[0]);
+    }
+  };
+
   const changeAvatar = async (selectedFile: File | null) => {
     const token = window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '';
     if (!selectedFile || !token) {
@@ -224,6 +230,38 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         setProfile(oldProfile);
         const oldUser = {...user};
         oldUser.avatar = response.data.avatar;
+        setUser(oldUser);
+        if(!socket){
+          return;
+        }
+        emited({}, "connected", socket!);
+      }
+    } catch (error) {
+      // console.error(error);
+    }
+  };
+
+  const changeBanner = async (selectedFile: File | null) => {
+    const token = window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '';
+    if (!selectedFile || !token) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('photo', selectedFile);
+    formData.append('token', token);
+    try {
+      const response = await axios.post('http://localhost:7500/uploadCover', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if(response.data.avatar){
+        const oldProfile = {...profile};
+        oldProfile.avatar = response.data.avatar;
+        setProfile(oldProfile);
+        const oldUser = {...user};
+        oldUser.banner = response.data.banner;
         setUser(oldUser);
         if(!socket){
           return;
@@ -264,7 +302,8 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         </div>
         <div className="background">
           <div className="transparent"></div>
-          <img className="cover" src="https://images.hdqwalls.com/wallpapers/reddit-cartoon-4k-io.jpg" alt="Cover" />
+          <img className="cover" 
+          src={`${profile?.banner ? profile?.banner : 'https://images.hdqwalls.com/wallpapers/reddit-cartoon-4k-io.jpg'}`} alt="Cover" />
           { profile.spotify_object.isPlaying ? <SpotifyPlayerProfile
           user={profile}
           /> :  <img className="avatar" src={`${profile?.avatar ? profile?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />}
@@ -272,6 +311,10 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
             <div className={`changeAvatar-photo ${profile.spotify_object.isPlaying ? 'photoSpotify' : 'photoSpotifyNot'}`}>
               <label className="mudar_foto" htmlFor="file">Change photo</label>
               <input style={{display: 'none'}} type="file" id="file" accept="image/*" onChange={handleFileChangeAvatar} />
+            </div>
+            <div className={`changeAvatar-photo coverPhoto`}>
+              <label className="mudar_foto cover-photo" htmlFor="fileCover">Change cover</label>
+              <input style={{display: 'none'}} type="file" id="fileCover" accept="image/*" onChange={handleFileChangeCover} />
             </div>
           </form> }
         </div>

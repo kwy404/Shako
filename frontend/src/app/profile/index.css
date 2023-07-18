@@ -254,3 +254,10 @@
     right: 20px;
     color: #00be44;
 }
+
+.cover-photo{
+    position: absolute;
+    display: block;
+    top: -220px;
+    right: -834px;
+}

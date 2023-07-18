@@ -11,7 +11,7 @@ interface User {
     email: string;
     discrimination: string;
     avatar: string;
-    bg: string;
+    banner: string;
     admin: string;
     is_activated: string;
     created_at: string;

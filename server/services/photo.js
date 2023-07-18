@@ -71,13 +71,51 @@ const handleUpload = async (req, res) => {
   }
 };
 
+// Função para lidar com o upload de arquivos
+const handleUploadBanner = async (req, res) => {
+  if (!req.file) {
+    res.status(400).send('Nenhum arquivo foi enviado.');
+    return;
+  }
+
+  const { token } = req.body;
+
+  // Verificar se o token é válido
+  if (!await verifyToken(token)) {
+    res.status(401).send('Token inválido.');
+    return;
+  }
+
+  try {
+    // Fazer o upload da foto diretamente para o Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'uploads', // Pasta no Cloudinary onde a foto será armazenada
+    });
+
+    // Obter a URL da foto do Cloudinary
+    const photoUrl = result.secure_url;
+
+    // Atualizar o usuário na tabela 'users'
+    await knex('users').where('token', token).update({ banner: photoUrl });
+
+    // Excluir o arquivo temporário
+    await deleteTempFile(req.file.path);
+
+    res.send(JSON.stringify({ banner: photoUrl }));
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Erro ao fazer o upload da foto.');
+  }
+};
+
+
 // Configurar o upload de arquivos com Multer
 const upload = multer({ dest: 'temp/' });
 
 // Rota para lidar com o upload de arquivos
 app.post('/uploadAvatar', upload.single('photo'), handleUpload);
 // Rota para lidar com o upload de arquivos
-app.post('/uploadCover', upload.single('photo'), handleUpload);
+app.post('/uploadCover', upload.single('photo'), handleUploadBanner);
 
 // Função para verificar se o token é válido
 async function verifyToken(token) {
@@ -87,7 +125,6 @@ async function verifyToken(token) {
         return true;
     }
   } catch (error) {
-    console.log(error);
     return false;
   }
 }
