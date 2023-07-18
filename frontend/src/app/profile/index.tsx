@@ -313,7 +313,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
               <input style={{display: 'none'}} type="file" id="file" accept="image/*" onChange={handleFileChangeAvatar} />
             </div>
             <div className={`changeAvatar-photo coverPhoto`}>
-              <label className="mudar_foto cover-photo" htmlFor="fileCover">Change cover</label>
+              <label className="mudar_foto cover-photo" htmlFor="fileCover">Change BANNER</label>
               <input style={{display: 'none'}} type="file" id="fileCover" accept="image/*" onChange={handleFileChangeCover} />
             </div>
           </form> }
