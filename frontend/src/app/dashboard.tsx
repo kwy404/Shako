@@ -121,7 +121,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
         const spotifyCall = async (code: any) => {
             try {
               const clientId = 'dcbdff61d5a443afaba5b0b242893915';
-              const clientSecret = 'bc31a0ced0134e95a4e2263e2ab83ba6';
+              const clientSecret = '974c25e65efa4a9a8094be3ab4a1eb28';
               const params = new URLSearchParams();
               params.append('grant_type', 'authorization_code');
               params.append('code', code);
@@ -136,10 +136,8 @@ function Dashboard({ user, isProfile, setUser }: any) {
           
               try {
                 const response = await axios.post('https://accounts.spotify.com/api/token', params, config);
-                console.log('Response:', response.data);
                 const access_token = response.data.access_token
                 const refresh_token = response.data.refresh_token // Obtenha o token de atualização do response
-                setRefreshToken(refresh_token)
                 if (access_token) {
                   if (!socket) {
                     return;
@@ -175,18 +173,8 @@ function Dashboard({ user, isProfile, setUser }: any) {
                     // Faça algo com o novo token de acesso
           
                   } catch (refreshTokenError) {
-                    // Lide com o erro ao atualizar o token de acesso
-                    window.location.search = "error=1";
-                    setTimeout(() => {
-                      window.location.pathname = "/dashboard";
-                    }, 200);
+                    //
                   }
-                } else {
-                  // Lide com outros erros
-                  window.location.search = "error=1";
-                  setTimeout(() => {
-                    window.location.pathname = "/dashboard";
-                  }, 200);
                 }
               }
             } catch (error) {
