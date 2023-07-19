@@ -77,15 +77,20 @@
 .Header .right .profile{
     width: 200px;
     background: rgba(0,0,0,.20);
-    height: 36px;
+    height: 36.5px;
     position: absolute;
     right: -55px;
     top: -15px;
     padding: 11px;
     cursor: pointer;
     opacity: 0.6;
-    border: 1px solid #2f3336;
+    border: 1px solid transparent;
     z-index: 100;
+}
+
+.Header .profileAtivo{
+    border: 1px solid #2f3336 !important;
+    opacity: 1 !important;
 }
 
 .Header .right .profile .avatar{
@@ -266,6 +271,8 @@
 
 .list-menu li svg{
     margin-right: 25px;
+    position: relative;
+    top: 2px;
 }
 
 .list-menu a{

@@ -128,7 +128,7 @@ function Header({ user, emited, socket, setUser }: Props) {
                     </div> }
                     <img className="icon bell-icon" src={bell_icon}/>
                     <img className="icon chat-icon" src={chat_icon}/>
-                    <div className="profile" onClick={() => setProfileMenu(!profileMenu)}>
+                    <div className={`profile ${profileMenu ? 'profileAtivo' : ''}`} onClick={() => setProfileMenu(!profileMenu)}>
                         <img className="icon expand" src={expand_icon}/>
                         <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
                         <span className="username">{user.username}
