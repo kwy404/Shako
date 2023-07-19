@@ -130,10 +130,10 @@ function Header({ user, emited, socket, setUser }: Props) {
                     <img className="icon bell-icon" src={bell_icon}/>
                     <img className="icon chat-icon" src={chat_icon}/>
                     <div 
-                    onBlur={() => setProfileMenu(false)}
                     tabIndex={0} // Torna a div focável
                     onBlur={() => setProfileMenu(false)}
-                    className={`profile ${profileMenu ? 'profileAtivo' : ''}`} onClick={() => setProfileMenu(!profileMenu)}>
+                    onFocus={() => setProfileMenu(true)}
+                    className={`profile ${profileMenu ? 'profileAtivo' : ''}`}>
                         <img className="icon expand" src={expand_icon}/>
                         <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
                         <span className="username">{user.username}
