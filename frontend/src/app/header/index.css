@@ -12,7 +12,7 @@
     justify-content: flex-start;
     align-items: center;
     padding: 10px;
-    z-index: 20;
+    z-index: 10;
     top: -20px;
 }
 
@@ -251,6 +251,7 @@
     border-radius: 5px;
     transition: 0.4s;
     z-index: 100;
+    z-index: 20;
 }
 
 .list-menu li{
@@ -309,4 +310,5 @@
     height: 200vh;
     left: -100vw;
     top: -6vh;
+    background-color: red;
 }

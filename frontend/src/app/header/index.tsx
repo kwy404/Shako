@@ -136,31 +136,28 @@ function Header({ user, emited, socket, setUser }: Props) {
                         <span className="discrimination">#{user.discrimination}</span>
                         </span>
                     </div>
-                    <div className="fixed-full-screen">
-                        <div className="fixed" onClick={() => setProfileMenu(false)}/>
-                        <div className={`${profileMenu ? 'list-menu list-menu-open' : 'list-menu list-menu-closed'}`}>
-                            <Link 
+                    <div className={`${profileMenu ? 'list-menu list-menu-open' : 'list-menu list-menu-closed'}`}>
+                        <Link 
                             onClick={() => setProfileMenu(false)}
                             to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
-                                <li>
-                                    <span>
-                                        <FaUser />  Profile
-                                    </span>
-                                </li>
-                            </Link>
-                            <Link
-                            onClick={() => {
-                            window.localStorage.setItem("token", "")
-                            location.reload()
-                            }}
-                            to={'/login'}>
                             <li>
                                 <span>
-                                    <FaSignOutAlt /> Logout
+                                    <FaUser />  Profile
                                 </span>
                             </li>
-                            </Link>
-                        </div>
+                        </Link>
+                        <Link
+                        onClick={() => {
+                            window.localStorage.setItem("token", "")
+                            location.reload()
+                        }}
+                        to={'/login'}>
+                        <li>
+                            <span>
+                                <FaSignOutAlt /> Logout
+                            </span>
+                        </li>
+                        </Link>
                     </div>
                 </div>
             </div>

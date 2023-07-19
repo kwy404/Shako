@@ -266,6 +266,7 @@ a{
   overflow: auto;
   height: calc(100vh - 50px);
   overflow: auto;
+  z-index: 9;
 }
 
 /* For WebKit-based browsers (Chrome, Safari) */
