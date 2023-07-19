@@ -131,13 +131,8 @@ function Header({ user, emited, socket, setUser }: Props) {
                     <img className="icon bell-icon" src={bell_icon}/>
                     <img className="icon chat-icon" src={chat_icon}/>
                     <div 
-                    tabIndex={0} // Torna a div focável
-                    onBlur={() => () => {
-                        setTimeout(() => {
-                            setProfileMenu(false);
-                        }, 200)
-                    }}
-                    onFocus={() => setProfileMenu(true)}
+                    tabIndex={1} // Torna a div focável
+                    onClick={() => setProfileMenu(!profileMenu)}
                     className={`profile ${profileMenu ? 'profileAtivo' : ''}`}>
                         <img className="icon expand" src={expand_icon}/>
                         <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
