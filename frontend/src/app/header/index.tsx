@@ -62,7 +62,7 @@ function Header({ user, emited, socket, setUser }: Props) {
         <div className="Header">
             <div className="center">
                 <div className="absolute left">
-                    <Link to={"/dashboard"}><h1>Shako</h1></Link>
+                    <Link to={"/dashboard"} onClick={() => setProfileMenu(false)}><h1>Shako</h1></Link>
                 </div>
                 <div className="absolute right">
                     <img className="icon search-input" src={search_icon}/>
@@ -73,6 +73,7 @@ function Header({ user, emited, socket, setUser }: Props) {
                             setSearchFound({users: []})
                         }, 200)
                     }}
+                    onClick={() => setProfileMenu(false)}
                     onKeyUp={(e) => {
                         if (!socket) {
                         // Handle the case when socket is null
