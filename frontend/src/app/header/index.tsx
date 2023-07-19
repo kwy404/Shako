@@ -129,14 +129,19 @@ function Header({ user, emited, socket, setUser }: Props) {
                     </div> }
                     <img className="icon bell-icon" src={bell_icon}/>
                     <img className="icon chat-icon" src={chat_icon}/>
-                    <div className={`profile ${profileMenu ? 'profileAtivo' : ''}`} onClick={() => setProfileMenu(!profileMenu)}>
+                    <div 
+                    onBlur={() => setProfileMenu(false)}
+                    tabIndex={0} // Torna a div focável
+                    onBlur={() => setProfileMenu(false)}
+                    className={`profile ${profileMenu ? 'profileAtivo' : ''}`} onClick={() => setProfileMenu(!profileMenu)}>
                         <img className="icon expand" src={expand_icon}/>
                         <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
                         <span className="username">{user.username}
                         <span className="discrimination">#{user.discrimination}</span>
                         </span>
                     </div>
-                    <div className={`${profileMenu ? 'list-menu list-menu-open' : 'list-menu list-menu-closed'}`}>
+                    <div 
+                    className={`${profileMenu ? 'list-menu list-menu-open' : 'list-menu list-menu-closed'}`}>
                         <Link 
                             onClick={() => setProfileMenu(false)}
                             to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
