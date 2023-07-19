@@ -86,12 +86,14 @@
     cursor: pointer;
     opacity: 0.6;
     border: 1px solid transparent;
+    border-bottom: 1px solid transparent !important;
     z-index: 100;
 }
 
 .Header .profileAtivo{
     border: 1px solid #2f3336 !important;
     opacity: 1 !important;
+    border-bottom: 1px solid transparent !important;
 }
 
 .Header .right .profile .avatar{
@@ -192,7 +194,7 @@
     border-top: 1px solid transparent;
     max-height: 300px;
     z-index: 120;
-    border-radius: 5px;a
+    border-radius: 5px;
     margin-top: 10px;
 }
 
