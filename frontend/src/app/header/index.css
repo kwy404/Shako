@@ -188,6 +188,7 @@
     border: 1px solid #2f3336;
     border-top: 1px solid transparent;
     max-height: 300px;
+    z-index: 120;
 }
 
 .foundUsers a{
