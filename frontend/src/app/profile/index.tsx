@@ -256,9 +256,9 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           'Content-Type': 'multipart/form-data',
         },
       });
-      if(response.data.avatar){
+      if(response.data.banner){
         const oldProfile = {...profile};
-        oldProfile.avatar = response.data.avatar;
+        oldProfile.banner = response.data.banner;
         setProfile(oldProfile);
         const oldUser = {...user};
         oldUser.banner = response.data.banner;
