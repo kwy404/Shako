@@ -2,7 +2,7 @@
     width: calc(100% - 20px);
     position: fixed;
     height: 60px;
-    background: #010108;
+    background: #23232a;
     border-bottom: 1px solid rgba(0,0,0,.80);
     padding: 15px;
     display: flex;
@@ -16,15 +16,22 @@
     top: -20px;
 }
 
+.Header .left h1{
+    z-index: 100;
+    position: relative;
+}
+
 .search-bar{
     width: 400px;
-    background-color: rgba(255,255,255,.12) !important;
+    background-color: rgba(255,255,255,.1) !important;
     right: 335px;
     position: relative;
     color: rgba(255,255,255,.7) !important;
     font-size: 12px;
     height: 15px;
     top: -5px;
+    z-index: 100;
+    border: none !important;
 }
 
 .search-bar::placeholder{
@@ -35,10 +42,12 @@
 
 .absolute{
     position: absolute;
+    z-index: 100;
 }
 
 .Header .left{
     left: 10px;
+    z-index: 110;
 }
 
 .Header .left h1{
@@ -55,25 +64,28 @@
 }
 
 .Header .right{
+    z-index: 100;
     right: 50px;
 }
 
 .Header .right .profile:hover{
     background: rgba(0,0,0,.10);
-    box-shadow: 2px 2px 10px 0px #030303;
     opacity: 1;
+    border: 1px solid #2f3336;
 }
 
 .Header .right .profile{
     width: 200px;
     background: rgba(0,0,0,.20);
-    height: 40px;
+    height: 36px;
     position: absolute;
-    right: -70px;
-    top: -20px;
+    right: -55px;
+    top: -15px;
     padding: 11px;
     cursor: pointer;
     opacity: 0.6;
+    border: 1px solid #2f3336;
+    z-index: 100;
 }
 
 .Header .right .profile .avatar{
@@ -81,12 +93,12 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    top: 5px;
+    top: 0px;
     position: relative;
 }
 
 .Header .right .profile .username{
-    top: -10px;
+    top: -15px;
     position: relative;
     left: 10px;
 }
@@ -101,6 +113,7 @@
     opacity: 0.4;
     cursor: pointer;
     top: -5px;
+    z-index: 100;
 }
 
 .icon:hover{
@@ -109,22 +122,19 @@
 
 .expand{
     right: 10px;
-    top: 30px;
+    top: 25px;
 }
 
 .search-input{
     z-index: 10;
     width: 4px;
-    height: 37px;
+    height: 35px;
     object-fit: fill;
     transform: scale(1);
     background-color: rgba(255,255,255,.12) !important;
     left: -371px;
     top: -5px;
     position: absolute;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
     border-radius: 0px;
     z-index: 10;
     opacity: 1 !important;
@@ -215,4 +225,73 @@
     position: relative;
     top: -14px;
     left: 10px;
+}
+
+.list-menu{
+    position: absolute;
+    right: -55px;
+    background-color: #23232a;
+    width: 210px;
+    padding: 10px;
+    margin-top: 12px;
+    border: 1px solid #2f3336;
+    border-radius: 5px;
+    transition: 0.4s;
+    z-index: 100;
+}
+
+.list-menu li{
+    width: 100%;
+    list-style: none;
+    text-align: initial;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 5px;
+    position: relative;
+    left: -10px;
+    transition: 0.4s ease;
+    padding: 5px;
+    border-radius: 5px;
+    opacity: 0.5;
+}
+
+.list-menu li:hover{
+    background-color: rgba(255,255,255,0.05);
+    opacity: 0.8;
+}
+
+.list-menu li span{
+    margin-left: 20px;
+}
+
+.list-menu li svg{
+    margin-right: 25px;
+}
+
+.list-menu a{
+    text-decoration: none;
+}
+
+.list-menu-open{
+    transform: scale(1);
+    opacity: 1;
+}
+
+.list-menu-closed{
+    transform: scale(0);
+    opacity: 0.5;
+}
+
+.fixed-full-screen{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.fixed-full-screen .fixed{
+    position: fixed;
+    width: 200vw;
+    height: 200vh;
+    left: -100vw;
+    top: -6vh;
 }

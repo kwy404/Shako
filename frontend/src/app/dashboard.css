@@ -1,0 +1,37 @@
+.home .Profile{
+    border: 0px solid transparent;
+}
+
+.home .post_{
+    border: 1px solid #2f3336;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.home .post_ .text_area img{
+    width: 30px;
+    height: 30px;
+    top: 0;
+    border: 1px solid transparent;
+    display: flex;
+    left: 0;
+}
+
+.home .post_ .text_area textarea{
+    width: calc(100% - 180px);
+    display: flex;
+    resize: none;
+    transition: height 0.5s ease-in-out; /* Efeito de transição suave */
+    left: 50px;
+    position: relative;
+    background-color: rgba(255,255,255,.2);
+    border: none;
+    padding: 15px;
+    color: white;
+    font-size: 17px;
+    border-radius: 20px;
+}
+
+.home .post_ .text_area textarea:focus{
+    height: 100px; /* Altura do textarea ao ser clicado */
+}

@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 
 import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import { FaSignOutAlt, FaUser  } from 'react-icons/fa'
 
 interface User {
     id: string;
@@ -53,6 +54,7 @@ declare global {
 
 function Header({ user, emited, socket, setUser }: Props) {
     const [searchFound, setSearchFound] = useState<{ users: User[] }>({ users: [] });
+    const [profileMenu, setProfileMenu] = useState(false);
     socket?.on('search', (found: any) => {
         setSearchFound(found);
     })
@@ -126,15 +128,39 @@ function Header({ user, emited, socket, setUser }: Props) {
                     </div> }
                     <img className="icon bell-icon" src={bell_icon}/>
                     <img className="icon chat-icon" src={chat_icon}/>
-                    <Link to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
-                        <div className="profile">
-                            <img className="icon expand" src={expand_icon}/>
-                            <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
-                            <span className="username">{user.username}
-                            <span className="discrimination">#{user.discrimination}</span>
-                            </span>
+                    <div className="profile" onClick={() => setProfileMenu(!profileMenu)}>
+                        <img className="icon expand" src={expand_icon}/>
+                        <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
+                        <span className="username">{user.username}
+                        <span className="discrimination">#{user.discrimination}</span>
+                        </span>
+                    </div>
+                    <div className="fixed-full-screen">
+                        <div className="fixed" onClick={() => setProfileMenu(false)}/>
+                        <div className={`${profileMenu ? 'list-menu list-menu-open' : 'list-menu list-menu-closed'}`}>
+                            <Link 
+                            onClick={() => setProfileMenu(false)}
+                            to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
+                                <li>
+                                    <span>
+                                        <FaUser />  Profile
+                                    </span>
+                                </li>
+                            </Link>
+                            <Link
+                            onClick={() => {
+                            window.localStorage.setItem("token", "")
+                            location.reload()
+                            }}
+                            to={'/login'}>
+                            <li>
+                                <span>
+                                    <FaSignOutAlt /> Logout
+                                </span>
+                            </li>
+                            </Link>
                         </div>
-                    </Link>
+                    </div>
                 </div>
             </div>
         </div>

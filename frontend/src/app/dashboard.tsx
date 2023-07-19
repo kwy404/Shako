@@ -11,6 +11,7 @@ import Profile from "./profile";
 import { Helmet } from 'react-helmet';
 import { Buffer } from 'buffer';
 import axios from 'axios';
+import './dashboard.css';
 
 declare global {
     interface Window {
@@ -22,7 +23,7 @@ let socket: Socket | null = null;
 let socketSpotfiy: Socket | null = null;
 
 function Dashboard({ user, isProfile, setUser }: any) {
-    const params = useParams<{ username?: string; discrimination?: string }>();
+    const params = useParams<{ username?: string; discrimination?: string; user_id?: string; }>();
     const [loading, setLoading] = useState(false);
     const initialMount = useRef(true);
     const [refresh_token_, setRefreshToken] = useState("");
@@ -201,7 +202,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
                     <Header user={user} emited={emited} setUser={() => {}} socket={socket} />
                 </>
             )}
-            {params?.username && params?.discrimination ? <>
+            {params?.username && params?.discrimination && params?.user_id ? <>
                     <div className="container">
                         <div className="center">
                         <Left>
@@ -212,12 +213,17 @@ function Dashboard({ user, isProfile, setUser }: any) {
             </> : <>
             {user?.username && <>
                 <div className="container">
-                    <div className="center">
+                    <div className="center home">
                         <Left>
                         </Left>
                         <div className="Profile fullScreen">
                             <div className="feed">
-                                <h1>Home</h1>
+                                <div className="post_">
+                                  <div className="text_area">
+                                    <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
+                                    <textarea placeholder="Create a post"></textarea>
+                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
