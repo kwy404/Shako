@@ -11,6 +11,8 @@ import { Tooltip } from '@mui/material';
 import axios from 'axios';
 import SpotifyPlayerProfile from './SpotifyPlayerProfile';
 import Loading from "../loading";
+import defaultAvatar from "../../resources/images/default_avatar.webp";
+import defaultBanner from "../../resources/images/default_banner.jpg";
 
 const typePage = "profile";
 
@@ -303,10 +305,10 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         <div className="background">
           <div className="transparent"></div>
           <img className="cover" 
-          src={`${profile?.banner ? profile?.banner : 'https://images.hdqwalls.com/wallpapers/reddit-cartoon-4k-io.jpg'}`} alt="Cover" />
+          src={`${profile?.banner ? profile?.banner : defaultBanner}`} alt="Cover" />
           { profile.spotify_object.isPlaying ? <SpotifyPlayerProfile
           user={profile}
-          /> :  <img className="avatar" src={`${profile?.avatar ? profile?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />}
+          /> :  <img className="avatar" src={`${profile?.avatar ? profile?.avatar : defaultAvatar}`} alt="Avatar" />}
           { profile.id == user.id && <form>
             <div className={`changeAvatar-photo ${profile.spotify_object.isPlaying ? 'photoSpotify' : 'photoSpotifyNot'}`}>
               <label className="mudar_foto" htmlFor="file">Change photo</label>

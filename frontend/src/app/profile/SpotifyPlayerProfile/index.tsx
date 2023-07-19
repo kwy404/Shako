@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import './index.css';
 import { Tooltip } from '@mui/material';
+import defaultAvatar from "../../../resources/images/default_avatar.webp";
 
 const typePage = "profile";
 
@@ -34,7 +35,7 @@ function SpotifyPlayerProfile({ user }: Props) {
     <>
       <div>
         <div className="spotify_card">
-            <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`} alt="Avatar" />
+            <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`} alt="Avatar" />
             <h1></h1>
             <div className="subCard">
                 <h1 className="listen">LISTENING TO SPOTIFY</h1>

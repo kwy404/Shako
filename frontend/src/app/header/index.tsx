@@ -10,6 +10,7 @@ import search_icon from "../../resources/images/search.svg";
 import { Tooltip } from '@mui/material';
 import adminBadge from "../../resources/images/admin.png";
 import nitroBadge from "../../resources/images/nitro_badge.webp";
+import defaultAvatar from "../../resources/images/default_avatar.webp";
 
 import { Link } from "react-router-dom";
 
@@ -139,7 +140,7 @@ function Header({ user, emited, socket, setUser }: Props) {
                     onFocus={() => setProfileMenu(true)}
                     className={`profile ${profileMenu ? 'profileAtivo' : ''}`}>
                         <img className="icon expand" src={expand_icon}/>
-                        <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
+                        <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
                         <span className="username">{user.username}
                         <span className="discrimination">#{user.discrimination}</span>
                         </span>
