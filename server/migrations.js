@@ -150,6 +150,31 @@ const up = async function (knex) {
       table.enum("vote", ["upvote", "downvote"]).notNullable();
     });
   }
+
+  // Create table post_votes_profile if it doesn't exist
+  const hasChatTable = await knex.schema.hasTable("chat");
+  if (!hasChatTable) {
+    await knex.schema.createTable("chat", (table) => {
+      table.increments("id").primary();
+      table.integer("receiver_id").notNullable();
+      table.string("sender_id").notNullable();
+      table.string("status").notNullable();
+      table.text("chat_object").notNullable();
+    });
+  }
+
+   // Create table post_votes_profile if it doesn't exist
+   const hasNotificationTable = await knex.schema.hasTable("notification");
+   if (!hasNotificationTable) {
+     await knex.schema.createTable("notification", (table) => {
+       table.increments("id").primary();
+       table.integer("receiver_id").notNullable();
+       table.string("sender_id").notNullable();
+       table.string("status").notNullable();
+       table.string("message").notNullable();
+       table.text("notification_object").notNullable();
+     });
+   }
 };
 
 // Migrations

@@ -1,3 +1,5 @@
+const {notification} = require("../notification");
+
 // Função para seguir ou parar de seguir um usuário
 const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
     const token = data.token;
@@ -66,6 +68,9 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
           message: "Follow you.",
           follow: '1'
           }, io, socket);
+
+        //Notification
+        notification({receiveUser: user, user: currentUser, message: 'Follow you.'}, knex, io, socket, sendToRoom, receive);
 
         sendToRoom(currentUser, 'profile', {
             type: "follower",

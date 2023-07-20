@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import { Buffer } from 'buffer';
 import axios from 'axios';
 import './dashboard.css';
+import Notification from "../components/Notification";
 
 declare global {
     interface Window {
@@ -22,12 +23,34 @@ declare global {
 let socket: Socket | null = null;
 let socketSpotfiy: Socket | null = null;
 
+interface NotificationData {
+  id: string;
+  message: string;
+  senderName: string;
+  senderAvatar: string;
+}
+
+
+
 function Dashboard({ user, isProfile, setUser }: any) {
     const params = useParams<{ username?: string; discrimination?: string; user_id?: string; }>();
     const [loading, setLoading] = useState(false);
     const initialMount = useRef(true);
-    const [refresh_token_, setRefreshToken] = useState("");
- 
+    const [notifications, setNotifications] = useState<NotificationData[]>([]);
+
+    const handleAddNotification = (id: any, message: any, senderName: any, senderAvatar: any) => {
+      const newNotification: NotificationData = {
+        id,
+        message: message,
+        senderName: senderName,
+        senderAvatar: senderAvatar,
+      };
+  
+      setNotifications([...notifications, newNotification]);
+    };
+
+    
+
     useEffect(() => {
         if (!socket) {
             socket = io("localhost:9091");
@@ -50,6 +73,10 @@ function Dashboard({ user, isProfile, setUser }: any) {
             }
         })
 
+        socket.on("notification", (message: any) => {
+          handleAddNotification(message.id, message.message, message.user.username, message.user.avatar)
+        })
+
         return () => {
             // Mantenha a conexão aberta se for a primeira montagem ou se o componente estiver sendo desmontado
             if (initialMount.current || !socket) {
@@ -58,7 +85,8 @@ function Dashboard({ user, isProfile, setUser }: any) {
             
             // Remova apenas os ouvintes do socket
             socket.off("connected");
-            
+            socket.off("profile");
+            socket.off("notification");
         };
     }, []);
 
@@ -189,12 +217,28 @@ function Dashboard({ user, isProfile, setUser }: any) {
         
       }, []);
 
+
+    const handleCloseNotification = (id: string) => {
+      setNotifications(notifications.filter((notification) => notification.id !== id));
+    };
     return (
         <div className="dashboard">
             {loading ? (
                 <>
                     <Header user={user} emited={emited} setUser={() => {}} socket={socket}/>
                     {/* <Online user={user} socket={socket!} emited={emited} /> */}
+                    <div className="notifications">
+                      {notifications.map((notification) => (
+                        <Notification
+                          key={notification.id}
+                          id={notification.id}
+                          message={notification.message}
+                          senderName={notification.senderName}
+                          senderAvatar={notification.senderAvatar}
+                          onClose={handleCloseNotification}
+                        />
+                      ))}
+                    </div>
                 </>
             ) : (
                 <>

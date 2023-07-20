@@ -35,3 +35,9 @@
 .home .post_ .text_area textarea:focus{
     height: 100px; /* Altura do textarea ao ser clicado */
 }
+
+.notifications{
+    position: fixed;
+    top: 20px;
+    z-index: 1000;
+}
