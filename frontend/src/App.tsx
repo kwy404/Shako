@@ -142,6 +142,17 @@ function App() {
               <Login registerSucess={false} setLogged={setLogged} />
             )}
           </Route>
+          <Route path="/chat" exact>
+            {user.id ? (
+              user.is_activated === '1' ? (
+                <Dashboard isChat={true} isProfile={false} setUser={setUser} user={user} />
+              ) : (
+                <Ativar user={user} setLogged={setLogged} />
+              )
+            ) : (
+              <Login registerSucess={false} setLogged={setLogged} />
+            )}
+          </Route>
           <Route path="/register" exact>
           {user.id ? (
               user.is_activated === '1' ? (

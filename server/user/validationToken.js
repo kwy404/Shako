@@ -172,7 +172,6 @@ const connected = async ({token}, knex, io, socket, sendToRoom, receive) => {
     }).select('*').then(async function(rows) {
       if(rows.length > 0){
           rows[0].password = undefined
-          const otherUsers = await getOtherUsersChat({token}, knex, io, socket, sendToRoom, receive)
           await userConnectToRoom(rows[0], `${token}-${rows[0].id}`, socket)
           await ping({token}, knex, io, socket, sendToRoom)
           return rows[0]
