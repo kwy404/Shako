@@ -14,6 +14,7 @@ const searchUsers = async (data, knex, io, socket, sendToRoom, receive) => {
             // Search users if its admin on top
             const users = await knex('users')
               .select('username', 'discrimination', 'nivel', 'lumis', 'epic', 'verificado', 'admin', 'avatar', 'id')
+              .limit('10')
               .where('username', 'like', `%${username}%`)
               .whereNot('id', myId) // Exclua o seu perfil da lista
               .orderBy('admin', 'desc')
