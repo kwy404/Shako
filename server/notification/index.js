@@ -16,7 +16,9 @@ const notification = async ({user, receiveUser, message}, knex, io, socket, send
         await knex('notification').insert({
             sender_id: user.id,
             receiver_id: receiveUser.id,
-            message: message
+            message: message,
+            status: '',
+            notification_object: '{}'
         });
         user.token = undefined;
         user.spotify = undefined;

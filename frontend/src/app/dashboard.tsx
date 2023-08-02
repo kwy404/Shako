@@ -14,6 +14,9 @@ import axios from 'axios';
 import './dashboard.css';
 import Notification from "../components/Notification";
 
+// Audio notification
+const notificationAudio = new Audio(`${window.location.origin}/resources/audio/notification.mp3`);
+
 declare global {
     interface Window {
         MyNamespace: any;
@@ -30,8 +33,6 @@ interface NotificationData {
   senderAvatar: string;
 }
 
-
-
 function Dashboard({ user, isProfile, setUser }: any) {
     const params = useParams<{ username?: string; discrimination?: string; user_id?: string; }>();
     const [loading, setLoading] = useState(false);
@@ -47,9 +48,8 @@ function Dashboard({ user, isProfile, setUser }: any) {
       };
   
       setNotifications([...notifications, newNotification]);
+      notificationAudio.play();
     };
-
-    
 
     useEffect(() => {
         if (!socket) {

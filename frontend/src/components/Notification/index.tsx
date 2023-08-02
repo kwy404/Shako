@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import defaultAvatar from "../../resources/images/default_avatar.webp";
 import './index.css';
 
 interface NotificationProps {
@@ -34,7 +35,7 @@ const Notification: React.FC<NotificationProps> = ({
   return (
     <div className={`notification ${isVisible ? 'visible' : 'hidden'}`}>
       <div className="avatar">
-        <img src={senderAvatar} alt="Profile Avatar" />
+        <img src={senderAvatar ? senderAvatar : defaultAvatar} alt="Profile Avatar" />
       </div>
       <div className="content">
         <p>
