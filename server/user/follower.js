@@ -58,6 +58,7 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
         await knex('followers').insert({
           sender_id: currentUserId,
           receiver_id: userIdToFollow,
+          status: ''
         });
         
         sendToRoom(user, 'profile', {
@@ -85,7 +86,6 @@ const followUser = async (data, knex, io, socket, sendToRoom, receive) => {
   
       } catch (error) {
         // Tratar erros
-        console.error(error);
         throw new Error('Failed to follow/unfollow user');
       }
     }
