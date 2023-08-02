@@ -13,6 +13,7 @@ import { Buffer } from 'buffer';
 import axios from 'axios';
 import './dashboard.css';
 import Notification from "../components/Notification";
+import defaultAvatar from "../resources/images/default_avatar.webp";
 
 // Audio notification
 const notificationAudio = new Audio(`${window.location.origin}/resources/audio/notification.mp3`);
@@ -230,7 +231,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
                             <div className="feed">
                                 <div className="post_">
                                   <div className="text_area">
-                                    <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
+                                    <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
                                     <textarea placeholder="Create a post"></textarea>
                                   </div>
                                 </div>
