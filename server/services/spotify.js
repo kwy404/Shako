@@ -48,7 +48,79 @@ class SpotifyServer {
     io.on('connection', socket => {
       socket.on('message', this.handleMessage.bind(this, socket));
       socket.on('disconnect', this.handleDisconnect.bind(this, socket));
+      socket.on('play', this.handlePlay.bind(this, socket));
+      socket.on('pause', this.handlePause.bind(this, socket));
+      socket.on('skip', this.handleSkip.bind(this, socket));
     });
+  }
+
+  handlePlay(socket) {
+    const clientData = this.clientSockets.get(socket);
+    if (clientData) {
+      this.spotifyPlay(clientData.accessToken);
+    }
+  }
+
+  handlePause(socket) {
+    const clientData = this.clientSockets.get(socket);
+    if (clientData) {
+      this.spotifyPause(clientData.accessToken);
+    }
+  }
+
+  handleSkip(socket) {
+    const clientData = this.clientSockets.get(socket);
+    if (clientData) {
+      this.spotifySkip(clientData.accessToken);
+    }
+  }
+
+  async spotifyPlay(accessToken) {
+    try {
+      await axios.put(
+        'https://api.spotify.com/v1/me/player/play',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Erro ao executar a música:', error);
+    }
+  }
+
+  async spotifyPause(accessToken) {
+    try {
+      await axios.put(
+        'https://api.spotify.com/v1/me/player/pause',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Erro ao pausar a música:', error);
+    }
+  }
+
+  async spotifySkip(accessToken) {
+    try {
+      await axios.post(
+        'https://api.spotify.com/v1/me/player/next',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Erro ao pular a música:', error);
+    }
   }
 
   async handleMessage(socket, data) {
@@ -71,8 +143,8 @@ class SpotifyServer {
   handleDisconnect(socket) {
     const clientData = this.clientSockets.get(socket);
     if (clientData) {
-      this.updateSpotifyObject({isPlaying: false}, clientData.user.token);
-      io.emit('currentSong', {isPlaying: false});
+      this.updateSpotifyObject({ isPlaying: false }, clientData.user.token);
+      io.emit('currentSong', { isPlaying: false });
       this.stopSongUpdates(socket);
       this.spotifyCall(clientData.user.spotify_code, clientData.user);
       this.clientSockets.delete(socket);
@@ -106,20 +178,20 @@ class SpotifyServer {
                 },
               }),
             ]);
-  
+
             const { is_playing } = responsePlay.data;
             const { item } = response.data;
-            if(typeof item == 'undefined'){
-              if(user.isPlaying !== false){
+            if (typeof item == 'undefined') {
+              if (user.isPlaying !== false) {
                 const userMusic = await knex('users').where('token', user.token).first();
                 try {
                   const actualMusic = JSON.parse(userMusic.spotify_object);
-                  if(actualMusic.isPlaying != false){
-                    io.emit('currentSong', {isPlaying: false});
-                    this.updateSpotifyObject({isPlaying: false}, user.token);
+                  if (actualMusic.isPlaying != false) {
+                    io.emit('currentSong', { isPlaying: false });
+                    this.updateSpotifyObject({ isPlaying: false }, user.token);
                   }
                 } catch (error) {
-                  this.updateSpotifyObject({isPlaying: false}, user.token);
+                  this.updateSpotifyObject({ isPlaying: false }, user.token);
                 }
                 return;
               }
@@ -130,12 +202,16 @@ class SpotifyServer {
               const userMusic = await knex('users').where('token', user.token).first();
               try {
                 const actualMusic = JSON.parse(userMusic.spotify_object);
-                if(actualMusic.name !== currentSong.name || actualMusic.artists[0].name != currentSong.artists[0].name || actualMusic.isPlaying != currentSong.isPlaying){
+                if (
+                  actualMusic.name !== currentSong.name ||
+                  actualMusic.artists[0].name != currentSong.artists[0].name ||
+                  actualMusic.isPlaying != currentSong.isPlaying
+                ) {
                   io.emit('currentSong', currentSong);
                   this.updateSpotifyObject(currentSong, user.token);
                 }
               } catch (error) {
-                this.updateSpotifyObject({isPlaying: false}, user.token);
+                this.updateSpotifyObject({ isPlaying: false }, user.token);
               }
             } catch (error) {
               // console.log(error)
@@ -143,7 +219,6 @@ class SpotifyServer {
           } catch (error) {
             // Code here
           }
-          
         } catch (error) {
           if (error.response && error.response.status === 429) {
             // Rate limit exceeded
@@ -175,7 +250,7 @@ class SpotifyServer {
       await knex('users')
         .where('token', token)
         .update({
-          spotify_object: JSON.stringify(currentSong)
+          spotify_object: JSON.stringify(currentSong),
         });
     } catch (error) {
       console.error('Erro ao atualizar o objeto do Spotify:', error);
@@ -220,7 +295,6 @@ class SpotifyServer {
                 await knex('users')
                   .where('token', user.token)
                   .update({ spotify: newAccessToken, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code });
-
               } catch (error) {
                 //
               }

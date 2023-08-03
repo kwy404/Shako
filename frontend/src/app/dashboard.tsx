@@ -175,7 +175,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
             } catch (error) {
               console.error('Error:', error);
             }
-          };          
+        };          
     
         if(window.location.search.split("code=")[1]){
             spotifyCall(window.location.search.split("code=")[1]);

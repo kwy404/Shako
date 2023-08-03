@@ -1,4 +1,4 @@
-const {calcularExpProximoNivel} = require('./exp');
+const { calcularExpProximoNivel } = require('./exp');
 
 function isValidJson(jsonString) {
   try {
@@ -10,134 +10,150 @@ function isValidJson(jsonString) {
 }
 
 const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
-    const token = data.token;
-    const {username, discrimination, user_id} = data.receive;
-    if(username && discrimination && token && user_id){
-        knex('users').where({
-          token: token
-          }).select('*').then(async function(myProfile) {
-            if(myProfile.length > 0){
-              if(myProfile[0].id){
-                try {
-                  const rows = await knex('users').where({
-                    username: username,
-                    discrimination: discrimination,
-                    id: user_id
-                  }).select('*');
-                  if (rows.length > 0) {
-                    rows[0].password = undefined;
-                    rows[0].code_activate = undefined;
-                    rows[0].exp_to_next_level = calcularExpProximoNivel(rows[0].nivel + 1);
-                    rows[0].token = undefined;
-                    rows[0].spotify = undefined;
-                    rows[0].spotify_refresh_token = undefined;
-                    rows[0].spotify_code = undefined;
-                    if (isValidJson(rows[0].spotify_object)) {
-                      rows[0].spotify_object = JSON.parse(rows[0].spotify_object);
-                    } else{
-                      rows[0].spotify_object = {}
-                    }
-                    if(rows[0].banned == 1 && myProfile[0].admin == 0){
-                      rows[0].spotify_object = {}
-                      socket.emit('profile', {
-                        type: "profile",
-                        user: rows[0],
-                        success: false,
-                        noMessageError: true,
-                        message: "This account is banned from Shako. "
-                      })
-                      return {};
-                    } else if(rows[0].private == 1){
-                      const followMe = await knex('followers')
-                      .where({ sender_id: rows[0].id, receiver_id: myProfile[0].id  })
-                      .first();
-                      const follow = await knex('followers')
-                      .where({ sender_id: myProfile[0].id, receiver_id: rows[0].id })
-                      .first();
-                      if(myProfile[0].id != rows[0].id && myProfile[0].admin == 0 && !followMe && !follow){
-                        rows[0].spotify_object = {}
-                        socket.emit('profile', {
-                          type: "profile",
-                          user: rows[0],
-                          success: false,
-                          noMessageError: true,
-                          message: `This account is private.`
-                        })
-                        return {};
-                      }
-                    }
+  const token = data.token;
+  const { username, discrimination, user_id } = data.receive;
+  if (!username || !discrimination || !token || !user_id) {
+    return socket.emit('profile', {
+      type: 'profile',
+      user: {},
+      success: false,
+      noMessageError: true,
+      message: 'Invalid request data.',
+    });
+  }
 
-                    const followers = await knex('followers')
-                      .join('users', 'users.id', '=', 'followers.sender_id')
-                      .where({ 'followers.receiver_id': rows[0].id })
-                      .select('users.id', 'users.username', 'users.email');
+  try {
+    const myProfile = await knex('users')
+      .where({ token: token })
+      .select('id', 'admin')
+      .first();
 
-                    const followersYouFollowBack = await knex('followers')
-                      .join('users', 'users.id', '=', 'followers.sender_id')
-                      .where({ 'followers.receiver_id': rows[0].id })
-                      .whereIn('followers.sender_id', followers.map(follower => follower.id))
-                      .select('users.id', 'users.username', 'users.email');
+    if (!myProfile || !myProfile.id) {
+      return socket.emit('profile', {
+        type: 'profile',
+        user: {},
+        success: false,
+        noMessageError: true,
+        message: 'Invalid token.',
+      });
+    }
 
-                    const followersWithFollowMe = followersYouFollowBack.map(follower => ({
-                      id: follower.id,
-                      username: follower.username,
-                      email: follower.email,
-                      follow_me: true
-                    }));
+    const rows = await knex('users')
+      .where({
+        username: username,
+        discrimination: discrimination,
+        id: user_id,
+      })
+      .select('*');
 
-                    const followersCount = await knex('followers')
-                      .where({ receiver_id: rows[0].id })
-                      .count('sender_id as count')
-                      .first();
+    if (rows.length === 0) {
+      return socket.emit('profile', {
+        type: 'profile',
+        user: {},
+        success: false,
+        noMessageError: true,
+        message: "This account doesn't exist.",
+      });
+    }
 
-                    const followingCount = await knex('followers')
-                      .where({ sender_id: rows[0].id })
-                      .count('receiver_id as count')
-                      .first();
+    const profileData = rows[0];
+    profileData.password = undefined;
+    profileData.code_activate = undefined;
+    profileData.exp_to_next_level = calcularExpProximoNivel(profileData.nivel + 1);
+    profileData.token = undefined;
+    profileData.spotify = undefined;
+    profileData.spotify_refresh_token = undefined;
+    profileData.spotify_code = undefined;
+    profileData.spotify_object = isValidJson(profileData.spotify_object)
+      ? JSON.parse(profileData.spotify_object)
+      : {};
 
-                    const follow = await knex('followers')
-                      .where({ sender_id: myProfile[0].id, receiver_id: rows[0].id })
-                      .first();
+    if (profileData.banned === 1 && myProfile.admin === 0) {
+      profileData.spotify_object = {};
+      socket.emit('profile', {
+        type: 'profile',
+        user: profileData,
+        success: false,
+        noMessageError: true,
+        message: 'This account is banned from Shako. ',
+      });
+      return profileData;
+    } else if (profileData.private === 1) {
+      const followMe = await knex('followers')
+        .where({ sender_id: profileData.id, receiver_id: myProfile.id })
+        .first();
+      const follow = await knex('followers')
+        .where({ sender_id: myProfile.id, receiver_id: profileData.id })
+        .first();
 
-                    const followBack = await knex('followers')
-                    .where({ sender_id: rows[0].id, receiver_id: myProfile[0].id  })
-                    .first();
-
-                    rows[0].isFollow = follow
-                    rows[0].followBack = followBack
-                    rows[0].followers = followersWithFollowMe;
-                    rows[0].followersCount = followersCount.count || 0;
-                    rows[0].followingCount = followingCount.count || 0;
-
-                    socket.emit('profile', {
-                      type: "profile",
-                      user: rows[0],
-                      success: true,
-                      noMessageError: true,
-                      message: "202"
-                    })
-                    return rows[0];
-                  } else {
-                    socket.emit('profile', {
-                      type: "profile",
-                      user: rows[0],
-                      success: false,
-                      noMessageError: true,
-                      message: "This account doesn’t exist."
-                    })
-                    return {};
-                  }
-                } catch (error) {
-                  console.log('error', error)
-                  return {};
-                }
-              }
-              } else{
-                  return {}
-              }
-        })
+      if (myProfile.id !== profileData.id && myProfile.admin === 0 && !followMe && !follow) {
+        profileData.spotify_object = {};
+        socket.emit('profile', {
+          type: 'profile',
+          user: profileData,
+          success: false,
+          noMessageError: true,
+          message: `This account is private.`,
+        });
+        return profileData;
       }
-  };
-  
-  module.exports = { getUserProfile };
-  
+    }
+
+    const followers = await knex('followers')
+      .join('users', 'users.id', '=', 'followers.sender_id')
+      .where({ 'followers.receiver_id': profileData.id })
+      .select('users.id', 'users.username', 'users.email');
+
+    const followersYouFollowBack = await knex('followers')
+      .join('users', 'users.id', '=', 'followers.sender_id')
+      .where({ 'followers.receiver_id': profileData.id })
+      .whereIn('followers.sender_id', followers.map(follower => follower.id))
+      .select('users.id', 'users.username', 'users.email');
+
+    const followersWithFollowMe = followersYouFollowBack.map(follower => ({
+      id: follower.id,
+      username: follower.username,
+      email: follower.email,
+      follow_me: true,
+    }));
+
+    const followersCount = await knex('followers')
+      .where({ receiver_id: profileData.id })
+      .count('sender_id as count')
+      .first();
+
+    const followingCount = await knex('followers')
+      .where({ sender_id: profileData.id })
+      .count('receiver_id as count')
+      .first();
+
+    const follow = await knex('followers')
+      .where({ sender_id: myProfile.id, receiver_id: profileData.id })
+      .first();
+
+    const followBack = await knex('followers')
+      .where({ sender_id: profileData.id, receiver_id: myProfile.id })
+      .first();
+
+    profileData.isFollow = !!follow;
+    profileData.followBack = followBack || null;
+    profileData.followers = followersWithFollowMe;
+    profileData.followersCount = followersCount.count || 0;
+    profileData.followingCount = followingCount.count || 0;
+
+    socket.emit('profile', {
+      type: 'profile',
+      user: profileData,
+      success: true,
+      noMessageError: true,
+      message: '202',
+    });
+
+    return profileData;
+  } catch (error) {
+    console.log('error', error);
+    return {};
+  }
+};
+
+module.exports = { getUserProfile };
