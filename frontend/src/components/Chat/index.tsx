@@ -217,7 +217,12 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             { searchFound?.users.length > 0 && searchFound?.users.map((user => (
               <li
                 className={`${selectUser.id === user.id ? 'activeChat': ''}`}
-                onClick={() => setSelectUser(user)}
+                onClick={() => 
+                  {
+                    setIsLoading(true);
+                    setSelectUser(user)
+                  }
+                }
                 key={user.id}>
                 <div className="flex--contaienr">
                   <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
@@ -232,7 +237,12 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             { myChatUsers?.length > 0 && myChatUsers.map((user:any) => (
               <li
               className={`chatFoundUserB ${selectUser.id === user.id ? 'activeChat': ''}`}
-              onClick={() => setSelectUser(user)}
+              onClick={() => 
+                {
+                  setIsLoading(true);
+                  setSelectUser(user)
+                }
+              }
               key={user.id}>
               <div className="flex--contaienr">
                 <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
