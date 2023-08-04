@@ -140,4 +140,3 @@ const getUserProfile = async (data, knex, io, socket, sendToRoom, receive) => {
   };
   
   module.exports = { getUserProfile };
-  

@@ -2,6 +2,7 @@
 const searchUsers = async (data, knex, io, socket, sendToRoom, receive) => {
     const username = data.receive.username;
     const token = data.token;
+    const type = data.receive.typeSearch;
   
     knex('users').where({
       token: token
@@ -26,7 +27,7 @@ const searchUsers = async (data, knex, io, socket, sendToRoom, receive) => {
             const count = users.length; // Contagem de resultados
 
             socket.emit('search', {
-              type: "profile",
+              type: type,
               users: users,
               count: count, // Inclui a contagem nos resultados
               success: false,

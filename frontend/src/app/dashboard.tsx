@@ -14,6 +14,7 @@ import axios from 'axios';
 import './dashboard.css';
 import Notification from "../components/Notification";
 import defaultAvatar from "../resources/images/default_avatar.webp";
+import ChatComponent from "../components/Chat";
 
 // Audio notification
 const notificationAudio = new Audio(`${window.location.origin}/resources/audio/notification.mp3`);
@@ -213,6 +214,9 @@ function Dashboard({ user, isProfile, setUser }: any) {
                     <Header user={user} emited={emited} setUser={() => {}} socket={socket} />
                 </>
             )}
+            {/* Chat component here */}
+            <ChatComponent user={user} emited={emited} setUser={() => {}} socket={socket}/>
+            {/* End chat component here */}
             {params?.username && params?.discrimination && params?.user_id ? <>
                     <div className="container">
                         <div className="center">

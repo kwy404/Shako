@@ -57,7 +57,9 @@ function Header({ user, emited, socket, setUser }: Props) {
     const [searchFound, setSearchFound] = useState<{ users: User[] }>({ users: [] });
     const [profileMenu, setProfileMenu] = useState(false);
     socket?.on('search', (found: any) => {
-        setSearchFound(found);
+        if(found.type == 'searchHeader'){
+            setSearchFound(found);
+        }
     })
     return (
         <div className="Header">
@@ -83,6 +85,8 @@ function Header({ user, emited, socket, setUser }: Props) {
                         emited(
                         {
                             username: (e.target as any).value,
+                            type: 'search',
+                            typeSearch: 'searchHeader',
                             token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''
                         },
                         'searchUsers',
@@ -97,7 +101,7 @@ function Header({ user, emited, socket, setUser }: Props) {
                         { searchFound?.users.length > 0 && searchFound?.users.map((user => (
                             <Link to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
                                 <li key={user.id}>
-                                    <img className="avatar" src={`${user?.avatar ? user?.avatar : 'https://www.redditstatic.com/avatars/avatar_default_12_545452.png'}`}/>
+                                    <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
                                     <span className="username">{user?.username}</span>
                                     <span className="discrimination">#{user?.discrimination}</span>
                                     <>
