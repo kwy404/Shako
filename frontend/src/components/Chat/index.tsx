@@ -349,7 +349,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
           </div>
         </div>
         { gifOpen && selectUser?.id && <div 
-        tabIndex={100} // Torna a div focável
+        tabIndex={100}
         className="gif">
           <GifSelector emited={emited} socket={socket} selectUserId={selectUser.id} setGifOpen={setGifOpen}/>
         </div>}
