@@ -23,6 +23,11 @@
     object-fit: cover;
 }
 
+.card--user .badge--profile img{
+    width: 15px !important; 
+    height: 15px !important;
+}
+
 .card--user .info--header .banner{
     width: 296px;
     height: 87px;

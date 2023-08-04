@@ -11,7 +11,7 @@ const suggestedUsers = async (data, knex, io, socket, sendToRoom, receive) => {
         try {
           // Sugest users with preference criteria
           const users = await knex('users')
-            .select('username', 'discrimination', 'nivel', 'lumis', 'epic', 'verificado', 'admin', 'avatar', 'id')
+            .select('username', 'discrimination', 'nivel', 'lumis', 'epic', 'verificado', 'admin', 'avatar', 'id', 'banner')
             .limit('10')
             .whereNot('id', myId) // Exclua o seu perfil da lista
             .orderBy('admin', 'desc')
