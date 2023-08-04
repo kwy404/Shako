@@ -209,15 +209,21 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
                 asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
               </p>
             </div>
-          </li></> : <>
+          </li>
+          </> : <>
           <div className="info--user info--user--blur"></div>
           <div className="info--user">
             <img className="avatar" src={defaultAvatar}/>
             <h3>Select Any User#0000</h3>
           </div>
           </>}
-          
       </div>
+      {/* Input chat */}
+      {selectUser?.id && isOpen && <div className="input--chat">
+        <input
+        placeholder={`Send a message to ${selectUser?.username}#${selectUser?.discrimination}`}
+        type="text" />
+      </div>}
     </div>
   );
 };

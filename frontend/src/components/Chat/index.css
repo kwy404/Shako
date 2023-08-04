@@ -166,7 +166,7 @@
     position: absolute;
     overflow-x: hidden;
     overflow-y: auto;
-    height: calc(100% - 50px);
+    height: calc(100% - 120px);
     word-wrap: break-word;
 }
 
@@ -205,4 +205,23 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.input--chat{
+    position: absolute;
+    bottom: 0px;
+    width: 597px;
+    right: 0;
+    border-top: 2px solid rgba(255,255,255,.1);
+    height: 67px;
+}
+
+.input--chat input{
+    width: calc(100% - 40px);
+    position: relative;
+    top: 15px;
+    left: 10px;
+    overflow: hidden;
+    background-color: rgba(255,255,255,.1);
+    border-radius: 5px;
 }
