@@ -89,7 +89,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
       <div 
       onClick={() => setIsOpen(!isOpen)}
       className="header--component-chat">
-        <p className="chat--logo">chat {selectUser?.id ? `${selectUser?.username}` : ''}</p>
+        <p className="chat--logo">chat {selectUser?.id ? `- ${selectUser?.username}` : ''}</p>
         <div className="icons--">
           <div 
           onClick={() => setIsOpen(!isOpen)}
