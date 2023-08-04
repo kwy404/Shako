@@ -268,12 +268,12 @@
 }
 
 .input--chat input{
-    width: calc(100% - 40px);
+    width: calc(100% - 100px);
     position: relative;
     top: 15px;
     left: 10px;
     overflow: hidden;
-    background-color: rgba(255,255,255,.1);
+    background-color: rgb(62 62 73);
     border-radius: 5px;
 }
 
@@ -297,4 +297,65 @@
     top: 15px;
     left: -5px;
     text-transform: uppercase;
+}
+
+.input--chat .icons{
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    height: 32px;
+    width: 56px;
+    overflow: hidden;
+    background-color: rgb(62 62 73);
+    border-top: 1px solid black;
+    border-radius: 0 5px 5px 0;
+    padding: 3px;
+    border-bottom: 1px solid black;
+    box-shadow: none;
+    padding-left: 5px;
+}
+
+.input--chat .icons .buttonWrapper{
+    opacity: 0.5 !important;
+    right: -22px;
+    top: 1px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+
+.input--chat .icons .buttonWrapper:hover{
+    opacity: 1 !important;
+    transform: scale(1.04);
+}
+
+.chat--component--container .gif input{
+    width: calc(100% - 25px);
+    left: 3px;
+    top: 3px;
+    position: sticky;
+    z-index: 1000;
+}
+
+.chat--component--container .gif{
+    position: absolute;
+    top: -304px;
+    background: #32323c;
+    border-radius: 5px;
+    box-shadow: 2px 1px 3px rgba(0,0,0,.20);
+    padding: 10px;
+    height: 300px;
+    overflow: auto;
+    right: 14px;
+    width: 400px;
+    animation: open 0.4s;
+}
+
+@keyframes open {
+    0%{
+        transform: scale(0.1);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
