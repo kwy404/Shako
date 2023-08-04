@@ -1,10 +1,6 @@
 import { useState } from 'react';
-import closeIcon from '../../resources/images/close.png';
 import dropeDown from "../../resources/images/dropdown.svg";
 import './index.css';
-import { Tooltip } from '@mui/material';
-import adminBadge from "../../resources/images/admin.png";
-import nitroBadge from "../../resources/images/nitro_badge.webp";
 import defaultAvatar from "../../resources/images/default_avatar.webp";
 
 
