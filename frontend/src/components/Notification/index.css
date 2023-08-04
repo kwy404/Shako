@@ -8,10 +8,10 @@
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   opacity: 0;
-  transform: translateY(-100%);
+  transform: translateY(-100%) scale(4);
   max-width: 400px;
   left: 20px;
-  top: 0px;
+  bottom: 0px;
   padding: 16px;
   z-index: 1000;
   background-color: #2a2a32;
@@ -27,7 +27,7 @@
 
 .notification.hidden {
   opacity: 0;
-  transform: translateY(-100%);
+  transform: translateY(-100%) scale(2);
 }
 
 .notification .avatar {
