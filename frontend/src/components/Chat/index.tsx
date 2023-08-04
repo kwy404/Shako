@@ -164,7 +164,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
         socket.off('getLastMensagens', getLastMensagens);
       };
     }
-  }, [socket]);
+  }, [socket, selectUser]);
 
   const handleInputChange = (inputElement: HTMLInputElement | null): void => {
     if (inputElement) {
