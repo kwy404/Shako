@@ -8,6 +8,20 @@
     padding: 20px;
 }
 
+.home h3{
+    padding-top: 10px;
+    margin: 15px;
+}
+
+.scroll-x{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    position: relative;
+    white-space: nowrap;
+    padding: 5px;
+}
+
 .home .post_ .text_area img{
     width: 30px;
     height: 30px;

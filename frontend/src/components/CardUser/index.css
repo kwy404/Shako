@@ -1,0 +1,51 @@
+.card--user{
+    position: relative;
+    width: 296px;
+    height: 178px;
+    background: #23232a;
+    border: 1px solid rgba(0,0,0,.80);
+    border-radius: 5px;
+    margin-left: 15px;
+    display: inline-flex;
+    transition: 0.4s;
+    border: 4px solid transparent;
+    padding: 2px;
+}
+
+.card--user:hover{
+    transform: scale(1.01);
+    border: 4px solid #563BC6;
+}
+
+.card--user img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card--user .info--header .banner{
+    width: 296px;
+    height: 87px;
+    background-size: cover;
+}
+
+.card--user .info--header .avatar{
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    position: absolute;
+    top: 40px;
+}
+
+.card--user .info--header .avatar img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.card--user .username{
+    font-size: 22px;
+    margin: 10px;
+    position: relative;
+    top: 35px;
+}

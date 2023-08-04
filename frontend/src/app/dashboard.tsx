@@ -15,6 +15,7 @@ import './dashboard.css';
 import Notification from "../components/Notification";
 import defaultAvatar from "../resources/images/default_avatar.webp";
 import ChatComponent from "../components/Chat";
+import CardUser from "../components/CardUser";
 
 // Audio notification
 const notificationAudio = new Audio(`${window.location.origin}/resources/audio/notification.mp3`);
@@ -40,6 +41,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
     const [loading, setLoading] = useState(false);
     const initialMount = useRef(true);
     const [notifications, setNotifications] = useState<NotificationData[]>([]);
+    const [suggestUsers, setSuggestedUsers] = useState([]);
 
     const handleAddNotification = (id: any, message: any, senderName: any, senderAvatar: any) => {
       const newNotification: NotificationData = {
@@ -58,6 +60,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
             socket = io("localhost:9091");
             setTimeout(() => {
                 emited({}, "connected", socket!);
+                emited({ token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'suggestedUsers', socket);
             }, 1000);
         } else{
             setLoading(true);
@@ -75,6 +78,11 @@ function Dashboard({ user, isProfile, setUser }: any) {
             }
         })
 
+        socket.on("suggestedUsers", (data: any) => {
+          console.log(data.users)
+          setSuggestedUsers(data.users)
+        })
+
         socket.on("notification", (message: any) => {
           handleAddNotification(message.id, message.message, message.user.username, message.user.avatar)
         })
@@ -89,6 +97,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
             socket.off("connected");
             socket.off("profile");
             socket.off("notification");
+            socket.off("suggestedUsers");
         };
     }, []);
 
@@ -232,6 +241,14 @@ function Dashboard({ user, isProfile, setUser }: any) {
                         <Left>
                         </Left>
                         <div className="Profile fullScreen">
+                            <h3>Perfil recomendados</h3>
+                            {/* Perfil recomendados */}
+                            <div className="scroll-x">
+                            {suggestUsers.length > 0 && suggestUsers.map((user: any) => (
+                              <CardUser user={user}/>
+                            ))}
+                            </div>
+                            {/* end Perfil recomendado */}
                             <div className="feed">
                                 <div className="post_">
                                   <div className="text_area">
