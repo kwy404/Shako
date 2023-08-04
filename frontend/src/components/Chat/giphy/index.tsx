@@ -10,16 +10,18 @@ import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 
 interface Props {
-    socket: Socket<DefaultEventsMap, DefaultEventsMap> | null,
-    emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
-    selectUserId: string,
-    setGifOpen: (data: any) => void
+  socket: Socket<DefaultEventsMap, DefaultEventsMap> | null,
+  emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
+  selectUserId: string,
+  setGifOpen: (data: any) => void
 }
 
-const GifSelector = ({socket,emited, selectUserId, setGifOpen}: Props) => {
+const GifSelector = ({ socket, emited, selectUserId, setGifOpen }: Props) => {
   const [gifs, setGifs] = useState<Gif[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>(''); // State to store search query
   const [presetUrls, setPresetUrls] = useState<string[]>([]); // State to store preset GIF URLs
+  const [searchResults, setSearchResults] = useState<Gif[]>([]); // State to store search results
+
   // Coloque a sua chave de API do Giphy aqui
   const API_KEY = 'R5ThJWeA3Hs6FhqupCRNpIOr9zG6L3ue';
   const API_URL = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}`;
@@ -57,7 +59,7 @@ const GifSelector = ({socket,emited, selectUserId, setGifOpen}: Props) => {
     const fetchPresetUrls = async () => {
       const urls = await Promise.all(
         presetGifs.map(async (preset) => {
-          const response = await fetch(`${API_URL}&q=${preset}&limit=10`);
+          const response = await fetch(`${API_URL}&q=${preset}&limit=1`);
           const data = await response.json();
           const gif = data.data[0];
           return gif ? gif.images.fixed_height.url : '';
@@ -85,7 +87,22 @@ const GifSelector = ({socket,emited, selectUserId, setGifOpen}: Props) => {
     }
   };
 
-  const generateToken = (length : any) => {
+  // Function to fetch GIFs from Giphy
+  const fetchGifsSearch = async (query: string) => {
+    try {
+      const response = await fetch(`${API_URL}&q=${query}&limit=10`); // Limit to ten GIFs
+      const data = await response.json();
+      const gifs = data.data.map((gif: any) => ({
+        id: gif.id,
+        url: gif.images.fixed_height.url,
+      }));
+      setSearchResults(gifs);
+    } catch (error) {
+      console.error('Error fetching GIFs:', error);
+    }
+  };
+
+  const generateToken = (length: any) => {
     const characters =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     let token = "";
@@ -98,60 +115,65 @@ const GifSelector = ({socket,emited, selectUserId, setGifOpen}: Props) => {
 
   // Function to handle GIF click and set as search query
   const handleGifClick = (url: string) => {
-    if(!socket){
-        return;
+    if (!socket) {
+      return;
     }
     //Emited message
     emited(
-    {
+      {
         usernameId: selectUserId,
         type: 'chatMessage',
         token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '',
         message: `${url.split('.gif?')[0]}.gif`,
         id: generateToken(20)
-    },
-    'chatContainer',
-    socket
+      },
+      'chatContainer',
+      socket
     );
     setGifOpen(false);
   };
 
   return (
-    <div 
-    className="gif-selector">
+    <div className="gif-selector">
       <input
         type="text"
         placeholder="Pesquisar GIFs..."
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+          fetchGifsSearch(e.target.value);
+        }}
       />
       {searchQuery.trim().length === 0 && (
         <div className="preset-options gifs">
           {presetGifs.map((preset, index) => (
-            <div className="gift">
-                <div
-                onClick={() => fetchGifs(preset)}
-                className="overlaygif">
-                    <span>{preset}</span>
-                </div>
-                <img
-                key={preset}
-                src={presetUrls[index]}
-                alt={preset}
-                />
+            <div className="gift" key={preset}>
+              <div onClick={() => fetchGifs(preset)} className="overlaygif">
+                <span>{preset}</span>
+              </div>
+              <img src={presetUrls[index]} alt={preset} />
             </div>
           ))}
         </div>
       )}
       <div className="gifs">
-        {gifs.map((gif) => (
-          <img
-            key={gif.id}
-            src={gif.url}
-            alt="GIF"
-            onClick={() => handleGifClick(gif.url)}
-          />
-        ))}
+        {searchQuery.trim().length > 0
+          ? searchResults.map((gif) => (
+            <img
+              key={gif.id}
+              src={gif.url}
+              alt="GIF"
+              onClick={() => handleGifClick(gif.url)}
+            />
+          ))
+          : gifs.map((gif) => (
+            <img
+              key={gif.id}
+              src={gif.url}
+              alt="GIF"
+              onClick={() => handleGifClick(gif.url)}
+            />
+          ))}
       </div>
     </div>
   );

@@ -259,7 +259,7 @@ class userRegister {
           website: "",
           nivel: 0,
           code_activate: code_ativacao,
-          is_activated: 0,
+          is_activated: 1,
           exp: 0,
           spotify: '',
           spotify_refresh_token: '',
