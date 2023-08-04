@@ -348,13 +348,11 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             </svg>
           </div>
         </div>
-        { gifOpen && <div 
+        { gifOpen && selectUser?.id && <div 
         tabIndex={100} // Torna a div focável
-        onBlur={() => setTimeout(() => setGifOpen(false), 200)}
         className="gif">
-          <GifSelector/>
+          <GifSelector emited={emited} socket={socket} selectUserId={selectUser.id} setGifOpen={setGifOpen}/>
         </div>}
-       
         <button style={{display: 'none'}}></button>
         </form>
         

@@ -6,7 +6,17 @@ interface Gif {
   url: string;
 }
 
-const GifSelector: React.FC = () => {
+import { Socket } from "socket.io-client";
+import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+
+interface Props {
+    socket: Socket<DefaultEventsMap, DefaultEventsMap> | null,
+    emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
+    selectUserId: string,
+    setGifOpen: (data: any) => void
+}
+
+const GifSelector = ({socket,emited, selectUserId, setGifOpen}: Props) => {
   const [gifs, setGifs] = useState<Gif[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>(''); // State to store search query
   const [presetUrls, setPresetUrls] = useState<string[]>([]); // State to store preset GIF URLs
@@ -62,7 +72,7 @@ const GifSelector: React.FC = () => {
   // Function to fetch GIFs from Giphy
   const fetchGifs = async (query: string) => {
     try {
-      const response = await fetch(`${API_URL}&q=${query}&limit=1`); // Limit to one GIF
+      const response = await fetch(`${API_URL}&q=${query}&limit=10`); // Limit to one GIF
       const data = await response.json();
       const gifs = data.data.map((gif: any) => ({
         id: gif.id,
@@ -75,9 +85,35 @@ const GifSelector: React.FC = () => {
     }
   };
 
+  const generateToken = (length : any) => {
+    const characters =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    let token = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      token += characters[randomIndex];
+    }
+    return token;
+  }
+
   // Function to handle GIF click and set as search query
   const handleGifClick = (url: string) => {
+    if(!socket){
+        return;
+    }
     //Emited message
+    emited(
+    {
+        usernameId: selectUserId,
+        type: 'chatMessage',
+        token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '',
+        message: `${url.split('.gif?')[0]}.gif`,
+        id: generateToken(20)
+    },
+    'chatContainer',
+    socket
+    );
+    setGifOpen(false);
   };
 
   return (
