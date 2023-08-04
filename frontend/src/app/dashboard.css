@@ -1,5 +1,6 @@
 .home .Profile{
     border: 0px solid transparent;
+    width: calc(100% - 340px);
 }
 
 .home .post_{
@@ -14,7 +15,7 @@
 }
 
 .scroll-x{
-    width: 100%;
+    width: calc(100%);
     overflow-y: hidden;
     overflow-x: auto;
     position: relative;
