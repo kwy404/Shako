@@ -132,7 +132,91 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
           </div> }
       </div>
       <div className="right chat--mensanger">
-
+          {selectUser?.id ? <>
+          <div className="info--user info--user--blur"></div>
+          <div className="info--user">
+            <img className="avatar" src={`${selectUser?.avatar ? selectUser?.avatar : defaultAvatar}`}/>
+            <h3>{ selectUser.username }#{ selectUser.discrimination }</h3>
+          </div>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li>
+          <li>
+            <div className="flex--container">
+              <img src={defaultAvatar}/>
+              <p className='mensagem--p'>
+                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+              </p>
+            </div>
+          </li></> : <>
+          <div className="info--user info--user--blur"></div>
+          <div className="info--user">
+            <img className="avatar" src={defaultAvatar}/>
+            <h3>Select Any User#0000</h3>
+          </div>
+          </>}
+          
       </div>
     </div>
   );

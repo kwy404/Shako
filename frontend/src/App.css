@@ -8,6 +8,10 @@
   --login-box: #010108;
 }
 
+img{
+  object-fit: cover;
+}
+
 html{
   background: #0000 !important;
 }
