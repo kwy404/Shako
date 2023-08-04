@@ -3,6 +3,7 @@ import dropeDown from "../../resources/images/dropdown.svg";
 import './index.css';
 import defaultAvatar from "../../resources/images/default_avatar.webp";
 import Loading from '../../app/loading';
+import { Link } from "react-router-dom";
 
 declare global {
     interface Window {
@@ -260,10 +261,13 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
       <div className="right chat--mensanger" ref={messagesContainerRef}>
           {selectUser?.id ? <>
           <div className="info--user info--user--blur"></div>
+          <Link 
+          onClick={() => setIsOpen(false)}
+          to={`/u/${selectUser.username}/${selectUser.discrimination}/${selectUser.id}`}>
           <div className="info--user">
             <img className="avatar" src={`${selectUser?.avatar ? selectUser?.avatar : defaultAvatar}`}/>
             <h3>{ selectUser.username }#{ selectUser.discrimination }</h3>
-          </div>
+          </div></Link>
           { isLoading ? <><Loading></Loading></> : <>
             {messagens.map((message: any) => (
             <li 
