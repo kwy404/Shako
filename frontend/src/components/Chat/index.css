@@ -68,10 +68,11 @@
     height: 100%;
     object-fit: fill;
     user-select: none;
+    transition: 0.8s ease-in-out;
 }
 
 .chat--component--container .invertIcon{
-    transform: rotate(180deg);
+    transform: rotate(180deg) scale(1.3);
 }
 
 .chat--component--container li{

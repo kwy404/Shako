@@ -97,7 +97,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
           <div 
           onClick={() => setIsOpen(!isOpen)}
           className="button button--close">
-            <img className={`close ${!isOpen ? 'invertIcon' : ''}`} src={isOpen ? closeIcon : dropeDown} alt="" />
+            <img className={`close ${!isOpen ? 'invertIcon' : ''}`} src={isOpen ? dropeDown : dropeDown} alt="" />
           </div>
         </div>
       </div>
