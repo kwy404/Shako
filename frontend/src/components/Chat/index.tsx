@@ -219,7 +219,9 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
                 className={`${selectUser.id === user.id ? 'activeChat': ''}`}
                 onClick={() => 
                   {
-                    setIsLoading(true);
+                    if(selectUser.id !== user.id){
+                      setIsLoading(true);
+                    }
                     setSelectUser(user)
                   }
                 }
@@ -239,7 +241,9 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
               className={`chatFoundUserB ${selectUser.id === user.id ? 'activeChat': ''}`}
               onClick={() => 
                 {
-                  setIsLoading(true);
+                  if(selectUser.id !== user.id){
+                    setIsLoading(true);
+                  }
                   setSelectUser(user)
                 }
               }
