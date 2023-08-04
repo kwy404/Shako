@@ -96,13 +96,18 @@
     background-color: rgba(0,0,0,.40);
 }
 
+.chat--component--container .chat--mensanger li{
+    height: fit-content !important;
+    display: table;
+}
+
 .chat--component--container li .message-m:hover{
     opacity: 1;
 }
 
 .activeChat{
     opacity: 1 !important;
-    background-color: #563BC6;
+    background-color: #563BC6 !important;
 }
 
 .chat--component--container li .flex--container{
@@ -273,7 +278,6 @@
 
 .chatmessage{
     padding-top: 5px !important;
-    padding-bottom: 60px !important;
     width: 100%;
 }
 
