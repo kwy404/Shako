@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import dropeDown from "../../resources/images/dropdown.svg";
 import './index.css';
 import defaultAvatar from "../../resources/images/default_avatar.webp";
-
+import Loading from '../../app/loading';
 
 declare global {
     interface Window {
@@ -59,10 +59,14 @@ interface Props {
 }
 
 function ChatComponent({ user, emited, socket, setUser }: Props) {
-  const [isLoading, setIsLoading] = useState(false);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingChat, setIsLoadingChat] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [searchFound, setSearchFound] = useState<{ users: User[] }>({ users: [] });
   const chatInput = useRef<HTMLInputElement>(null);
+  const [messagens, setMensanges] = useState<any[]>([]);
+  const [myChatUsers, setMyChatUsers] = useState([])
   const [selectUser, setSelectUser] = useState({
     id: '',
     username: '',
@@ -75,9 +79,16 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
     spotify_object: {name: "", artist: "", album: ""}
   })
 
-  const handleConfirm = async () => {
-    setIsLoading(true);
-  };
+  const generateToken = (length : any) => {
+    const characters =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    let token = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      token += characters[randomIndex];
+    }
+    return token;
+  }
 
   socket?.on('search', (found: any) => {
     if(found.type == 'searchChat'){
@@ -85,9 +96,80 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
     }
   })
 
+  useEffect(() => {
+    const socketListener = (data: any) => {
+      // Check if the message with the same ID already exists in the state
+      const messageExists = messagens.some((message) => message.id === data.message.id);
+  
+      // If the user ID matches the selected user's ID
+      if (selectUser?.id === data.message.receiveId || selectUser?.id === data.message.senderId) {
+        // If the message doesn't exist, add it to the state
+        if (!messageExists) {
+          setMensanges((prevMessages) => [...prevMessages, data.message]);
+          scrollToBottom();
+        }
+      }
+    };
+  
+    socket?.on('messenger', socketListener);
+  
+    return () => {
+      socket?.off('messenger', socketListener);
+    };
+  }, [selectUser, messagens, socket]);
+
+  useEffect(() => {
+    const loadMessenger = (data: any) => {
+      setMensanges(data.message);
+      scrollToBottom();
+      setIsLoading(false);
+    };
+    
+    if (socket) {
+      socket.on('mensagens', loadMessenger);
+      emited({ user_id: selectUser?.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '' }, 'getMensagens', socket);
+    }
+  
+    return () => {
+      if (socket) {
+        socket.off('mensagens', loadMessenger);
+      }
+    };
+  }, [selectUser, socket]);  
+
+  useEffect(() => {
+    if (socket) {
+      const getLastMensagens = (data: any) => {
+        setMyChatUsers(data.messages);
+        setIsLoadingChat(false);
+      };
+  
+      socket.on('getLastMensagens', getLastMensagens);
+  
+      // Emit the request to get the last messages when the component mounts
+      emited({ user_id: selectUser?.id, token: window.localStorage.getItem('token') || '' }, 'getLastMensagens', socket);
+  
+      // Clean up the event listeners when the component unmounts to avoid memory leaks
+      return () => {
+        socket.off('getLastMensagens', getLastMensagens);
+      };
+    }
+  }, [socket]);
+
   const handleInputChange = (inputElement: HTMLInputElement | null): void => {
     if (inputElement) {
       inputElement.value = "";
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      // Scroll the div to the bottom by setting scrollTop to the scrollHeight
+      setTimeout(() => {
+        if(messagesContainerRef.current){
+          messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+      }, 500);
     }
   };
 
@@ -106,7 +188,13 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
         </div>
       </div>
       <div className="left">
-          <input 
+          <input
+          onBlur={(e) => {
+            setTimeout(() => {
+              e.target.value = "";
+              setSearchFound({ users: [] });
+            }, 1000);
+          }}
           onKeyUp={(e) => {
             if (!socket) {
             // Handle the case when socket is null
@@ -125,6 +213,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
           }}
           type="text" placeholder='Search Users to chat' className="search" />
           { searchFound.users.length > 0 && <div>
+            <span className='span-a'>Search Results</span>
             { searchFound?.users.length > 0 && searchFound?.users.map((user => (
               <li
                 className={`${selectUser.id === user.id ? 'activeChat': ''}`}
@@ -137,22 +226,44 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             </li>
           ))) }
           </div> }
+          { isLoadingChat ? <Loading></Loading> : <>
+          { myChatUsers.length > 0 && <div>
+            <span className='span-a'>My chat</span>
+            { myChatUsers?.length > 0 && myChatUsers.map((user:any) => (
+              <li
+              className={`chatFoundUserB ${selectUser.id === user.id ? 'activeChat': ''}`}
+              onClick={() => setSelectUser(user)}
+              key={user.id}>
+              <div className="flex--contaienr">
+                <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
+                <span>{user?.username} <span className="discrimination">#{user?.discrimination}</span></span>
+              </div>
+              </li>
+            )) }
+          </div> }
+          </>}
       </div>
-      <div className="right chat--mensanger">
+      <div className="right chat--mensanger" ref={messagesContainerRef}>
           {selectUser?.id ? <>
           <div className="info--user info--user--blur"></div>
           <div className="info--user">
             <img className="avatar" src={`${selectUser?.avatar ? selectUser?.avatar : defaultAvatar}`}/>
             <h3>{ selectUser.username }#{ selectUser.discrimination }</h3>
           </div>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                A little message
-              </p>
-            </div>
-          </li>
+          { isLoading ? <><Loading></Loading></> : <>
+            {messagens.map((message: any) => (
+            <li 
+            className={`chatmessage ${message.senderId == user.id ? 'myMessage': 'notMyMessage'}`}
+            key={message.id}>
+              <div className="flex--container message-m">
+                <img src={message.avatar ? message.avatar : defaultAvatar} alt="User Avatar" />
+                <p className='mensagem--p'>
+                  {message.message}
+                </p>
+              </div>
+            </li>
+            ))}
+          </>  }
           </> : <>
           <div className="info--user info--user--blur"></div>
           <div className="info--user">
@@ -174,9 +285,10 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
                 usernameId: selectUser?.id,
                 type: 'chatMessage',
                 token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '',
-                message: chatInput.current?.value
+                message: chatInput.current?.value,
+                id: generateToken(20)
             },
-            'chat--container',
+            'chatContainer',
             socket
             );
             handleInputChange(e.currentTarget.elements[0] as HTMLInputElement);
