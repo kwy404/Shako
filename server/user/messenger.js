@@ -174,16 +174,18 @@ const getLastMensagens = async (data, knex, io, socket, sendToRoom, receive) => 
           const otherUserId = message.sender_id == myProfile[0].id ? message.receiver_id : message.sender_id;
           
           const otherUser = await knex('users').where('id', otherUserId).select('*').first();
-          mensangesArray.push({
-            message: JSON.parse(message.chat_object).message,
-            username: otherUser.username,
-            id: otherUser.id,
-            discrimination: otherUser.discrimination,
-            avatar: otherUser.avatar,
-            userId: myProfile[0].id,
-            senderId: JSON.parse(message.chat_object).sender_id,
-            receiveId: JSON.parse(message.chat_object).receiver_id,
-          });
+          if(!mensangesArray.find(e => e.username == otherUser.username)){
+            mensangesArray.push({
+              message: JSON.parse(message.chat_object).message,
+              username: otherUser.username,
+              id: otherUser.id,
+              discrimination: otherUser.discrimination,
+              avatar: otherUser.avatar,
+              userId: myProfile[0].id,
+              senderId: JSON.parse(message.chat_object).sender_id,
+              receiveId: JSON.parse(message.chat_object).receiver_id,
+            });
+          }
         }
 
         // Emit the array of messages back to the socket using socket.emit
