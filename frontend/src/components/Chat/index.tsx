@@ -35,6 +35,7 @@ interface User {
     spotify: string;
 } 
 
+// Future use the code to chat date
 function convertDate(dateString: string) {
     const parts = dateString.split('/');
     const month = parseInt(parts[1], 10);
