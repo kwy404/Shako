@@ -148,7 +148,10 @@ const GifSelector = ({ socket, emited, selectUserId, setGifOpen }: Props) => {
         <div className="preset-options gifs">
           {presetGifs.map((preset, index) => (
             <div className="gift" key={preset}>
-              <div onClick={() => fetchGifs(preset)} className="overlaygif">
+              <div onClick={() => {
+                setSearchQuery(preset);
+                fetchGifsSearch(preset);
+              }} className="overlaygif">
                 <span>{preset}</span>
               </div>
               <img src={presetUrls[index]} alt={preset} />
