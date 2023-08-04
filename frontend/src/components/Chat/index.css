@@ -131,7 +131,7 @@
     border: 1px solid rgba(255,255,255,.1);
 }
 
-.chat--component--container li span{
+.chat--component--container li .span{
     display: flex;
     align-content: flex-start;
     flex-wrap: wrap;
@@ -144,9 +144,9 @@
 }
 
 .chat--component--container .discrimination{
-    position: absolute;
-    left: -9px;
-    top: 13px;
+    position: absolute !important;
+    left: -9px !important;
+    top: 13px !important;
     font-weight: bold;
 }
 
@@ -199,14 +199,18 @@
     border: 2px solid #563BC6;
 }
 
+.message-m{
+    border-radius: 5px;
+    margin: 5px;
+    position: relative;
+}
+
 .chat--component--container .notMyMessage .message-m{
     background-color: #c63b3bc7;
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
     float: left;
     left: 5px;
-    border-radius: 5px;
-    margin: 5px;
-    position: relative;
+    width: calc();
 }
 
 .chat--component--container .myMessage .message-m{
@@ -214,14 +218,11 @@
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
     float: right;
     right: 15px;
-    position: relative;
-    border-radius: 5px;
     opacity: 1;
-    margin: 5px;
 }
 
 .mensagem--p{
-    left: -30px;
+    left: -35px;
     position: relative;
     top: -6px;
     font-size: 16px;

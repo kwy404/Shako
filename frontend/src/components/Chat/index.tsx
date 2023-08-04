@@ -4,6 +4,7 @@ import './index.css';
 import defaultAvatar from "../../resources/images/default_avatar.webp";
 import Loading from '../../app/loading';
 import { Link } from "react-router-dom";
+import MessageRenderer from "./renderMessage";
 
 declare global {
     interface Window {
@@ -214,7 +215,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
           }}
           type="text" placeholder='Search Users to chat' className="search" />
           { searchFound.users.length > 0 && <div>
-            <span className='span-a'>Search Results</span>
+            <span className='span span-a'>Search Results</span>
             { searchFound?.users.length > 0 && searchFound?.users.map((user => (
               <li
                 className={`${selectUser.id === user.id ? 'activeChat': ''}`}
@@ -229,7 +230,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
                 key={user.id}>
                 <div className="flex--contaienr">
                   <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
-                  <span>{user?.username} <span className="discrimination">#{user?.discrimination}</span></span>
+                  <span className="span">{user?.username} <span className="span discrimination">#{user?.discrimination}</span></span>
                 </div>
             </li>
           ))) }
@@ -251,7 +252,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
               key={user.id}>
               <div className="flex--contaienr">
                 <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
-                <span>{user?.username} <span className="discrimination">#{user?.discrimination}</span></span>
+                <span className="span">{user?.username} <span className="span discrimination">#{user?.discrimination}</span></span>
               </div>
               </li>
             )) }
@@ -276,7 +277,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
               <div className="flex--container message-m">
                 <img src={message.avatar ? message.avatar : defaultAvatar} alt="User Avatar" />
                 <p className='mensagem--p'>
-                  {message.message}
+                  <MessageRenderer message={message.message} />
                 </p>
               </div>
             </li>
