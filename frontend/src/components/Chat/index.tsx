@@ -89,7 +89,9 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
 
   return (
     <div className={`chat--component--container ${isOpen ? 'chat--component--max' : 'chat--component--min'}`}>
-      <div className="header--component-chat">
+      <div 
+      onClick={() => setIsOpen(!isOpen)}
+      className="header--component-chat">
         <p className="chat--logo">chat {selectUser?.id ? `${selectUser?.username}` : ''}</p>
         <div className="icons--">
           <div 
