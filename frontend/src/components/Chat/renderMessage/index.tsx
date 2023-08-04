@@ -72,8 +72,8 @@ const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => {
               ></iframe>
               {videoInfo && (
                 <div className="info">
-                  <p>Nome do vídeo: {videoInfo.title}</p>
-                  <p>Autor: {videoInfo.author}</p>
+                  <p>{videoInfo.title}</p>
+                  <p>By: {videoInfo.author}</p>
                 </div>
               )}
             </div>
