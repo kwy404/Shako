@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import dropeDown from "../../resources/images/dropdown.svg";
 import './index.css';
 import defaultAvatar from "../../resources/images/default_avatar.webp";
@@ -62,6 +62,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchFound, setSearchFound] = useState<{ users: User[] }>({ users: [] });
+  const chatInput = useRef<HTMLInputElement>(null);
   const [selectUser, setSelectUser] = useState({
     id: '',
     username: '',
@@ -83,6 +84,12 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
       setSearchFound(found);
     }
   })
+
+  const handleInputChange = (inputElement: HTMLInputElement | null): void => {
+    if (inputElement) {
+      inputElement.value = "";
+    }
+  };
 
   return (
     <div className={`chat--component--container ${isOpen ? 'chat--component--max' : 'chat--component--min'}`}>
@@ -142,71 +149,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             <div className="flex--container">
               <img src={defaultAvatar}/>
               <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className="flex--container">
-              <img src={defaultAvatar}/>
-              <p className='mensagem--p'>
-                asdiosadusahusdsauidhsauidhusahduisahduisahuidshauidhsauidhusaidhusaidhuaisdhuashudi
+                A little message
               </p>
             </div>
           </li>
@@ -220,9 +163,31 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
       </div>
       {/* Input chat */}
       {selectUser?.id && isOpen && <div className="input--chat">
+        <form onSubmit={(e) => {
+            e.preventDefault();
+            if (!socket) {
+              // Handle the case when socket is null
+              return;
+            }
+            emited(
+            {
+                usernameId: selectUser?.id,
+                type: 'chatMessage',
+                token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '',
+                message: chatInput.current?.value
+            },
+            'chat--container',
+            socket
+            );
+            handleInputChange(e.currentTarget.elements[0] as HTMLInputElement);
+        }}>
         <input
+        ref={chatInput}
         placeholder={`Send a message to ${selectUser?.username}#${selectUser?.discrimination}`}
         type="text" />
+        <button style={{display: 'none'}}></button>
+        </form>
+        
       </div>}
     </div>
   );

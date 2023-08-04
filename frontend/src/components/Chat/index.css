@@ -173,7 +173,7 @@
 .mensagem--p{
     left: -30px;
     position: relative;
-    top: -4px;
+    top: 3px;
     font-size: 16px;
     white-space: pre-wrap;
     width: 85%;

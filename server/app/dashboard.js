@@ -4,6 +4,7 @@ const {banUser} = require('../admin/banUser');
 const {followUser} = require("../user/follower");
 const {searchUsers} = require('../user/search');
 const {spotify} = require("../user/spotify");
+const {sendMessage} = require("../user/messenger");
 
 const dashboard = async (socket, knex, io) => {
     socket.on('message', async msg => {
@@ -40,7 +41,8 @@ const types = {
   'banUser': banUser,
   'follow': followUser,
   'searchUsers': searchUsers,
-  'spotify': spotify
+  'spotify': spotify,
+  'chatMessage': sendMessage
 }
 
 module.exports = {dashboard}
