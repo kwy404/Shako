@@ -1,5 +1,3 @@
-
-
 function generateToken(length) {
     const characters =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
