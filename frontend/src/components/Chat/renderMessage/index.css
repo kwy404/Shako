@@ -39,6 +39,7 @@
 
 .mensagem--p .youtube-frame iframe{
     width: 100%;
+    border-radius: 3px;
 }
 
 .mensagem--p .youtube-frame .info p{
