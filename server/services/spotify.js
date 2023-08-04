@@ -40,7 +40,7 @@ class SpotifyServer {
 
   configureRoutes() {
     app.get('/', (req, res) => {
-      res.send("<h1>Hello World</h1>");
+      res.send("<h1>Its just a server to spotify profile</h1>");
     });
   }
 
