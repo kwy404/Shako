@@ -241,7 +241,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
                         <Left>
                         </Left>
                         <div className="Profile fullScreen">
-                            <h3>Perfil recomendados</h3>
+                            <h3>Recommended profiles</h3>
                             {/* Perfil recomendados */}
                             <div className="scroll-x">
                             {suggestUsers.length > 0 && suggestUsers.map((user: any) => (
