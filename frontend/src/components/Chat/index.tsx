@@ -109,7 +109,13 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
       if (selectUser?.id === data.message.receiveId || selectUser?.id === data.message.senderId) {
         // If the message doesn't exist, add it to the state
         if (!messageExists) {
-          setMensanges((prevMessages) => [...prevMessages, data.message]);
+          setMensanges((prevMessages) => {
+            // Filter out the existing messages with the same ID
+            const filteredMessages = prevMessages.filter(
+              (message) => message.id !== data.message.id
+            );
+            return [...filteredMessages, data.message];
+          });
           scrollToBottom();
         }
       }

@@ -16,7 +16,6 @@ async function insertMessage(message, knex) {
     return insertedMessageIds;
   } catch (error) {
     // Handle any errors that might occur during the insertion process.
-    console.error('Error inserting message:', error);
     throw error;
   }
 }
@@ -81,8 +80,8 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
               receiver_id: userAnonymous.id,
               sender_id: myProfile[0].id,
               avatar: myProfile[0].avatar,
-              username: myProfile[0].username
-              // Add any other relevant message properties here
+              username: myProfile[0].username,
+              id: id
             },
           }, knex);
         }
