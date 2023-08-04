@@ -272,7 +272,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             <h3>{ selectUser.username }#{ selectUser.discrimination }</h3>
           </div></Link>
           { isLoading ? <><Loading></Loading></> : <>
-            {messagens.map((message: any) => (
+            { messagens.map((message: any) => (
             <li 
             className={`chatmessage ${message.senderId == user.id ? 'myMessage': 'notMyMessage'}`}
             key={message.id}>

@@ -181,7 +181,7 @@
     position: absolute;
     overflow-x: hidden;
     overflow-y: auto;
-    height: calc(100% - 140px);
+    height: calc(100% - 122px);
     word-wrap: break-word;
     padding-bottom: 0px;
 }
