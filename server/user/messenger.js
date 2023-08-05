@@ -105,15 +105,15 @@ const getMensagens = async (data, knex, io, socket, sendToRoom, receive) => {
 
         // Use the 'knex' instance to query the database
         const messages = await knex(chatTable)
-          .where((queryBuilder) => {
-            // Query messages where receiver_id is the provided userId
-            queryBuilder.orWhere('receiver_id', userId);
-
-            // Query messages where sender_id is the provided userId
-            queryBuilder.orWhere('sender_id', userId);
+          .where(function() {
+            // Query messages where sender_id is the user's ID and receiver_id is myProfile[0].id
+            this.where('sender_id', userId)
+                .andWhere('receiver_id', myProfile[0].id)
+                // Query messages where sender_id is myProfile[0].id and receiver_id is the user's ID
+                .orWhere('sender_id', myProfile[0].id)
+                .andWhere('receiver_id', userId);
           })
           .select('*');
-
 
         const mensangesArray = []
         // Emit each message back to the socket using socket.emit
@@ -123,14 +123,14 @@ const getMensagens = async (data, knex, io, socket, sendToRoom, receive) => {
             avatar: JSON.parse(message.chat_object).avatar,
             id: message.id,
             userId: myProfile[0].id,
-            senderId: JSON.parse(message.chat_object).sender_id,
-            receiveId: JSON.parse(message.chat_object).receiver_id,
+            senderId: message.sender_id,
+            receiveId: message.receiver_id,
           })
         });
 
         socket.emit('mensagens', {
           type: 'mensagens',
-          userId: myProfile.id,
+          userId: myProfile[0].id,
           success: true,
           noMessageError: true,
           message: mensangesArray
