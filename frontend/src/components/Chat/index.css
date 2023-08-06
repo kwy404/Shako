@@ -200,6 +200,10 @@
     position: relative;
 }
 
+.chat--component--container .notMyMessage{
+    left: -15px;
+}
+
 .chat--component--container .notMyMessage .message-m{
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
     float: left;
