@@ -1,13 +1,7 @@
-import { useState, useEffect } from "react";
-// Webpack CSS import
+import { useState, useEffect, ReactNode } from "react";
 import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 import './index.css';
-import expand_icon from "../../resources/images/expandgrey.png"
-import bell_icon from "../../resources/images/bell.png"
-import chat_icon from "../../resources/images/chat.png"
-import search_icon from "../../resources/images/search.svg";
-
 import { Link } from "react-router-dom";
 
 const typePage = "header";
@@ -18,11 +12,15 @@ declare global {
     }
 }
 
-function Left({ user }: any) {
+interface LeftProps {
+    user: any;
+}
+
+function Left({ user, children }: React.PropsWithChildren<LeftProps>) {
     return (
         <div className="Left">
             <div className="cardT">
-
+                {children}
             </div>
         </div>
     );

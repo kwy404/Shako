@@ -56,3 +56,21 @@
     top: 20px;
     z-index: 1000;
 }
+
+.home .Left{
+    height: calc(100% + 30px);
+    border-right: 1px solid #2f3336;
+}
+
+.home .Left .cardT{
+    background-color: transparent !important;
+}
+
+.home .Left .cardT .card--user{
+    margin-top: 30px;
+}
+
+.home .Left .cardT .card--user .info--header .avatar{
+    left: 10px;
+    top: 45px;
+}

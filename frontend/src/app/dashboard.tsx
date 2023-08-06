@@ -79,7 +79,6 @@ function Dashboard({ user, isProfile, setUser }: any) {
         })
 
         socket.on("suggestedUsers", (data: any) => {
-          console.log(data.users)
           setSuggestedUsers(data.users)
         })
 
@@ -229,7 +228,8 @@ function Dashboard({ user, isProfile, setUser }: any) {
             {params?.username && params?.discrimination && params?.user_id ? <>
                     <div className="container">
                         <div className="center">
-                        <Left>
+                        <Left user={user}>
+                          
                         </Left>
                         <Profile setUser={setUser} params={params} socket={socket} emited={emited} user={user}/>
                         </div>
@@ -238,7 +238,8 @@ function Dashboard({ user, isProfile, setUser }: any) {
             {user?.username && <>
                 <div className="container">
                     <div className="center home">
-                        <Left>
+                        <Left user={user}>
+                          <CardUser user={user}/>
                         </Left>
                         <div className="Profile fullScreen">
                             <h3>Recommended profiles</h3>
