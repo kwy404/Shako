@@ -6,13 +6,14 @@
   
 .mensagem--p img {
     border-radius: 0px !important;
-    width: 100% !important;
+    width: calc(100% + 80px) !important;
     height: 300px !important;
-    max-width: 100% !important;
+    max-width: calc(100% + 80px)!important;
     max-height: 300px !important;
     object-fit: cover;
     position: relative !important;
     margin-top: 5px !important;
+    left: -120px !important;
 }
   
 .mensagem--p a {
