@@ -39,6 +39,7 @@ interface NotificationData {
 function Dashboard({ user, isProfile, setUser }: any) {
     const params = useParams<{ username?: string; discrimination?: string; user_id?: string; }>();
     const [loading, setLoading] = useState(false);
+    const [loadingSuggestUsers, setLoadingSuggestUsers] = useState(true);
     const initialMount = useRef(true);
     const [notifications, setNotifications] = useState<NotificationData[]>([]);
     const [suggestUsers, setSuggestedUsers] = useState([]);
@@ -80,6 +81,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
 
         socket.on("suggestedUsers", (data: any) => {
           setSuggestedUsers(data.users)
+          setLoadingSuggestUsers(false);
         })
 
         socket.on("notification", (message: any) => {
@@ -245,9 +247,11 @@ function Dashboard({ user, isProfile, setUser }: any) {
                             <h3>Recommended profiles</h3>
                             {/* Perfil recomendados */}
                             <div className="scroll-x">
-                            {suggestUsers.length > 0 && suggestUsers.map((user: any) => (
-                              <CardUser user={user}/>
-                            ))}
+                            {loadingSuggestUsers ? <Loading/> : <>
+                              {suggestUsers.length > 0 && suggestUsers.map((user: any) => (
+                                <CardUser user={user}/>
+                              ))}
+                            </>}
                             </div>
                             {/* end Perfil recomendado */}
                             <div className="feed">

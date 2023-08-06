@@ -79,3 +79,10 @@
     left: 10px;
     top: 45px;
 }
+
+.scroll-x .loading-overlay{
+    width: 100%;
+    height: 200px;
+    background-color: rgba(0,0,0,.50);
+    position: relative;
+}
