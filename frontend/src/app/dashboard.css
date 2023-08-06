@@ -58,8 +58,13 @@
 }
 
 .home .Left{
-    height: calc(100% + 30px);
+    height: calc(100% + 430px);
     border-right: 1px solid #2f3336;
+}
+
+.home .Left .cardT{
+    position: sticky !important;
+    top: 25px;
 }
 
 .home .Left .cardT{
