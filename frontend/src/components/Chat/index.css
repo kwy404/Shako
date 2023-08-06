@@ -232,7 +232,7 @@
 
 .chat--component--container .info--user h3{
     position: absolute;
-    left: 59px;
+    left: 65px;
     top: 5px;
     font-size: 14px;
 }
@@ -257,6 +257,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    left: 20px;
 }
 
 .input--chat{
