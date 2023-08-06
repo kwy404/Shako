@@ -31,6 +31,7 @@
 }
 
 .chat--component--container .header--component-chat{
+    z-index: 1000;
     cursor: pointer;
     position: absolute;
     width: 100%;
