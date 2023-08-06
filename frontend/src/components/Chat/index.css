@@ -237,7 +237,8 @@
     left: -110px;
     font-size: 15px;
     display: block;
-    width: calc(100% - 80px) !important;
+    width: calc(100% - 0px) !important;
+    border: none;
 }
 
 .chatmessage .mensagem--p a:hover{
