@@ -14,6 +14,7 @@ img{
 
 html{
   background: #0000 !important;
+  display: flex;
 }
 
 button, .button{
