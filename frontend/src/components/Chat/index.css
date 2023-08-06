@@ -233,7 +233,8 @@
 .chat--component--container .info--user h3{
     position: absolute;
     left: 59px;
-    top: -10px;
+    top: 5px;
+    font-size: 14px;
 }
 
 .chat--component--container .info--user--blur{
