@@ -58,7 +58,7 @@
 }
 
 .home .Left{
-    height: calc(100% + 430px);
+    height: calc(100% + 30px);
     border-right: 1px solid #2f3336;
 }
 
