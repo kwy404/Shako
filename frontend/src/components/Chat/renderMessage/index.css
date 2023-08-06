@@ -32,20 +32,22 @@
 
 .mensagem--p .youtube-frame{
     margin-top: 35px;
-    background-color: #c4302b;
+    border-left: 5px solid #c4302b;
     box-shadow: 2px 3px 6px 2px rgba(0,0,0,.20);
     border-radius: 5px;
-    left: -60px;
+    left: -110px;
     position: relative;
+    background-color: rgba(0,0,0,.1);
+    width: calc(100% + 60px);
 }
 
 .mensagem--p .youtube-frame iframe{
-    width: 100%;
     border-radius: 3px;
+    width: 100%;
 }
 
 .mensagem--p .youtube-frame .info p{
-    left: -35px;
+    left: -25px;
     top: -10px;
     position: relative;
 }
