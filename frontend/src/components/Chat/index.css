@@ -172,6 +172,7 @@
     margin-left: 10px;
     margin-top: 7px;
     position: sticky;
+    left: -100px;
 }
 
 .chat--component--container .chat--mensanger{
@@ -187,26 +188,19 @@
 }
 
 .chat--component--container .chat--mensanger li img{
-    margin-top: -13px;
+    margin-top: 0px;
+    padding: 10px;
     margin-left: 3px !important;
-}
-
-.chat--component--container .chat--mensanger .notMyMessage img{
-    border: 2px solid #c63b3bc7;
-}
-
-.chat--component--container .chat--mensanger .myMessage img{
-    border: 2px solid #563BC6;
 }
 
 .message-m{
     border-radius: 5px;
+    width: 100%;
     margin: 5px;
     position: relative;
 }
 
 .chat--component--container .notMyMessage .message-m{
-    background-color: #c63b3bc7;
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
     float: left;
     left: 5px;
@@ -214,20 +208,55 @@
 }
 
 .chat--component--container .myMessage .message-m{
-    background-color: #563BC6;
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
     float: right;
-    right: 15px;
     opacity: 1;
 }
 
 .mensagem--p{
-    left: -35px;
+    left: 0px;
     position: relative;
-    top: -6px;
+    top: 0px;
     font-size: 16px;
     white-space: pre-wrap;
     width: 85%;
+}
+
+.mensagem--p a{
+    width: 40px !important;
+}
+
+.chatmessage .mensagem--p span{
+    position: relative;
+    top: 20px;
+}
+
+.chatmessage .mensagem--p a{
+    position: relative;
+    top: 20px;
+    left: -110px;
+    font-size: 15px;
+    display: block;
+    width: calc(100% - 80px) !important;
+}
+
+.chatmessage .mensagem--p a:hover{
+    text-decoration: underline !important;
+}
+
+.chatmessage .mensagem--p span{
+    position: relative;
+    top: 20px;
+    left: -110px;
+    width: calc(100% - 50px);
+    padding-bottom: 20px !important;
+    font-size: 15px;
+}
+
+.username--p-message{
+    position: relative;
+    font-weight: bold;
+    top: 10px;
 }
 
 .chat--component--container .info--user h3{
@@ -285,7 +314,7 @@
 }
 
 .message-m{
-    max-width: 400px;
+    max-width: 100%;
     opacity: 0.8;
 }
 

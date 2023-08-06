@@ -284,6 +284,9 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             key={message.id}>
               <div className="flex--container message-m">
                 <img src={message.avatar ? message.avatar : defaultAvatar} alt="User Avatar" />
+                <div className="username--p-message">
+                  {`${message.senderId == user.id ? user.username+"#"+user.discrimination: selectUser.username+"#"+selectUser.discrimination}`}
+                </div>
                 <p className='mensagem--p'>
                   <MessageRenderer message={message.message} />
                 </p>
