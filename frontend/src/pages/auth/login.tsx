@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import MyAlertDialog from "../../components/Alert";
-
+import Loading from "../../app/loading";
 
 import {
   Link
@@ -24,6 +24,7 @@ function Login(props: any) {
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
     const [dialog, setDialog] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         ws.onmessage = (evt: any) => {
@@ -45,6 +46,9 @@ function Login(props: any) {
             ws.send(stringy(data))
           }
         }
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000)
     }, []);
   
     const stringy = (json: object) => {
@@ -54,6 +58,7 @@ function Login(props: any) {
     return (
       <>
         <img className='background--image' src={`https://source.unsplash.com/random/1920%C3%971080/?${randPhoto}`}/>
+        {loading ? <Loading/> : <>
         { error && <MyAlertDialog open={dialog} message={message} error="I made a mistake" setDialog={setDialog}/> }
         { props.registerSucess  && !error && <MyAlertDialog open={dialog} message={"Registration done successfully, login above using the same credentials."} error="🤩Thanks 🤩" setDialog={setDialog}/> }
         <div className="App">
@@ -96,6 +101,8 @@ function Login(props: any) {
             </div>
         </div>
         </div>
+        </>}
+        
       </>
     )
 }

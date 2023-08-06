@@ -133,7 +133,7 @@ function Header({ user, emited, socket, setUser }: Props) {
                         ))) }
                     </div> }
                     <img className="icon bell-icon" src={bell_icon}/>
-                    <img className="icon chat-icon" src={chat_icon}/>
+                    {/* <img className="icon chat-icon" src={chat_icon}/> */}
                     <div 
                     tabIndex={1} // Torna a div focável
                     onClick={() => setProfileMenu(!profileMenu)}

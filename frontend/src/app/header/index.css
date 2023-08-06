@@ -22,9 +22,9 @@
 }
 
 .search-bar{
-    width: 400px;
+    width: 640px;
     background-color: rgb(67 67 74) !important;
-    right: 335px;
+    right: 240px;
     position: relative;
     color: rgba(255,255,255,.7) !important;
     font-size: 12px;
@@ -140,7 +140,7 @@
     object-fit: fill;
     transform: scale(1);
     background-color: rgb(67 67 74);
-    left: -363px;
+    left: -270px;
     top: -5px;
     position: absolute;
     border-radius: 0px;
@@ -154,7 +154,7 @@
 }
 
 .bell-icon{
-    left: 109px;
+    left: 430px;
     width: 40px;
     height: 40px;
     transform: scale(0.8);
@@ -191,16 +191,17 @@
 }
 
 .foundUsers{
-    width: 480px;
+    width: 690px;
     height: fit-content;
     background: #010108;
     position: absolute;
-    left: -380px;
+    left: -270px;
     background-color: #23232a;
     border: 1px solid #2f3336;
     box-shadow: 1px 2px 20px 0px rgb(0 0 0 / 47%);
     border-top: 1px solid transparent;
     max-height: 300px;
+    overflow: auto;
     top: 25px;
     z-index: 120;
     border-radius: 5px;
