@@ -30,7 +30,7 @@ const saveInteresses = async (data, knex, io, socket, sendToRoom, receive) => {
         }
       }
 
-      socket.emit('saveInteresses', {
+      socket.emit('saveInteresse', {
         success: true,
         noMessageError: true,
         interesses: interests,

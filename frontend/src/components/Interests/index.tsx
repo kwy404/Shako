@@ -87,20 +87,38 @@ const InterestsModal: React.FC<InterestsModalProps> = ({ isOpen, emited, socket 
   useEffect(() => {
     const handleSave = (data: any) => {
       console.log('%c[SaveInteresse] Saved Success', 'color: purple;');
-    }
+      // You might want to check the data received from the server here
+      // ...
 
-    socket?.on('saveInteresses', handleSave);
+      // Emit suggestedUsers event
+      if (socket) {
+        emited({ token: window.localStorage.getItem('token') ?? '' }, 'suggestedUsers', socket);
+      }
 
-    return () => {
-      socket?.off('saveInteresses', handleSave);
+      setTimeout(() => {
+        const interesseModal = document.querySelector('.interesse-modal') as HTMLElement | null;
+        if (interesseModal) {
+          interesseModal.style.display = 'none';
+        }
+      }, 500);
     };
-  }, [])
+
+    if (socket) {
+      socket.on('saveInteresse', handleSave);
+      return () => {
+        socket.off('saveInteresse', handleSave);
+      };
+    }
+  }, [socket, emited]);
 
   const save = () => {
     if (!socket) {
       return;
     }
-    window.document.querySelector('.interesse-modal')?.remove();
+    const interesseModalT = document.querySelector('.interesse-modal') as HTMLElement | null;
+    if (interesseModalT) {
+      interesseModalT.style.display = 'none';
+    }    
     emited({ selectedInterests }, 'saveInteresses', socket);
   };
 
