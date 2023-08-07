@@ -159,17 +159,17 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
   useEffect(() => {
     if (socket) {
       const getLastMensagens = (data: any) => {
-        data.messages.unshift({
-          id: 'Yee',
-          username: 'Yee.ia',
-          token: '',
-          email: '',
-          discrimination: '0001',
-          avatar: 'https://img.freepik.com/vetores-premium/chatbot-servico-de-ia-virtual-suporta-bot-de-chat-de-robo_8071-11023.jpg?w=2000',
-          admin: '',
-          is_activated: '1',
-          spotify_object: { name: "", artist: "", album: "" }
-        })
+        // data.messages.unshift({
+        //   id: 'Yee',
+        //   username: 'Yee.ia',
+        //   token: '',
+        //   email: '',
+        //   discrimination: '0001',
+        //   avatar: 'https://img.freepik.com/vetores-premium/chatbot-servico-de-ia-virtual-suporta-bot-de-chat-de-robo_8071-11023.jpg?w=2000',
+        //   admin: '',
+        //   is_activated: '1',
+        //   spotify_object: { name: "", artist: "", album: "" }
+        // })
         setMyChatUsers(data.messages);
         // Novo objeto a ser adicionado no início do array
         setIsLoadingChat(false);
