@@ -2,40 +2,87 @@
 const suggestedUsers = async (data, knex, io, socket, sendToRoom, receive) => {
   const token = data.token;
 
-  knex('users').where({
-    token: token
-  }).select('*').then(async function (myProfile) {
-    if (myProfile.length > 0) {
-      const myId = myProfile[0].id; // Obtenha o ID do seu perfil
+  try {
+    const myProfile = await knex('users')
+      .select('id')
+      .where('token', token)
+      .first();
 
-      try {
-        // Sugest users with preference criteria, randomizing the order
-        const users = await knex('users')
-          .select('username', 'discrimination', 'nivel', 'lumis', 'epic', 'verificado', 'admin', 'avatar', 'id', 'banner')
-          .limit('10')
-          .whereNot('id', myId) // Exclua o seu perfil da lista
-          .orderByRaw('RAND()') // Ordenar aleatoriamente (ou use a função equivalente ao seu banco de dados)
-          .orderBy('admin', 'desc')
-          .orderBy('discrimination', 'asc')
-          .orderBy('verificado', 'desc')
-          .orderBy('nivel', 'desc')
-          .orderBy('lumis', 'desc');
-
-        const count = users.length; // Contagem de resultados
-
-        socket.emit('suggestedUsers', {
-          type: 'suggestedUsers',
-          users: users,
-          count: count, // Inclui a contagem nos resultados
-          success: false,
-          noMessageError: true,
-          message: "I found this."
-        });
-      } catch (error) {
-        console.error(error);
-      }
+    if (!myProfile) {
+      return;
     }
-  });
+
+    const myId = myProfile.id; // Obtenha o ID do seu perfil
+
+    const myInterests = await knex('interests')
+      .select('category')
+      .where('user_id', myId);
+
+    if (myInterests.length === 0) {
+      // Caso não tenha interesses definidos, retornar usuários aleatórios
+      const randomUsers = await knex('users')
+        .select('username', 'discrimination', 'nivel', 'lumis', 'epic', 'verificado', 'admin', 'avatar', 'id', 'banner')
+        .limit(10)
+        .whereNot('id', myId)
+        .orderByRaw('RAND()')
+        .orderBy('admin', 'desc')
+        .orderBy('verificado', 'desc')
+        .orderBy('nivel', 'desc')
+        .orderBy('lumis', 'desc');
+
+      const count = randomUsers.length; // Contagem de resultados
+
+      socket.emit('suggestedUsers', {
+        type: 'suggestedUsers',
+        users: randomUsers,
+        count: count, // Inclui a contagem nos resultados
+        success: false,
+        noMessageError: true,
+        message: "I found this."
+      });
+    } else {
+      // Caso tenha interesses definidos, retornar usuários com interesses semelhantes
+      let suggestedUsers = await knex('users')
+        .select('u.username', 'u.discrimination', 'u.nivel', 'u.lumis', 'u.epic', 'u.verificado', 'u.admin', 'u.avatar', 'u.id', 'u.banner')
+        .distinct()
+        .from('users AS u')
+        .join('interests AS i', 'u.id', 'i.user_id')
+        .whereIn('i.category', myInterests.map(interest => interest.category))
+        .whereNot('u.id', myId)
+        .limit(10)
+        .orderByRaw('RAND()')
+        .orderBy('u.admin', 'desc')
+        .orderBy('u.verificado', 'desc')
+        .orderBy('u.nivel', 'desc')
+        .orderBy('u.lumis', 'desc');
+
+      const count = suggestedUsers.length; // Contagem de resultados
+
+      if(count === 0){
+        suggestedUsers = await knex('users')
+        .select('u.username', 'u.discrimination', 'u.nivel', 'u.lumis', 'u.epic', 'u.verificado', 'u.admin', 'u.avatar', 'u.id', 'u.banner')
+        .distinct()
+        .from('users AS u')
+        .whereNot('u.id', myId)
+        .limit(10)
+        .orderByRaw('RAND()')
+        .orderBy('u.admin', 'desc')
+        .orderBy('u.verificado', 'desc')
+        .orderBy('u.nivel', 'desc')
+        .orderBy('u.lumis', 'desc');
+      }
+      socket.emit('suggestedUsers', {
+        type: 'suggestedUsers',
+        users: suggestedUsers,
+        count: count, // Inclui a contagem nos resultados
+        success: false,
+        noMessageError: true,
+        message: "I found this."
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 module.exports = { suggestedUsers };

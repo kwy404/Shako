@@ -95,6 +95,10 @@ class userLogin {
       rows[0].followers = followersWithFollowMe;
       rows[0].followersCount = followersCount.count || 0;
       rows[0].followingCount = followingCount.count || 0;
+      const existingInterest = await this.knex('interests')
+      .where({ user_id: rows[0].id })
+      .first();
+      rows[0].selectedInterests = existingInterest ? true: false;
 
       this.ws.send(
         JSON.stringify({

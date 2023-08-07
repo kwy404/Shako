@@ -15,6 +15,7 @@ declare global {
   
 import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import YoutubeHTMLViewer from './games/youtube';
   
 interface User {
     id: string;
@@ -71,6 +72,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
   const [messagens, setMensanges] = useState<any[]>([]);
   const [myChatUsers, setMyChatUsers] = useState([])
   const [gifOpen, setGifOpen] = useState(false);
+  const [youtubeHTML, setYoutubeHTML] = useState('');
   const [selectUser, setSelectUser] = useState({
     id: '',
     username: '',
@@ -134,15 +136,22 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
       scrollToBottom();
       setIsLoading(false);
     };
+
+    const youtubeLoad = (data: any) => {
+      setYoutubeHTML(data.data);
+      console.log(data)
+    }
     
     if (socket) {
       socket.on('mensagens', loadMessenger);
+      socket.on('youtube', youtubeLoad)
       emited({ user_id: selectUser?.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '' }, 'getMensagens', socket);
     }
   
     return () => {
       if (socket) {
         socket.off('mensagens', loadMessenger);
+        socket.off('youtube', youtubeLoad)
       }
     };
   }, [selectUser, socket]);  
@@ -150,7 +159,19 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
   useEffect(() => {
     if (socket) {
       const getLastMensagens = (data: any) => {
+        data.messages.unshift({
+          id: 'Yee',
+          username: 'Yee.ia',
+          token: '',
+          email: '',
+          discrimination: '0001',
+          avatar: 'https://img.freepik.com/vetores-premium/chatbot-servico-de-ia-virtual-suporta-bot-de-chat-de-robo_8071-11023.jpg?w=2000',
+          admin: '',
+          is_activated: '1',
+          spotify_object: { name: "", artist: "", album: "" }
+        })
         setMyChatUsers(data.messages);
+        // Novo objeto a ser adicionado no início do array
         setIsLoadingChat(false);
       };
   
@@ -158,6 +179,8 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
   
       // Emit the request to get the last messages when the component mounts
       emited({ user_id: selectUser?.id, token: window.localStorage.getItem('token') || '' }, 'getLastMensagens', socket);
+      // Emit the request to get the last messages when the component mounts
+      emited({ user_id: selectUser?.id, token: window.localStorage.getItem('token') || '' }, 'youtube', socket);
   
       // Clean up the event listeners when the component unmounts to avoid memory leaks
       return () => {
@@ -280,7 +303,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
           { isLoading ? <><Loading></Loading></> : <>
             { messagens.map((message: any) => (
             <li 
-            className={`chatmessage ${message.senderId == user.id ? 'myMessage': 'notMyMessage'}`}
+            className={`chatmessage`}
             key={message.id}>
               <div className="flex--container message-m">
                 <img src={message.avatar ? message.avatar : defaultAvatar} alt="User Avatar" />
@@ -301,6 +324,9 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             <h3>Select Any User#0000</h3>
           </div>
           </>}
+          {/* <div className="game">
+            <YoutubeHTMLViewer htmlString={youtubeHTML}/>
+          </div> */}
       </div>
       {/* Input chat */}
       {selectUser?.id && isOpen && <div className="input--chat">

@@ -127,6 +127,10 @@ const validationToken = async ({ token }, knex, ws) => {
       user.followers = followersWithFollowMe;
       user.followersCount = followersCount.count || 0;
       user.followingCount = followingCount.count || 0;
+      const existingInterest = await knex('interests')
+      .where({ user_id: user.id })
+      .first();
+      user.selectedInterests = existingInterest ? true: false;
 
       ws.send(
         JSON.stringify({

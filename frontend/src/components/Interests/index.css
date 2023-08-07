@@ -1,0 +1,96 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.interests-modal {
+  height: 400px;
+  background-color: #23232a;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  text-align: center;
+  position: relative; /* Adicione esta linha para posicionar o botão corretamente */
+  overflow: auto;
+}
+
+.interests-modal h2 {
+  margin-bottom: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #23232a;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  top: -20px;
+}
+
+.interests-modal ul {
+  list-style: none;
+  padding: 0;
+}
+
+.interests-modal li {
+  height: 70px;
+  width: 80px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+  border: 2px solid #2f3336;
+}
+
+.interests-modal li:hover{
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,.4));
+}
+
+.interests-modal li.selected {
+  background-color: #563bc6;
+  color: white;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,.4));
+}
+
+.interests-modal .fixed{
+    border-top: 2px solid #2f3336;
+    position: sticky;
+    padding: 20px;
+    padding-bottom: 60px;
+}
+
+.close-button {
+  border: none;
+  background-color: #563bc6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Centralize horizontalmente */
+  width: fit-content;
+  height: 40px;
+  margin-top: 40px;
+  transition: 0.4s ease-in-out;
+}
+
+.close-button:active{
+    transform: translateX(-50%) scale(1.1) !important; /* Centralize horizontalmente */
+}
+
+.close-button:hover {
+  background-color: #563bc6;
+}

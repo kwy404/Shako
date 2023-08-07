@@ -1,3 +1,5 @@
+const {yeeIA} = require('../ia/chat');
+
 // Function to insert a message into the chat table
 async function insertMessage(message, knex) {
   try {
@@ -35,6 +37,46 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
         if (myId) {
           const user = await knex('users').where({ id: usernameId }).select('*');
           const userAnonymous = user[0];
+          console.log(usernameId)
+          if(usernameId == 'Yee'){
+            resposta = yeeIA(message);
+            // My user
+            sendToRoom(myProfile[0], 'messenger', {
+              type: 'messenger',
+              userId: myProfile.id,
+              success: true,
+              noMessageError: true,
+              message: {
+                message,
+                avatar: myProfile[0].avatar,
+                id,
+                userId: myProfile[0].id,
+                senderId: myProfile[0].id,
+                receiveId: 'Yee'
+              },
+              id,
+            }, io, socket);
+            if(resposta){
+            const resposta = await yeeIA(message);
+            // Yee
+            sendToRoom(myProfile[0], 'messenger', {
+              type: 'messenger',
+              userId: myProfile.id,
+              success: true,
+              noMessageError: true,
+              message: {
+                message: resposta,
+                avatar: 'https://img.freepik.com/vetores-premium/chatbot-servico-de-ia-virtual-suporta-bot-de-chat-de-robo_8071-11023.jpg?w=2000',
+                id: id+'051',
+                userId: 'Yee',
+                senderId: 'Yee',
+                receiveId: myProfile[0].id,
+              },
+              id,
+            }, io, socket);
+            }
+            return;
+          }
           // My user
           sendToRoom(myProfile[0], 'messenger', {
             type: 'messenger',

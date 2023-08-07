@@ -16,6 +16,7 @@ import Notification from "../components/Notification";
 import defaultAvatar from "../resources/images/default_avatar.webp";
 import ChatComponent from "../components/Chat";
 import CardUser from "../components/CardUser";
+import InterestsModal from "../components/Interests";
 
 // Audio notification
 const notificationAudio = new Audio(`${window.location.origin}/resources/audio/notification.mp3`);
@@ -239,6 +240,8 @@ function Dashboard({ user, isProfile, setUser }: any) {
             </> : <>
             {user?.username && <>
                 <div className="container">
+                  { !user.selectedInterests && <InterestsModal isOpen={true} emited={emited} socket={socket}/>}
+                  
                     <div className="center home">
                         <Left user={user}>
                           <CardUser user={user}/>
