@@ -232,7 +232,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
                     <div className="container">
                         <div className="center">
                         <Left user={user}>
-                          
+                          <CardUser user={user}/>
                         </Left>
                         <Profile setUser={setUser} params={params} socket={socket} emited={emited} user={user}/>
                         </div>

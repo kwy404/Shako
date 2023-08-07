@@ -16,7 +16,7 @@ const CardUser: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <Link to={`u/${user.username}/${user.discrimination}/${user.id}`}>
+      <Link to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
         <div className="card--user">
           <div className="info--header">
             <div

@@ -62,20 +62,21 @@
     border-right: 1px solid #2f3336;
 }
 
-.home .Left .cardT{
+.Left .cardT{
     position: sticky !important;
     top: 25px;
+    margin-left: 45px;
 }
 
-.home .Left .cardT{
+.Left .cardT{
     background-color: transparent !important;
 }
 
-.home .Left .cardT .card--user{
+.Left .cardT .card--user{
     margin-top: 30px;
 }
 
-.home .Left .cardT .card--user .info--header .avatar{
+.Left .cardT .card--user .info--header .avatar{
     left: 10px;
     top: 55px;
 }
