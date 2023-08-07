@@ -1,0 +1,88 @@
+.app-3xd6d0 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #000;
+ /* Set your desired background color */
+}
+.verifyConnectedAccount-3EQU9K .logos-2S_BUa .logosDivider-2Dw-LR{
+  width: 28px;
+  height: 28px;
+  margin: 0 37px;
+  background-size: 28px 28px;
+  content: " ";
+  display: inline-block;
+}
+.shako-logo{
+  font-size: 35px;
+  margin-top: 38px;
+}
+.logos-2S_BUa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.logo-NKOv2w {
+  width: 100px;
+ /* Adjust the width as needed */
+  height: 100px;
+ /* Adjust the height as needed */
+  background-size: cover;
+}
+.message-1eGzHc {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+.btn-GGwnFG {
+  padding: 10px 20px;
+  background-color: #1db954;
+ /* Set your desired button color */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-GGwnFG .contents-3NembX {
+  display: flex;
+  align-items: center;
+}
+.spinner-2ID8f1 {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+.wanderingCubes-2A046F {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.item-2VgEex {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid white;
+  background-color: transparent;
+  border-radius: 50%;
+  animation: wanderingCubes-2A046F 1.8s cubic-bezier(0.15, 0.15, 0.85, 0.85) infinite;
+}
+@keyframes wanderingCubes-2A046F {
+  0%, 100% {
+      transform: scale(1) translate(-25%, -25%);
+ }
+  25% {
+      transform: scale(1.5) translate(-25%, -25%);
+ }
+  50% {
+      transform: scale(1) translate(0, 0);
+ }
+  75% {
+      transform: scale(0.5) translate(-25%, -25%);
+ }
+}

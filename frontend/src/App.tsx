@@ -12,6 +12,7 @@ import Register from './pages/auth/register';
 import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
 import LandingPage from './pages/LandingPage';
+import Spotify from "./pages/Spotify";
 
 const ws = new WebSocket('ws://localhost:9011/ws/login')
 
@@ -134,7 +135,7 @@ function App() {
           <Route path="/spotify" exact>
             {user.id ? (
               user.is_activated === '1' ? (
-                <Dashboard isProfile={false} setUser={setUser} user={user} />
+                <Spotify />
               ) : (
                 <Ativar user={user} setLogged={setLogged} />
               )
