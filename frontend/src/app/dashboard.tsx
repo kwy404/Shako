@@ -42,6 +42,8 @@ function Dashboard({ user, isProfile, setUser }: any) {
     const initialMount = useRef(true);
     const [notifications, setNotifications] = useState<NotificationData[]>([]);
     const [suggestUsers, setSuggestedUsers] = useState([]);
+    const [emissionTime, setEmissionTime] = useState<number | null>(null);
+    const [connectionTime, setConnectionTime] = useState<number | null>(null);
 
     const handleAddNotification = (id: any, message: any, senderName: any, senderAvatar: any) => {
       const newNotification: NotificationData = {
@@ -56,53 +58,67 @@ function Dashboard({ user, isProfile, setUser }: any) {
     };
 
     useEffect(() => {
+      const initialMount = { current: true };
+  
+      const initSocket = () => {
+        const startTime = Date.now();
         if (!socket) {
-            socket = io("localhost:9091");
-            setTimeout(() => {
-                emited({}, "connected", socket!);
-                emited({ token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'suggestedUsers', socket);
-            }, 1000);
-        } else{
-            setLoading(true);
+          let emissionStartTime = Date.now();
+          socket = io("localhost:9091");
+  
+          setTimeout(() => {
+            emissionStartTime = Date.now();
+            emited({}, "connected", socket!);
+            setEmissionTime(Date.now() - emissionStartTime);
+            emited({ token: window.localStorage.getItem('token') || '' }, 'suggestedUsers', socket);
+          }, 1000);
+        } else {
+          setLoading(true);
         }
-
+  
         socket.on("connected", (message: any) => {
-            setLoading(true);
+          const endTime = Date.now();
+          setConnectionTime(endTime - startTime);
+          setLoading(true);
+          console.log(`%c[FAST CONNECT] connected in ${endTime - startTime}ms`, 'color: purple;');
         });
-
+  
         socket.on("profile", (message: any) => {
-            if(message.type == 'profileBanned'){
-                if(message.user == user.id){
-                    window.location.pathname = "/login"
-                }
+          if (message.type === 'profileBanned') {
+            if (message.user === user.id) {
+              window.location.pathname = "/login";
             }
-        })
-
+          }
+        });
+  
         socket.on("suggestedUsers", (data: any) => {
-          setSuggestedUsers(data.users)
+          setSuggestedUsers(data.users);
           setLoadingSuggestUsers(false);
-        })
-
+        });
+  
         socket.on("notification", (message: any) => {
-          handleAddNotification(message.id, message.message, message.user.username, message.user.avatar)
-        })
-
-        return () => {
-            // Mantenha a conexão aberta se for a primeira montagem ou se o componente estiver sendo desmontado
-            if (initialMount.current || !socket) {
-                return;
-            }
-            
-            // Remova apenas os ouvintes do socket
-            socket.off("connected");
-            socket.off("profile");
-            socket.off("notification");
-            socket.off("suggestedUsers");
-            if (socket) {
-              socket.disconnect();
-            }
-        };
-    }, []);
+          handleAddNotification(message.id, message.message, message.user.username, message.user.avatar);
+        });
+      };
+  
+      initSocket();
+  
+      return () => {
+        // Mantenha a conexão aberta se for a primeira montagem ou se o componente estiver sendo desmontado
+        if (initialMount.current || !socket) {
+          return;
+        }
+  
+        // Remova apenas os ouvintes do socket
+        socket.off("connected");
+        socket.off("profile");
+        socket.off("notification");
+        socket.off("suggestedUsers");
+        if (socket) {
+          socket.disconnect();
+        }
+      };
+    }, [socket]);
 
     const emited = (data: any, type: any, socketInstance: any) => {
       socketInstance.emit("message", {
