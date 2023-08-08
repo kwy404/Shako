@@ -107,7 +107,6 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setLoaded(false);
     if (socket) {
       if (!socket) {
         // Handle the case when socket is null
