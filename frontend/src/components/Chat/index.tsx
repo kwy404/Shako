@@ -105,22 +105,23 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
     const socketListener = (data: any) => {
       // Check if the message with the same ID already exists in the state
       const messageExists = messagens.some((message) => message.id === data.message.id);
-  
+    
       // If the user ID matches the selected user's ID
       if (selectUser?.id === data.message.receiveId || selectUser?.id === data.message.senderId) {
-        // If the message doesn't exist, add it to the state
-        if (!messageExists) {
-          setMensanges((prevMessages) => {
-            // Filter out the existing messages with the same ID
-            const filteredMessages = prevMessages.filter(
-              (message) => message.id !== data.message.id
+        setMensanges((prevMessages) => {
+          // If the message exists, replace it with the new message
+          if (messageExists) {
+            return prevMessages.map((message) =>
+              message.id === data.message.id ? data.message : message
             );
-            return [...filteredMessages, data.message];
-          });
-          scrollToBottom();
-        }
+          } else {
+            // Otherwise, add the new message to the state
+            return [...prevMessages, data.message];
+          }
+        });
+        scrollToBottom();
       }
-    };
+    };    
   
     socket?.on('messenger', socketListener);
   
@@ -302,7 +303,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
           { isLoading ? <><Loading></Loading></> : <>
             { messagens.map((message: any) => (
             <li 
-            className={`chatmessage`}
+            className={`chatmessage ${message.sending ? 'msg--sending' : 'msg--receive'}`}
             key={message.id}>
               <div className="flex--container message-m">
                 <img src={message.avatar ? message.avatar : defaultAvatar} alt="User Avatar" />
@@ -333,17 +334,31 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
               // Handle the case when socket is null
               return;
             }
+            const token = generateToken(20)
             emited(
             {
                 usernameId: selectUser?.id,
                 type: 'chatMessage',
                 token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '',
                 message: chatInput.current?.value,
-                id: generateToken(20)
+                id: token
             },
             'chatContainer',
             socket
             );
+            const addFakeMessageLoading = () => {
+              const novaMensagem = { 
+                message: chatInput.current?.value,
+                avatar: user.avatar ? user.avatar : defaultAvatar,
+                id: token,
+                userId: user?.id,
+                senderId: user?.id,
+                receiveId: selectUser?.id,
+                sending: true
+              }
+              setMensanges([...messagens, novaMensagem]);
+            }
+            addFakeMessageLoading();
             handleInputChange(e.currentTarget.elements[0] as HTMLInputElement);
         }}>
         <input

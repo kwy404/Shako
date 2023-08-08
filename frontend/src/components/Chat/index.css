@@ -89,6 +89,7 @@
     padding: 5px;
     cursor: pointer;
     background-color: rgba(0,0,0,0.1);
+    padding-bottom: 10px;
 }
 
 .chat--component--container .loading-overlay{
@@ -303,6 +304,7 @@
 .chatmessage{
     padding-top: 5px !important;
     width: 100%;
+    padding-bottom: 15px !important;
 }
 
 .message-m{
@@ -393,4 +395,17 @@
 
 .game .youtube_game{
     z-index: 1000;
+}
+
+@keyframes blink {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+.msg--sending{
+    animation: blink 1s infinite;
 }
