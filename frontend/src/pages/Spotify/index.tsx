@@ -16,6 +16,7 @@ declare global {
 let socket: Socket | null = null;
 
 function Spotify() {
+    const history = useHistory();
     useEffect(() => {
         if (!socket) {
             socket = io("localhost:9091");
@@ -68,7 +69,6 @@ function Spotify() {
             spotifyCall(window.location.search.split("code=")[1]);
         }
         setTimeout(() => {
-            const history = useHistory();
             history.push('/dashboard');
         }, 5000)
     }, [])

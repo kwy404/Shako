@@ -137,7 +137,6 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
 
   useEffect(() => {
     const handleProfileEvent = (receive: any) => {
-      setLoaded(false);
       try {
         if (receive.user.username === params.username && params.discrimination === receive.user.discrimination) {
           setProfile(receive.user);
