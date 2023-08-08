@@ -262,3 +262,12 @@
     top: -220px;
     right: -810px;
 }
+
+.animation--spine{
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

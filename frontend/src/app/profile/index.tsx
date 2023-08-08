@@ -13,6 +13,7 @@ import SpotifyPlayerProfile from './SpotifyPlayerProfile';
 import Loading from "../loading";
 import defaultAvatar from "../../resources/images/default_avatar.webp";
 import defaultBanner from "../../resources/images/default_banner.jpg";
+import { FaSpinner } from 'react-icons/fa';
 
 const typePage = "profile";
 
@@ -105,6 +106,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   const [cachedUsers, setCachedUsers] = useState<{ [key: string]: CachedUser }>({});
   const [url, setUrl] = useState(window.location.pathname);
   const [loaded, setLoaded] = useState(false);
+  const [loadingButtonFollow, setLoadingButtonFollow] = useState(false);
 
   useEffect(() => {
     if (socket) {
@@ -139,6 +141,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
     const handleProfileEvent = (receive: any) => {
       try {
         if (receive.user.username === params.username && params.discrimination === receive.user.discrimination) {
+          setLoadingButtonFollow(false);
           setProfile(receive.user);
           setLoaded(true);
           setFound(receive.success);
@@ -423,13 +426,12 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
                 // Handle the case when socket is null
                 return;
               }
+              setLoadingButtonFollow(true);
               emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'follow', socket);
             }}>
-              {
-                profile.followBack && profile.followBack.sender_id == profile.id 
+              {loadingButtonFollow ? <><FaSpinner className="spin animation--spine" /></> : profile.followBack && profile.followBack.sender_id == profile.id 
                   ? (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Stop to follow' : 'Follow back')
-                  : (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Unfollow' : 'Follow')
-              }
+                  : (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Unfollow' : 'Follow')}
               </button>
           </> }
         </div>
