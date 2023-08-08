@@ -12,11 +12,12 @@
   max-width: 400px;
   left: 20px;
   bottom: 0px;
-  padding: 16px;
   z-index: 1000;
   background-color: #2a2a32;
   border: 1px solid #505059;
   transition: 0.4s ease-in-out;
+  top: 57px;
+  padding: 20px;
 }
 
 .notification.visible {

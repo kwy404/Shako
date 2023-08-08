@@ -42,9 +42,6 @@ const Notification: React.FC<NotificationProps> = ({
           <strong>{senderName}</strong> {message}
         </p>
       </div>
-      <button className="close-button" onClick={handleClose}>
-        &#x2715;
-      </button>
     </div>
   );
 };
