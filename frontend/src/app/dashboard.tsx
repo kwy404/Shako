@@ -98,6 +98,9 @@ function Dashboard({ user, isProfile, setUser }: any) {
             socket.off("profile");
             socket.off("notification");
             socket.off("suggestedUsers");
+            if (socket) {
+              socket.disconnect();
+            }
         };
     }, []);
 
@@ -115,7 +118,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
         socketSpotfiy = io("localhost:4100");
         setTimeout(() => {
             emited({}, "connected", socketSpotfiy!);
-            console.log(`%c[Spotify] Conneted`, 'color: purple;');
+            console.log(`%c[Spotify] WS Connected`, 'color: purple;');
         }, 1000);
 
         socketSpotfiy.on("currentSong", (song: any) => {
@@ -129,7 +132,6 @@ function Dashboard({ user, isProfile, setUser }: any) {
             setUser(oldProfile);
         })
       }, []);
-
 
     const handleCloseNotification = (id: string) => {
       setNotifications(notifications.filter((notification) => notification.id !== id));
