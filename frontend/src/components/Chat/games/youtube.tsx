@@ -30,18 +30,9 @@ const YoutubeHTMLViewer: React.FC<Props> = ({ htmlString }) => {
 
   return (
     <div>
-      <div>
-        <iframe
-          ref={iframeRef}
-          title="YouTube"
-          srcDoc={htmlString}
-          width="100%"
-          height="500px"
-          frameBorder="0"
-          allowFullScreen
-        />
+      <div className='yt--game--party'>
+        
       </div>
-      <button onClick={() => sendMessageToIframe('Olá, iframe!')}>Enviar mensagem para o iframe</button>
     </div>
   );
 };

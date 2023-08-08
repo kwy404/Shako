@@ -11,11 +11,10 @@ declare global {
     interface Window {
       MyNamespace: any;
     }
-  }
+}
   
 import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
-import YoutubeHTMLViewer from './games/youtube';
   
 interface User {
     id: string;
@@ -324,9 +323,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             <h3>Select Any User#0000</h3>
           </div>
           </>}
-          {/* <div className="game">
-            <YoutubeHTMLViewer htmlString={youtubeHTML}/>
-          </div> */}
+          
       </div>
       {/* Input chat */}
       {selectUser?.id && isOpen && <div className="input--chat">
