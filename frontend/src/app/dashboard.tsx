@@ -134,7 +134,6 @@ function Dashboard({ user, isProfile, setUser }: any) {
         socketSpotfiy = io("localhost:4100");
         setTimeout(() => {
             emited({}, "connected", socketSpotfiy!);
-            console.log(`%c[Spotify] WS Connected`, 'color: purple;');
         }, 1000);
 
         socketSpotfiy.on("currentSong", (song: any) => {

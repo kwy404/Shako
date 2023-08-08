@@ -396,7 +396,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
               className="banned_button spotify_button">
                 <img src={spotify}/>
                 {user?.spotify && user?.spotify.trim().length > 0 ? `Connected` : `Connect`}</button>
-             : <a target="_blank" href="https://accounts.spotify.com/authorize?response_type=code&client_id=dcbdff61d5a443afaba5b0b242893915&scope=user-read-currently-playing%20user-read-playback-state&redirect_uri=http://localhost:5173/spotify">
+             : <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=dcbdff61d5a443afaba5b0b242893915&scope=user-read-currently-playing%20user-read-playback-state&redirect_uri=http://localhost:5173/spotify">
               <button 
               className="banned_button spotify_button">
                 <img src={spotify}/>

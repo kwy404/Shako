@@ -1,6 +1,3 @@
-import {
-    Link
-  } from "react-router-dom";
 import "./index.css";
 import { io, Socket } from "socket.io-client";
 import spotify_connect from "../../resources/images/spotify_connect.svg";
@@ -8,7 +5,14 @@ import divisor from "../../resources/images/plus.svg";
 import { Buffer } from 'buffer';
 import axios from 'axios';
 import { useEffect } from "react";
+import { useHistory } from 'react-router-dom';
   
+declare global {
+    interface Window {
+        MyNamespace: any;
+    }
+}
+
 let socket: Socket | null = null;
 
 function Spotify() {
@@ -63,6 +67,10 @@ function Spotify() {
         if (window.location.search.split("code=")[1]) {
             spotifyCall(window.location.search.split("code=")[1]);
         }
+        setTimeout(() => {
+            const history = useHistory();
+            history.push('/dashboard');
+        }, 5000)
     }, [])
     return (
     <>
@@ -85,7 +93,7 @@ function Spotify() {
                 </div>
                 <div className="message-1eGzHc">
                     Logged in to your <strong>Spotify</strong> account at{" "}
-                <strong>Shako</strong>. You can close this page.
+                <strong>Shako</strong>. You can close this page. Automatic redirection in 5 seconds.
             </div>
             </div>
         </div>
