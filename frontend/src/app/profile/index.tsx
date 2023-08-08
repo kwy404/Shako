@@ -420,14 +420,16 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           </> }
           { found && user.id != profile.id && <>
             <button 
-            className="banned_button follow_button"
+            className={`banned_button follow_button ${loadingButtonFollow ? 'disabled-btn' : ''}`}
             onClick={() => {
               if (!socket) {
                 // Handle the case when socket is null
                 return;
               }
               setLoadingButtonFollow(true);
-              emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'follow', socket);
+              if(!loadingButtonFollow){
+                emited({ id: profile.id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'follow', socket);
+              }
             }}>
               {loadingButtonFollow ? <><FaSpinner className="spin animation--spine" /></> : profile.followBack && profile.followBack.sender_id == profile.id 
                   ? (profile.isFollow && profile.isFollow.sender_id == user.id ? 'Stop to follow' : 'Follow back')

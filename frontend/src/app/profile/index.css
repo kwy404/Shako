@@ -270,4 +270,9 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
+
+.disabled-btn{
+    filter: grayscale(1);
+    background-color: gray;
+}
