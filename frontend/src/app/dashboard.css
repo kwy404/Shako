@@ -87,3 +87,7 @@
     background-color: rgba(0,0,0,.50);
     position: relative;
 }
+
+.home .Left {
+    margin-left: -40px !important;
+}
