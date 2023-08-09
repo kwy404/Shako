@@ -121,7 +121,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
           socket.disconnect();
         }
       };
-    }, [socket]);
+    }, [socket, true]);
 
     const emited = (data: any, type: any, socketInstance: any) => {
       socketInstance.emit("message", {
