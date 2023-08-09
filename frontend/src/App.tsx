@@ -188,7 +188,15 @@ function App() {
             )}
           </Route>
           <Route path="/" exact>
-            <LandingPage />
+            {user.id ? (
+              user.is_activated === '1' ? (
+                <Dashboard isProfile={false} setUser={setUser} user={user} />
+              ) : (
+                <Ativar user={user} setLogged={setLogged} />
+              )
+            ) : (
+              <Dashboard isProfile={false} setUser={setUser} user={user} />
+            )}
           </Route>
           <Route>
             <Redirect to="/" />

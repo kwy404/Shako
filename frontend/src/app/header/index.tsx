@@ -132,7 +132,7 @@ function Header({ user, emited, socket, setUser }: Props) {
                             </Link>
                         ))) }
                     </div> }
-                    <img className="icon bell-icon" src={bell_icon}/>
+                    { user?.username && <img className="icon bell-icon" src={bell_icon}/>}
                     {/* <img className="icon chat-icon" src={chat_icon}/> */}
                     <div 
                     tabIndex={1} // Torna a div focável
@@ -141,13 +141,13 @@ function Header({ user, emited, socket, setUser }: Props) {
                     className={`profile ${profileMenu ? 'profileAtivo' : ''}`}>
                         <img className="icon expand" src={expand_icon}/>
                         <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
-                        <span className="username">{user.username}
-                        <span className="discrimination">#{user.discrimination}</span>
+                        <span className="username">{user.username}{`${user.username ? user.username : 'MENU'}`}
+                        <span className="discrimination">{user.username ? '#' : ''}{user.discrimination}</span>
                         </span>
                     </div>
                     <div 
                     className={`${profileMenu ? 'list-menu list-menu-open' : 'list-menu list-menu-closed'}`}>
-                        <Link 
+                        { user?.username && <Link 
                             onClick={() => setProfileMenu(false)}
                             to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
                             <li>
@@ -155,8 +155,8 @@ function Header({ user, emited, socket, setUser }: Props) {
                                     <FaUser />  Profile
                                 </span>
                             </li>
-                        </Link>
-                        <Link
+                        </Link> }
+                        { user?.username ? <Link
                         onClick={() => {
                             window.localStorage.setItem("token", "")
                             location.reload()
@@ -167,7 +167,14 @@ function Header({ user, emited, socket, setUser }: Props) {
                                 <FaSignOutAlt /> Logout
                             </span>
                         </li>
-                        </Link>
+                        </Link> : <Link
+                        to={'/login'}>
+                        <li>
+                            <span>
+                                <FaSignOutAlt /> Login
+                            </span>
+                        </li>
+                        </Link> }
                     </div>
                 </div>
             </div>

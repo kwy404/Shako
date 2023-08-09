@@ -181,7 +181,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
                 </>
             )}
             {/* Chat component here */}
-            <ChatComponent user={user} emited={emited} setUser={() => {}} socket={socket}/>
+            { user?.username && <ChatComponent user={user} emited={emited} setUser={() => {}} socket={socket}/> } 
             {/* End chat component here */}
             {params?.username && params?.discrimination && params?.user_id ? <>
                     <div className="container">
@@ -193,33 +193,32 @@ function Dashboard({ user, isProfile, setUser }: any) {
                         </div>
                     </div>
             </> : <>
-            {user?.username && <>
+            {<>
                 <div className="container">
-                  { !user.selectedInterests && <InterestsModal isOpen={true} emited={emited} socket={socket}/>}
-                  
+                  { !user.selectedInterests && user?.username && <InterestsModal isOpen={true} emited={emited} socket={socket}/>}
                     <div className="center home">
                         <Left user={user}>
-                          <CardUser user={user}/>
+                          {user?.username && <CardUser user={user}/>}
                         </Left>
                         <div className="Profile fullScreen">
                             <h3>Recommended profiles</h3>
                             {/* Perfil recomendados */}
                             <div className="scroll-x">
-                            {loadingSuggestUsers ? <Loading/> : <>
+                            {user?.username ? loadingSuggestUsers ? <Loading/> : <>
                               {suggestUsers.length > 0 && suggestUsers.map((user: any) => (
                                 <CardUser user={user}/>
                               ))}
-                            </>}
+                            </> : <><h3 style={{opacity: '0.8', textTransform: 'uppercase'}}>You can see this, please make login</h3></>}
                             </div>
                             {/* end Perfil recomendado */}
-                            <div className="feed">
+                            {user?.username && <div className="feed">
                                 <div className="post_">
                                   <div className="text_area">
                                     <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
                                     <textarea placeholder="Create a post"></textarea>
                                   </div>
                                 </div>
-                            </div>
+                            </div>}
                         </div>
                     </div>
                 </div>
