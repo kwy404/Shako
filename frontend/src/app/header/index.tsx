@@ -141,7 +141,7 @@ function Header({ user, emited, socket, setUser }: Props) {
                     className={`profile ${profileMenu ? 'profileAtivo' : ''}`}>
                         <img className="icon expand" src={expand_icon}/>
                         <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
-                        <span className="username">{user.username}{`${user.username ? user.username : 'MENU'}`}
+                        <span className="username">{user.username}{`${user.username ? '' : 'MENU'}`}
                         <span className="discrimination">{user.username ? '#' : ''}{user.discrimination}</span>
                         </span>
                     </div>
