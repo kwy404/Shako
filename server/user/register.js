@@ -169,6 +169,19 @@ class userRegister {
         return {};
       }
 
+      if (this.username.trim().length === 0 || this.username.length > 15 || /\s/.test(this.username)) {
+        this.ws.send(
+          JSON.stringify({
+            type: "register",
+            redirectUrl: "/register",
+            success: false,
+            redirect: false,
+            message: "Invalid username. Username cannot contain spaces and must have at most 15 characters.",
+          })
+        );
+        return {};
+      }
+
       const existingUser = await this.knex('users')
         .select()
         .where('email', this.email);
