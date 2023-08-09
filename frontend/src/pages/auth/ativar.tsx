@@ -5,6 +5,7 @@ import {
   Link
 } from "react-router-dom"
 
+import { FaSpinner } from 'react-icons/fa';
 const typePage = 'validateCode'
 
 const ws = new WebSocket('ws://localhost:9011/ws/validateCode')
@@ -22,12 +23,14 @@ function Ativar(props: any) {
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
     const [dialog, setDialog] = useState(true);
+    const [loadingButton, setLoadingButton] = useState(false);
 
     useEffect(() => {
         ws.onmessage = (evt: any) => {
         // listen to data sent from the websocket server
           const message = JSON.parse(evt.data)
           if(message.type === typePage){
+            setLoadingButton(false);
             if(message?.redirect){
               window.location.pathname = `${message?.redirectUrl}`
             }
@@ -63,8 +66,11 @@ function Ativar(props: any) {
               <form
               onSubmit={(e: any) => {
                 e.preventDefault();
-                const data = {type: 'userValidateCode', data: {token: window.localStorage.getItem('token')?window.localStorage.getItem('token'): 'undefined', codeAtivate: email}};
-                ws.send(stringy(data))
+                if(!loadingButton){
+                  setLoadingButton(true);
+                  const data = {type: 'userValidateCode', data: {token: window.localStorage.getItem('token')?window.localStorage.getItem('token'): 'undefined', codeAtivate: email}};
+                  ws.send(stringy(data))
+                }
               }}
               >
                 <div className="login-box-content">
@@ -87,7 +93,9 @@ function Ativar(props: any) {
                   type="text" id="email" autoComplete="off"/>
                   <span className='error'>{ error && message }</span>
                   <br></br>
-                  <button>Validate</button>
+                  <button>
+                  {loadingButton ? <><FaSpinner className="spin animation--spine" /></>: <>Validate</>}
+                    </button>
                   <p>I'ts not you? <Link
                     onClick={() => {
                       window.localStorage.setItem("token", "")

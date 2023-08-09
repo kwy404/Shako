@@ -5,6 +5,18 @@ require('dotenv').config();
 class userRegister {
   constructor(data, knex, ws) {
     const { email, password, username } = data;
+    if(email.trim().length == 0 || password.trim().length == 0 || username.trim().length == 0 ){
+      ws.send(
+        JSON.stringify({
+          type: "register",
+          redirectUrl: "/register",
+          success: false,
+          redirect: false,
+          message: "Fill in the fields below, please."
+        })
+      );
+      return {};
+    }
     if(email, password, username){
       this.email = email;
       this.password = password;

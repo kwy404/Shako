@@ -7,6 +7,19 @@ class userLogin {
       return;
     }
 
+    if(data.email.trim().length == 0 || data.password.trim().length == 0){
+      ws.send(
+        JSON.stringify({
+          type: 'login',
+          user: {},
+          success: false,
+          noMessageError: false,
+          message: "Fill in the fields below, please."
+        })
+      );
+      return {};
+    }
+
     this.email = data.email;
     this.password = data.password;
     this.knex = knex;

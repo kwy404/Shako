@@ -6,6 +6,7 @@ import {
 
 import MyAlertDialog from "../../components/Alert";
 import TermosDeUso from '../../components/termos';
+import { FaSpinner } from 'react-icons/fa';
 
 const typePage = 'register'
 
@@ -27,10 +28,11 @@ function Register(props: any) {
     const [message, setMessage] = useState('');
     const [dialog, setDialog] = useState(true);
     const [termos, setTermos] = useState(false);
+    const [loadingButton, setLoadingButton] = useState(false);
     
     useEffect(() => {
         ws.onmessage = (evt: any) => {
-        // listen to data sent from the websocket server
+          // listen to data sent from the websocket server
           const message = JSON.parse(evt.data)
           if(message.type === 'login'){
             if(!message?.noMessageError){
@@ -42,6 +44,7 @@ function Register(props: any) {
               props.setLogged(message.user)
             } 
           } else if(message.type === typePage){
+            setLoadingButton(false);
             setError(!message.sucess)
             setDialog(true)
             setMessage(message.message)
@@ -102,8 +105,11 @@ function Register(props: any) {
               <form
               onSubmit={(e: any) => {
                 e.preventDefault();
-                const data = {type: 'userRegister', data: {email, password, username}};
-                ws.send(stringy(data))
+                if(!loadingButton){
+                  const data = {type: 'userRegister', data: {email, password, username}};
+                  ws.send(stringy(data))
+                  setLoadingButton(true);
+                }
               }}
               >
                 <div className="login-box-content">
@@ -125,7 +131,9 @@ function Register(props: any) {
                     position: 'relative'
                   }}>{ error && message }</span>
                   <p><a className="register" href="#">Forgot your password?</a></p>
-                  <button>Register</button>
+                  <button>
+                  {loadingButton ? <><FaSpinner className="spin animation--spine" /></>: <>Register</>}
+                    </button>
                   <p>Have a account? <Link 
                     to={'/login'}
                     className="register">Login</Link>

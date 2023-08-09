@@ -6,6 +6,8 @@ import {
   Link
 } from "react-router-dom"
 
+import { FaSpinner } from 'react-icons/fa';
+
 const typePage = 'login'
 
 const ws = new WebSocket('ws://localhost:9011/ws/login')
@@ -25,6 +27,7 @@ function Login(props: any) {
     const [message, setMessage] = useState('');
     const [dialog, setDialog] = useState(true);
     const [loading, setLoading] = useState(true);
+    const [loadingButton, setLoadingButton] = useState(false);
 
     useEffect(() => {
         ws.onmessage = (evt: any) => {
@@ -35,6 +38,7 @@ function Login(props: any) {
               setError(!message.sucess)
               setDialog(true)
               setMessage(message.message)
+              setLoadingButton(false);
             }
             if(message.user?.id){
               window.localStorage.setItem('token', message.user.token)
@@ -68,8 +72,11 @@ function Login(props: any) {
               <form
               onSubmit={(e: any) => {
                 e.preventDefault();
-                const data = {type: 'userLogin', data: {email, password}};
-                ws.send(stringy(data))
+                if(!loadingButton){
+                  setLoadingButton(true);
+                  const data = {type: 'userLogin', data: {email, password}};
+                  ws.send(stringy(data))
+                }
               }}
               >
                 <div className="login-box-content">
@@ -92,7 +99,7 @@ function Login(props: any) {
                     userSelect: 'none'
                   }}>Registration done successfully, login above using the same credentials.</h4>}
                   <p><a className="register" href="#">Forgot your password?</a></p>
-                  <button>Login</button>
+                  <button>{loadingButton ? <><FaSpinner className="spin animation--spine" /></>: <>Login</>}</button>
                   <p>Need an account? <Link 
                     to={'/register'}
                     className="register">Register</Link>.</p>
