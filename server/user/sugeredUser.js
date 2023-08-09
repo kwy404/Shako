@@ -42,11 +42,10 @@ const suggestedUsers = async (data, knex, io, socket, sendToRoom, receive) => {
       });
     } else {
       // Caso tenha interesses definidos, retornar usuários com interesses semelhantes
-      let suggestedUsers = await knex('users')
+      let suggestedUsers = await knex('users AS u')
         .select('u.username', 'u.discrimination', 'u.nivel', 'u.lumis', 'u.epic', 'u.verificado', 'u.admin', 'u.avatar', 'u.id', 'u.banner')
         .distinct()
-        .from('users AS u')
-        .join('interests AS i', 'u.id', 'i.user_id')
+        .leftJoin('interests AS i', 'u.id', 'i.user_id')
         .whereIn('i.category', myInterests.map(interest => interest.category))
         .whereNot('u.id', myId)
         .limit(10)
@@ -58,26 +57,29 @@ const suggestedUsers = async (data, knex, io, socket, sendToRoom, receive) => {
 
       const count = suggestedUsers.length; // Contagem de resultados
 
-      if(count === 0){
-        suggestedUsers = await knex('users')
+      // Obter outros usuários sugeridos aleatoriamente, excluindo aqueles já encontrados
+      const otherUsersSuggest = await knex('users AS u')
         .select('u.username', 'u.discrimination', 'u.nivel', 'u.lumis', 'u.epic', 'u.verificado', 'u.admin', 'u.avatar', 'u.id', 'u.banner')
         .distinct()
-        .from('users AS u')
         .whereNot('u.id', myId)
-        .limit(10)
+        .whereNotIn('u.id', suggestedUsers.map(user => user.id)) // Excluir usuários já sugeridos
+        .limit(10 - suggestedUsers.length) // Limitar para completar 10 usuários no total
         .orderByRaw('RAND()')
         .orderBy('u.admin', 'desc')
         .orderBy('u.verificado', 'desc')
         .orderBy('u.nivel', 'desc')
         .orderBy('u.lumis', 'desc');
-      }
+
+      // Combinar as listas de usuários sugeridos
+      suggestedUsers = suggestedUsers.concat(otherUsersSuggest);
+
       socket.emit('suggestedUsers', {
-        type: 'suggestedUsers',
-        users: suggestedUsers,
-        count: count, // Inclui a contagem nos resultados
-        success: false,
-        noMessageError: true,
-        message: "I found this."
+          type: 'suggestedUsers',
+          users: suggestedUsers,
+          count: count, // Inclui a contagem nos resultados
+          success: false,
+          noMessageError: true,
+          message: "I found this."
       });
     }
   } catch (error) {

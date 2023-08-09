@@ -92,8 +92,11 @@ function Dashboard({ user, isProfile, setUser }: any) {
         });
   
         socket.on("suggestedUsers", (data: any) => {
+          const endTime = Date.now();
+          setConnectionTime(endTime - startTime);
           setSuggestedUsers(data.users);
           setLoadingSuggestUsers(false);
+          console.log(`%c[FAST CONNECT] loaded suggestion users in ${endTime - startTime}ms`, 'color: purple;');
         });
   
         socket.on("notification", (message: any) => {

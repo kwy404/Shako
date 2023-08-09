@@ -53,4 +53,8 @@
     margin: 10px;
     position: relative;
     top: 35px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 280px;
 }
