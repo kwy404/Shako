@@ -37,7 +37,6 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
         if (myId) {
           const user = await knex('users').where({ id: usernameId }).select('*');
           const userAnonymous = user[0];
-          console.log(usernameId)
           if(usernameId == 'Yee'){
             resposta = yeeIA(message);
             // My user
