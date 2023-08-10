@@ -107,6 +107,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   const [url, setUrl] = useState(window.location.pathname);
   const [loaded, setLoaded] = useState(false);
   const [loadingButtonFollow, setLoadingButtonFollow] = useState(false);
+  const [connectionTime, setConnectionTime] = useState<number | null>(null);
 
   useEffect(() => {
     if (socket) {
@@ -138,6 +139,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
   }, []);
 
   useEffect(() => {
+    const startTime = Date.now();
     const handleProfileEvent = (receive: any) => {
       try {
         if (receive.user.username === params.username && params.discrimination === receive.user.discrimination) {
@@ -146,6 +148,10 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
           setLoaded(true);
           setFound(receive.success);
           setMessageError(receive.message);
+          const endTime = Date.now();
+          setConnectionTime(endTime - startTime);
+          //Time
+          console.log(`%c[FAST CONNECT] loaded profile ${params.username}#${params.discrimination} in ${endTime - startTime}ms`, 'color: purple;');
         } else {
           setFound(receive.success);
           setMessageError(receive.message);

@@ -111,14 +111,12 @@ function Dashboard({ user, isProfile, setUser }: any) {
         if (initialMount.current || !socket) {
           return;
         }
-  
-        // Remova apenas os ouvintes do socket
-        socket.off("connected");
-        socket.off("profile");
-        socket.off("notification");
-        socket.off("suggestedUsers");
         if (socket) {
           socket.disconnect();
+          socket.off("connected");
+          socket.off("profile");
+          socket.off("notification");
+          socket.off("suggestedUsers");
         }
       };
     }, [socket, true]);
@@ -206,7 +204,9 @@ function Dashboard({ user, isProfile, setUser }: any) {
                             <div className="scroll-x">
                             {user?.username ? loadingSuggestUsers ? <Loading/> : <>
                               {suggestUsers.length > 0 && suggestUsers.map((user: any) => (
-                                <CardUser user={user}/>
+                                <div style={{
+                                  display: 'inline-flex'
+                                }} key={user?.id}><CardUser user={user}/></div>
                               ))}
                             </> : <><h3 style={{opacity: '0.8', textTransform: 'uppercase'}}>You can see this, please make login</h3></>}
                             </div>

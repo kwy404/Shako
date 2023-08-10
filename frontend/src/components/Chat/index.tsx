@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import dropeDown from "../../resources/images/dropdown.svg";
 import './index.css';
 import defaultAvatar from "../../resources/images/default_avatar.webp";
+import badgeBot from "../../resources/images/bot.png";
 import Loading from '../../app/loading';
 import { Link } from "react-router-dom";
 import MessageRenderer from "./renderMessage";
@@ -15,6 +16,7 @@ declare global {
   
 import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import { Tooltip } from '@mui/material';
   
 interface User {
     id: string;
@@ -72,6 +74,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
   const [myChatUsers, setMyChatUsers] = useState([])
   const [gifOpen, setGifOpen] = useState(false);
   const [youtubeHTML, setYoutubeHTML] = useState('');
+  const [connectionTime, setConnectionTime] = useState<number | null>(null);
   const [selectUser, setSelectUser] = useState({
     id: '',
     username: '',
@@ -158,6 +161,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
 
   useEffect(() => {
     if (socket) {
+      const startTime = Date.now();
       const getLastMensagens = (data: any) => {
         // data.messages.unshift({
         //   id: 'Yee',
@@ -173,6 +177,11 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
         setMyChatUsers(data.messages);
         // Novo objeto a ser adicionado no início do array
         setIsLoadingChat(false);
+        //Loading chat
+        const endTime = Date.now();
+        setConnectionTime(endTime - startTime);
+        //Time
+        console.log(`%c[FAST CONNECT] loaded lastMessages in ${endTime - startTime}ms`, 'color: purple;');
       };
   
       socket.on('getLastMensagens', getLastMensagens);
@@ -187,7 +196,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
         socket.off('getLastMensagens', getLastMensagens);
       };
     }
-  }, [socket, selectUser]);
+  }, [socket, selectUser, true]);
 
   const handleInputChange = (inputElement: HTMLInputElement | null): void => {
     if (inputElement) {
@@ -298,7 +307,13 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
           to={`/u/${selectUser.username}/${selectUser.discrimination}/${selectUser.id}`}>
           <div className="info--user">
             <img className="avatar" src={`${selectUser?.avatar ? selectUser?.avatar : defaultAvatar}`}/>
-            <h3>{ selectUser.username }#{ selectUser.discrimination }</h3>
+            <h3>{ selectUser.username }#{ selectUser.discrimination } {selectUser?.id == 'Yee' && 
+            <>
+            <span style={{opacity: '0.4'}}>-</span> <Tooltip title="Bot IA."><img 
+            className='badge--chat'
+            src={badgeBot}/></Tooltip>
+            </>
+            }</h3>
           </div></Link>
           { isLoading ? <><Loading></Loading></> : <>
             { messagens.map((message: any) => (

@@ -99,7 +99,8 @@ function Header({ user, emited, socket, setUser }: Props) {
                     />
                     { searchFound.users.length > 0 && <div className="foundUsers">
                         { searchFound?.users.length > 0 && searchFound?.users.map((user => (
-                            <Link to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
+                            <div key={user.id}>
+                                <Link to={`/u/${user.username}/${user.discrimination}/${user.id}`}>
                                 <li key={user.id}>
                                     <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
                                     <span className="username">{user?.username}</span>
@@ -130,6 +131,7 @@ function Header({ user, emited, socket, setUser }: Props) {
                                     </>
                                 </li>
                             </Link>
+                            </div>
                         ))) }
                     </div> }
                     { user?.username && <img className="icon bell-icon" src={bell_icon}/>}

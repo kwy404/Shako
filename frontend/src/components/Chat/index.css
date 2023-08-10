@@ -414,3 +414,11 @@
 .msg--sending{
     animation: blink 1s infinite;
 }
+
+.badge--chat{
+    width: 13px !important;
+    height: 13px !important;
+    opacity: 0.8;
+    left: 0px !important;
+    margin: 0px;
+}
