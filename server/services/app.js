@@ -22,7 +22,6 @@ const io = require('socket.io')(serverWSS, {
   }
 });
 
-
 wss.on("connection", ws => {
   ws.on("message", msg => {
     const msgReceive = msg.toString()
