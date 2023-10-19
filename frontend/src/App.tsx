@@ -13,7 +13,7 @@ import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
 import Spotify from "./pages/Spotify";
 
-const ws = new WebSocket('ws://localhost:9011/ws/login')
+const ws = new WebSocket('ws://localhost:9022/ws/login')
 
 interface User {
   id: string;

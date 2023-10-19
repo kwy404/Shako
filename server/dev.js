@@ -22,9 +22,10 @@ class CommandRunner {
   }
 
   async runAllCommands() {
-    for (const [command, description] of this.commands) {
-      await this.runCommand(command, description);
-    }
+    const promises = this.commands.map(([command, description]) =>
+      this.runCommand(command, description)
+    );
+    await Promise.all(promises);
   }
 }
 
