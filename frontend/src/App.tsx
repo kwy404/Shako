@@ -11,7 +11,6 @@ import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
-import LandingPage from './pages/LandingPage';
 import Spotify from "./pages/Spotify";
 
 const ws = new WebSocket('ws://localhost:9011/ws/login')
@@ -30,7 +29,7 @@ interface User {
 }
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [localStorageItem, setLocalStorageItem] = useState<string | null>(null);
   const [user, setUser] = useState<User>({
     id: '',
@@ -195,7 +194,7 @@ function App() {
                 <Ativar user={user} setLogged={setLogged} />
               )
             ) : (
-              <Dashboard isProfile={false} setUser={setUser} user={user} />
+              <Login registerSucess={false} setLogged={setLogged} />
             )}
           </Route>
           <Route>
