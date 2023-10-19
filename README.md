@@ -110,9 +110,8 @@ Certifique-se de configurar corretamente as variáveis no arquivo .env antes de 
 Observação: O Shako é um projeto em constante evolução. Verifique a documentação e as atualizações mais recentes no repositório oficial.
 
 Aproveite a sua experiência no Shako! 🎉
+```
 
-perl
-Copy code
-
+```bash
 Lembre-se de configurar as variáveis no arquivo `.env` de acordo com a configuração específica do seu ambiente. Substitua os exemplos no arquivo `.env` pelos valores reais que você deseja usar.
 ```
