@@ -2,6 +2,26 @@
 
 Bem-vindo ao repositório oficial da rede social Shako, uma plataforma social incrível para se conectar com amigos, compartilhar fotos, ouvir músicas do Spotify e muito mais! Aqui estão algumas informações importantes sobre as configurações e dependências do projeto.
 
+## Imagens de Preview
+
+Aqui estão algumas imagens de preview do Shako:
+
+### Login
+
+![Login](https://raw.githubusercontent.com/kwy404/Shako/main/preview/login.png)
+
+### Perfil
+
+![Perfil](https://raw.githubusercontent.com/kwy404/Shako/main/preview/profile_1.png)
+
+### Perfil com Chat
+
+![Perfil com Chat](https://raw.githubusercontent.com/kwy404/Shako/main/preview/profile_2.png)
+
+### Perfil de uma pessoa que não é você
+
+![Perfil de uma pessoa que não é você](https://raw.githubusercontent.com/kwy404/Shako/main/preview/profile_strange.png)
+
 ## Configurações do banco de dados 📦
 
 Configure as informações do banco de dados no arquivo `.env`:
