@@ -19,9 +19,6 @@ DB_USER=seu-usuario
 DB_PASSWORD=sua-senha
 DB_NAME=seu-banco
 
-markdown
-Copy code
-
 ## Configurações de email 📧
 
 Configure as informações de e-mail no arquivo `.env`:
@@ -37,9 +34,6 @@ EMAIL_PORT=sua-porta-de-email
 EMAIL_USER=seu-usuario-de-email
 EMAIL_PASSWORD=sua-senha-de-email
 
-perl
-Copy code
-
 ## Configurações do Shako 🌐
 
 Defina o nome do seu site no arquivo `.env`:
@@ -48,9 +42,6 @@ Defina o nome do seu site no arquivo `.env`:
 
 Exemplo de configuração no arquivo `.env`:
 NAME=Nome do seu site
-
-markdown
-Copy code
 
 ## Configurações do Cloudinary ☁️
 
@@ -65,9 +56,6 @@ CLOUDINARY_CLOUD_NAME=seu-nome-de-nuvem
 CLOUDINARY_API_KEY=sua-chave-de-api
 CLOUDINARY_API_SECRET=seu-segredo-de-api
 
-perl
-Copy code
-
 ## Integração com o Spotify 🎶
 
 Habilitar a integração com o Spotify requer que você defina as seguintes variáveis no arquivo `.env`:
@@ -80,9 +68,6 @@ Exemplo de configuração no arquivo `.env`:
 CLIENT_ID=seu-client-id
 CLIENT_SECRET=seu-client-secret
 REDIRECT_URI=sua-uri-de-redirecionamento
-
-markdown
-Copy code
 
 ## Comandos Disponíveis 📜
 
