@@ -4,59 +4,94 @@ Bem-vindo ao repositório oficial da rede social Shako, uma plataforma social in
 
 ## Configurações do banco de dados 📦
 
-Para configurar o banco de dados, você pode utilizar o arquivo `.env` com as seguintes variáveis:
+Configure as informações do banco de dados no arquivo `.env`:
 
-- **DB_HOST**: mysql-150185-0.cloudclusters.net
-- **DB_PORT**: 18220
-- **DB_USER**: admin
-- **DB_PASSWORD**: WHiiaDKm
-- **DB_NAME**: shako
+- **DB_HOST**: Endereço do servidor de banco de dados
+- **DB_PORT**: Porta do banco de dados
+- **DB_USER**: Usuário do banco de dados
+- **DB_PASSWORD**: Senha do banco de dados
+- **DB_NAME**: Nome do banco de dados
+
+Exemplo de configuração no arquivo `.env`:
+DB_HOST=seu-host-do-banco
+DB_PORT=sua-porta
+DB_USER=seu-usuario
+DB_PASSWORD=sua-senha
+DB_NAME=seu-banco
+
+markdown
+Copy code
 
 ## Configurações de email 📧
 
-Utilize as seguintes configurações de email para a funcionalidade de email da aplicação:
+Configure as informações de e-mail no arquivo `.env`:
 
-- **EMAIL_HOST**: smtp.protonmail.ch
-- **EMAIL_PORT**: 465
-- **EMAIL_USER**: shako-not-reply@proton.me
-- **EMAIL_PASSWORD**: X@nde123
+- **EMAIL_HOST**: Servidor de email
+- **EMAIL_PORT**: Porta do servidor de email
+- **EMAIL_USER**: Nome de usuário de email
+- **EMAIL_PASSWORD**: Senha de email
+
+Exemplo de configuração no arquivo `.env`:
+EMAIL_HOST=seu-servidor-de-email
+EMAIL_PORT=sua-porta-de-email
+EMAIL_USER=seu-usuario-de-email
+EMAIL_PASSWORD=sua-senha-de-email
+
+perl
+Copy code
 
 ## Configurações do Shako 🌐
 
-- **NAME**: Shako
+Defina o nome do seu site no arquivo `.env`:
+
+- **NAME**: Nome do seu site
+
+Exemplo de configuração no arquivo `.env`:
+NAME=Nome do seu site
+
+markdown
+Copy code
 
 ## Configurações do Cloudinary ☁️
 
-Para gerenciar suas imagens e mídia, utilizamos o serviço de armazenamento em nuvem Cloudinary. Configure as seguintes variáveis:
+Para gerenciar suas imagens e mídia, você pode configurar o Cloudinary no arquivo `.env`:
 
-- **CLOUDINARY_CLOUD_NAME**: dgqj83cdm
-- **CLOUDINARY_API_KEY**: 892858926497658
-- **CLOUDINARY_API_SECRET**: I_N8mPmw9ssGInW5XmXZXqe1eyQ
+- **CLOUDINARY_CLOUD_NAME**: Nome da nuvem Cloudinary
+- **CLOUDINARY_API_KEY**: Chave de API Cloudinary
+- **CLOUDINARY_API_SECRET**: Segredo da API Cloudinary
+
+Exemplo de configuração no arquivo `.env`:
+CLOUDINARY_CLOUD_NAME=seu-nome-de-nuvem
+CLOUDINARY_API_KEY=sua-chave-de-api
+CLOUDINARY_API_SECRET=seu-segredo-de-api
+
+perl
+Copy code
 
 ## Integração com o Spotify 🎶
 
-O Shako permite que você conecte sua conta do Spotify para desfrutar de música durante a navegação. Para habilitar essa funcionalidade, configure as seguintes variáveis:
+Habilitar a integração com o Spotify requer que você defina as seguintes variáveis no arquivo `.env`:
 
-- **CLIENT_ID**: dcbdff61d5a443afaba5b0b242893915
-- **CLIENT_SECRET**: 974c25e65efa4a9a8094be3ab4a1eb28
-- **REDIRECT_URI**: http://localhost:5173/spotify
+- **CLIENT_ID**: ID do cliente Spotify
+- **CLIENT_SECRET**: Segredo do cliente Spotify
+- **REDIRECT_URI**: URI de redirecionamento para o Spotify
 
-## Configuração do Projeto 🛠️
+Exemplo de configuração no arquivo `.env`:
+CLIENT_ID=seu-client-id
+CLIENT_SECRET=seu-client-secret
+REDIRECT_URI=sua-uri-de-redirecionamento
 
-As seguintes são as informações relacionadas ao projeto:
+markdown
+Copy code
 
-- **type**: commonjs
-- **name**: shako
-- **version**: 1.0.0
-- **description**: (Adicione uma descrição do seu projeto)
-- **main**: index.js
+## Comandos Disponíveis 📜
 
-## Scripts disponíveis 📜
+Você pode usar os seguintes comandos para executar diferentes partes da aplicação:
 
-Você pode usar os seguintes scripts para executar diferentes partes da aplicação:
-
-- `npm run app`: Inicia o servidor principal (sistema de login/registro/validação de token).
+- `npm run app`: Inicia o servidor principal (sistema de login, registro e validação de token).
 - `npm run dashboard`: Inicia o servidor do painel de controle (quando está logado).
+- `npm run photo`: Inicia o servidor de fotos.
+- `npm run spotify`: Inicia o servidor do Spotify.
 
 ### Desenvolvimento Local (npm run dev) 🧪
 
@@ -68,30 +103,16 @@ O script npm run dev inicia os seguintes serviços simultaneamente:
 
 npm run app: Inicia o servidor principal, incluindo o sistema de login, registro e validação de token.
 npm run dashboard: Inicia o servidor do painel de controle, utilizado quando o usuário está logado na plataforma.
-Dependências Principais 📦
-O Shako utiliza várias bibliotecas e pacotes para funcionar corretamente. As principais dependências incluem:
-
-axios
-chalk
-cloudinary
-cors
-dotenv
-express
-knex
-memcached
-multer
-mysql
-nodemailer
-random-token-generator
-redis
-socket.io
-spotify-web-api-node
-uuid
-websocket
-ws
-Certifique-se de instalar todas as dependências antes de executar o projeto.
+npm run photo: Inicia o servidor de fotos.
+npm run spotify: Inicia o servidor do Spotify.
+Certifique-se de configurar corretamente as variáveis no arquivo .env antes de executar os comandos.
 
 Observação: O Shako é um projeto em constante evolução. Verifique a documentação e as atualizações mais recentes no repositório oficial.
 
 Aproveite a sua experiência no Shako! 🎉
+
+perl
+Copy code
+
+Lembre-se de configurar as variáveis no arquivo `.env` de acordo com a configuração específica do seu ambiente. Substitua os exemplos no arquivo `.env` pelos valores reais que você deseja usar.
 ```
