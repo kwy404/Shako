@@ -272,7 +272,7 @@
 }
 
 .chat--component--container .info--user{
-    position: sticky;
+    position: relative;
     top: 0px;
     width: 100%;
     height: 50px;

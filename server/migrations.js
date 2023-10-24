@@ -175,6 +175,16 @@ const up = async function (knex) {
        table.text("notification_object").notNullable();
      });
    }
+  const hasStoryTable = await knex.schema.hasTable("story");
+  if (!hasStoryTable) {
+    await knex.schema.createTable("story", (table) => {
+      table.increments("id").primary();
+      table.integer("user_id").notNullable(); // ID do usuário que criou a história
+      table.string("title").notNullable(); // Título da história
+      table.text("content").notNullable(); // Conteúdo da história
+      table.timestamp("created_at").defaultTo(knex.fn.now()); // Data de criação da história
+    });
+  }
 };
 
 // Migrations

@@ -181,6 +181,7 @@ class SpotifyServer {
 
             const { is_playing } = responsePlay.data;
             const { item } = response.data;
+            console.log(response.data)
             if (typeof item == 'undefined') {
               if (user.isPlaying !== false) {
                 const userMusic = await knex('users').where('token', user.token).first();
@@ -217,7 +218,7 @@ class SpotifyServer {
               // console.log(error)
             }
           } catch (error) {
-            // Code here
+            console.log(error)
           }
         } catch (error) {
           if (error.response && error.response.status === 429) {

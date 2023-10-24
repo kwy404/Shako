@@ -1,13 +1,15 @@
-const {connected, getOtherUsersChat, ping} = require('../user/validationToken');
-const {getUserProfile} = require('../user/profile');
-const {banUser} = require('../admin/banUser');
-const {followUser} = require("../user/follower");
-const {searchUsers} = require('../user/search');
-const {spotify} = require("../user/spotify");
-const {sendMessage, getMensagens, getLastMensagens} = require("../user/messenger");
-const {suggestedUsers} = require("../user/sugeredUser");
-const {youtube} = require("../games/youtube");
-const {saveInteresses} = require("../user/saveInteresses");
+const { connected, getOtherUsersChat, ping } = require('../user/validationToken');
+const { getUserProfile } = require('../user/profile');
+const { banUser } = require('../admin/banUser');
+const { followUser } = require("../user/follower");
+const { searchUsers } = require('../user/search');
+const { spotify } = require("../user/spotify");
+const { sendMessage, getMensagens, getLastMensagens } = require("../user/messenger");
+const { suggestedUsers } = require("../user/sugeredUser");
+const { youtube } = require("../games/youtube");
+const { saveInteresses } = require("../user/saveInteresses");
+const { publishStory } = require("../user/stories/stories");
+
 
 const dashboard = async (socket, knex, io) => {
     socket.on('message', async msg => {
@@ -50,7 +52,8 @@ const types = {
   'getMensagens': getMensagens,
   'suggestedUsers': suggestedUsers,
   'youtube': youtube,
-  'saveInteresses': saveInteresses
+  'saveInteresses': saveInteresses,
+  'publishStory': publishStory // Storie
 }
 
 module.exports = {dashboard}

@@ -417,7 +417,6 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
         </div>}
         <button style={{display: 'none'}}></button>
         </form>
-        
       </div>}
     </div>
   );
