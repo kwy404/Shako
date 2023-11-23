@@ -7,6 +7,7 @@ import Loading from '../../app/loading';
 import { Link } from "react-router-dom";
 import MessageRenderer from "./renderMessage";
 import GifSelector from './giphy';
+import Dashboard from '../../app/dashboard';
 
 declare global {
     interface Window {
@@ -216,6 +217,7 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
   };
 
   return (
+    <>
     <div className={`chat--component--container ${isOpen ? 'chat--component--max' : 'chat--component--min'}`}>
       <div 
       onClick={() => setIsOpen(!isOpen)}
@@ -339,7 +341,6 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
             <h3>Select Any User#0000</h3>
           </div>
           </>}
-          
       </div>
       {/* Input chat */}
       {selectUser?.id && isOpen && <div className="input--chat">
@@ -418,7 +419,12 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
         <button style={{display: 'none'}}></button>
         </form>
       </div>}
+      
     </div>
+    <div className="right--profile--selected">
+      { selectUser.id && isOpen && <Dashboard isProfile={true} setUser={setUser} user={user} chatProfile={{user_id: selectUser.id, username: selectUser.username, discrimination: selectUser.discrimination}}/> }
+    </div>
+  </>
   );
 };
 

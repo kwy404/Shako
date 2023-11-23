@@ -53,7 +53,8 @@ interface Props {
   user: User,
   emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
   setUser: (data: any) => void,
-  params: any
+  params: any,
+  notBack: any
 }
 
 interface CachedUser {
@@ -77,7 +78,7 @@ function convertDate(dateString: string) {
   return `${monthString} ${year}`;
 }
 
-function Profile({ user, emited, params, socket, setUser }: Props) {
+function Profile({ user, emited, params, socket, setUser, notBack }: Props) {
   const history = useHistory();
   const location = useLocation();
   const [messageError, setMessageError] = useState("");
@@ -295,7 +296,7 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
         { loaded && <>
           <div className="Header-Profile blur"/>
         <div className="Header-Profile">
-          <Link to="/dashboard">
+          { !notBack && <Link to="/dashboard">
             <button className="back-icon">
               <svg
               viewBox="0 0 24 24"
@@ -308,7 +309,8 @@ function Profile({ user, emited, params, socket, setUser }: Props) {
                 </g>
               </svg>
             </button>
-          </Link>
+          </Link>}
+          
         </div>
         <div className="background">
           <div className="transparent"></div>

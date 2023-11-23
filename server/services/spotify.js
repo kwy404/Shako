@@ -215,7 +215,7 @@ class SpotifyServer {
                 this.updateSpotifyObject({ isPlaying: false }, user.token);
               }
             } catch (error) {
-              // console.log(error)
+              // console.log('bitch aa', error)
             }
           } catch (error) {
             console.log(error)

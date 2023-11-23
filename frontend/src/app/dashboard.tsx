@@ -35,7 +35,7 @@ interface NotificationData {
   senderAvatar: string;
 }
 
-function Dashboard({ user, isProfile, setUser }: any) {
+function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
     const params = useParams<{ username?: string; discrimination?: string; user_id?: string; }>();
     const [loading, setLoading] = useState(false);
     const [loadingSuggestUsers, setLoadingSuggestUsers] = useState(true);
@@ -157,7 +157,9 @@ function Dashboard({ user, isProfile, setUser }: any) {
         <div className="dashboard">
             {loading ? (
                 <>
+                    {!chatProfile && 
                     <Header user={user} emited={emited} setUser={() => {}} socket={socket}/>
+                    }
                     {/* <Online user={user} socket={socket!} emited={emited} /> */}
                     <div className="notifications">
                       {notifications.map((notification) => (
@@ -175,19 +177,24 @@ function Dashboard({ user, isProfile, setUser }: any) {
             ) : (
                 <>
                     <Loading />
+                    {!chatProfile && 
                     <Header user={user} emited={emited} setUser={() => {}} socket={socket} />
+                    }
                 </>
             )}
+            { chatProfile &&
+            <Profile notBack={true} setUser={setUser} params={chatProfile ? chatProfile : params} socket={socket} emited={emited} user={user}/> }
             {/* Chat component here */}
             { user?.username && <ChatComponent user={user} emited={emited} setUser={() => {}} socket={socket}/> } 
             {/* End chat component here */}
             {params?.username && params?.discrimination && params?.user_id ? <>
                     <div className="container">
                         <div className="center">
-                        <Left user={user}>
+                        {!chatProfile && <Left user={user}>
                           <CardUser user={user}/>
-                        </Left>
-                        <Profile setUser={setUser} params={params} socket={socket} emited={emited} user={user}/>
+                        </Left>}
+                        { !chatProfile &&
+                        <Profile notBack={false} setUser={setUser} params={chatProfile ? chatProfile : params} socket={socket} emited={emited} user={user}/> }
                         </div>
                     </div>
             </> : <>
@@ -211,7 +218,7 @@ function Dashboard({ user, isProfile, setUser }: any) {
                             </> : <><h3 style={{opacity: '0.8', textTransform: 'uppercase'}}>You can see this, please make login</h3></>}
                             </div>
                             {/* end Perfil recomendado */}
-                            {user?.username && <div className="feed">
+                            {user?.username && !chatProfile && <div className="feed">
                                 <div className="post_">
                                   <div className="text_area">
                                     <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
