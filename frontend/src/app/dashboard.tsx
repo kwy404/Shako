@@ -162,7 +162,7 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
                     }
                     {/* <Online user={user} socket={socket!} emited={emited} /> */}
                     <div className="notifications">
-                      {notifications.map((notification) => (
+                      { !chatProfile && notifications.map((notification) => (
                         <Notification
                           key={notification.id}
                           id={notification.id}
@@ -185,7 +185,7 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
             { chatProfile &&
             <Profile notBack={true} setUser={setUser} params={chatProfile ? chatProfile : params} socket={socket} emited={emited} user={user}/> }
             {/* Chat component here */}
-            { user?.username && <ChatComponent user={user} emited={emited} setUser={() => {}} socket={socket}/> } 
+            {  !chatProfile && user?.username && <ChatComponent user={user} emited={emited} setUser={() => {}} socket={socket}/> } 
             {/* End chat component here */}
             {params?.username && params?.discrimination && params?.user_id ? <>
                     <div className="container">
@@ -198,7 +198,7 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
                         </div>
                     </div>
             </> : <>
-            {<>
+            { !chatProfile && <>
                 <div className="container">
                   { !user.selectedInterests && user?.username && <InterestsModal isOpen={true} emited={emited} socket={socket}/>}
                     <div className="center home">
