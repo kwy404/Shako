@@ -16,7 +16,7 @@ Aqui estão algumas imagens de preview do Shako:
 
 ### Perfil com Chat
 
-![Perfil com Chat](https://raw.githubusercontent.com/kwy404/Shako/main/preview/profile_2.png)
+![Perfil com Chat](https://raw.githubusercontent.com/kwy404/Shako/main/preview/profile_3.png)
 
 ### Perfil de uma pessoa que não é você
 
