@@ -61,7 +61,7 @@ const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => {
           const videoId = getYouTubeVideoID(part);
           return (
             <>
-            {isLink(part) && <a href={message} target="_blank" rel="noopener noreferrer">{message}</a>}
+            {isLink(part) && <a href={part} target="_blank" rel="noopener noreferrer">{part}</a>}
             
             <div className="youtube-frame" key={index}>
               <iframe
