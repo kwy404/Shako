@@ -60,6 +60,9 @@ const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => {
         if (isYouTubeURL(part)) {
           const videoId = getYouTubeVideoID(part);
           return (
+            <>
+            {isLink(part) && <a href={message} target="_blank" rel="noopener noreferrer">{message}</a>}
+            
             <div className="youtube-frame" key={index}>
               <iframe
                 width="560"
@@ -77,6 +80,7 @@ const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => {
                 </div>
               )}
             </div>
+            </>
           );
         } else if (isImageURL(part)) {
           return <img key={index} src={part} alt="Imagem" style={{ maxWidth: "100px", maxHeight: "100px" }} />;
