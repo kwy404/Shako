@@ -110,6 +110,31 @@ function Profile({ user, emited, params, socket, setUser, notBack }: Props) {
   const [loadingButtonFollow, setLoadingButtonFollow] = useState(false);
   const [connectionTime, setConnectionTime] = useState<number | null>(null);
 
+  const loadingNewProfile = () => {
+    setLoaded(false)
+    setProfile({
+      id: user?.id,
+      username: params.username,
+      token: '',
+      email: '',
+      discrimination: params.discrimination,
+      avatar: '',
+      banner: '',
+      admin: '',
+      is_activated: '1',
+      created_at: '23/06/1999',
+      verificado: '0',
+      banned: '0',
+      epic: '0',
+      followingCount: '0',
+      followersCount: '0',
+      isFollow: '0',
+      followBack: {},
+      spotify_object: { isPlaying: false },
+      spotify: ''
+    });
+  }
+
   useEffect(() => {
     if (socket) {
       if (!socket) {
@@ -117,6 +142,7 @@ function Profile({ user, emited, params, socket, setUser, notBack }: Props) {
         return;
       }
       setTimeout(() => {
+        loadingNewProfile()
         emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
       }, 500)
     }
