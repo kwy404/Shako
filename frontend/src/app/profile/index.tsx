@@ -142,11 +142,10 @@ function Profile({ user, emited, params, socket, setUser, notBack }: Props) {
         return;
       }
       setTimeout(() => {
-        loadingNewProfile()
         emited({ username: params.username, discrimination: params.discrimination, user_id: params.user_id, token: window.localStorage.getItem('token') ? window.localStorage.getItem('token') : ''}, 'getProfile', socket);
       }, 500)
     }
-  }, [socket, emited, params]);
+  }, [ params ]);
   
 
   useEffect(() => {
@@ -231,7 +230,7 @@ function Profile({ user, emited, params, socket, setUser, notBack }: Props) {
     return () => {
       socket?.off('profile', handleProfileEvent);
     };
-  }, [socket, params, emited, user, profile.id]);
+  }, [params]);
 
   
   const handleFileChangeAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
