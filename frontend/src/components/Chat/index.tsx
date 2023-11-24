@@ -421,9 +421,10 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
       </div>}
       
     </div>
-    <div className="right--profile--selected">
-      { selectUser.id && isOpen && <Dashboard isProfile={true} setUser={setUser} user={user} chatProfile={{user_id: selectUser.id, username: selectUser.username, discrimination: selectUser.discrimination}}/> }
-    </div>
+    { selectUser.id && isOpen && 
+    <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
+      <Dashboard isProfile={true} setUser={setUser} user={user} chatProfile={{user_id: selectUser.id, username: selectUser.username, discrimination: selectUser.discrimination}}/> 
+    </div> }
   </>
   );
 };
