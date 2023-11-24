@@ -256,7 +256,7 @@ function Profile({ user, emited, params, socket, setUser, notBack }: Props) {
     formData.append('photo', selectedFile);
     formData.append('token', token);
     try {
-      const response = await axios.post('http://shakophoto.onrender.com/uploadAvatar', formData, {
+      const response = await axios.post('https://shakophoto.onrender.com/uploadAvatar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -288,7 +288,7 @@ function Profile({ user, emited, params, socket, setUser, notBack }: Props) {
     formData.append('photo', selectedFile);
     formData.append('token', token);
     try {
-      const response = await axios.post('http://shakophoto.onrender.com/uploadCover', formData, {
+      const response = await axios.post('https://shakophoto.onrender.com/uploadCover', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
