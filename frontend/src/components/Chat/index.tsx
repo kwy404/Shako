@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import dropeDown from "../../resources/images/dropdown.svg";
+import emojiHm from "../../resources/images/hm.png";
 import './index.css';
 import defaultAvatar from "../../resources/images/default_avatar.webp";
 import badgeBot from "../../resources/images/bot.png";
@@ -424,6 +425,13 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
     { selectUser.id && isOpen && 
     <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
       <Dashboard isProfile={true} setUser={setUser} user={user} chatProfile={{user_id: selectUser.id, username: selectUser.username, discrimination: selectUser.discrimination}}/> 
+    </div> }
+    { !selectUser.id && isOpen && 
+    <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
+      <div className='noSelect--profile'>
+        <h1>Select a user in chat to see their profile.</h1>
+        <img className="hm" src={emojiHm}/>
+      </div>
     </div> }
   </>
   );

@@ -8,7 +8,7 @@
     border-radius: 4px;
     bottom: -47px;
     z-index: 10000;
-    right: 410px;
+    right: 413px;
     overflow: hidden;
     transition: 0.3s ease-in-out;
     padding-bottom: 30px;
@@ -440,7 +440,7 @@
     border-radius: 4px;
     bottom: -47px;
     z-index: 10000;
-    right: 6px;
+    right: 4px;
     overflow: hidden;
     transition: 0.3s ease-in-out;
     padding-bottom: 30px;
@@ -478,4 +478,21 @@
 .chat--component--max--{
     width: 400px !important;
     height: calc(100% / 1.4) !important;
+}
+
+.right--profile--selected .noSelect--profile h1{
+    font-size: 22px;
+    padding: 10px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.right--profile--selected .noSelect--profile .hm{
+    width: 60px;
+    height: 60px;
+    z-index: 10;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 15px;
 }
