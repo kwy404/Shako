@@ -13,7 +13,7 @@ import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
 import Spotify from "./pages/Spotify";
 
-const ws = new WebSocket('ws://shakoapp.onrender.com/ws/login')
+const ws = new WebSocket('wss://shakoapp.onrender.com/ws/login')
 
 interface User {
   id: string;

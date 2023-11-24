@@ -10,7 +10,7 @@ import { FaSpinner } from 'react-icons/fa';
 
 const typePage = 'register'
 
-const ws = new WebSocket('ws://shakoapp.onrender.com/ws/register')
+const ws = new WebSocket('wss://shakoapp.onrender.com/ws/register')
 
 function getRandomChoicePhoto() {
   const choices = ['geek', 'anime', 'rock', 'error', 'space', 'place', 'music'];
