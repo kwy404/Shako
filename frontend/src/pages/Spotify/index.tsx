@@ -19,7 +19,7 @@ function Spotify() {
     const history = useHistory();
     useEffect(() => {
         if (!socket) {
-            socket = io("localhost:9091");
+            socket = io("shakodash.onrender.com");
         }
         const spotifyCall = async (code: any) => {
             try {

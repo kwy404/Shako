@@ -64,7 +64,7 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
         const startTime = Date.now();
         if (!socket) {
           let emissionStartTime = Date.now();
-          socket = io("localhost:9091");
+          socket = io("shakodash.onrender.com");
   
           setTimeout(() => {
             emissionStartTime = Date.now();
