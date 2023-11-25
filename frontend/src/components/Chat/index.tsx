@@ -112,9 +112,9 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
       // Check if the message with the same ID already exists in the state
       const messageExists = messagens.some((message) => message.id === data.message.id);
       if(data.message.receiveId != user.id){
-        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.user.username, data.message.user.avatar)
+        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.username, data.message.avatar)
       } else if(data.message.senderId != user.id){
-        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.user.username, data.message.user.avatar)
+        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.username, data.message.avatar)
       }
       // If the user ID matches the selected user's ID
       if (selectUser?.id === data.message.receiveId || selectUser?.id === data.message.senderId) {
