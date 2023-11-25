@@ -185,7 +185,9 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
             { chatProfile &&
             <Profile notBack={true} setUser={setUser} params={chatProfile ? chatProfile : params} socket={socket} emited={emited} user={user}/> }
             {/* Chat component here */}
-            {  !chatProfile && user?.username && <ChatComponent user={user} emited={emited} setUser={() => {}} socket={socket}/> } 
+            {  !chatProfile && user?.username && <ChatComponent 
+            handleAddNotification={handleAddNotification}
+            user={user} emited={emited} setUser={() => {}} socket={socket}/> } 
             {/* End chat component here */}
             {params?.username && params?.discrimination && params?.user_id ? <>
                     <div className="container">

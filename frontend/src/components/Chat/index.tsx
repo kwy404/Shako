@@ -63,9 +63,10 @@ interface Props {
     user: User,
     emited: (data: any, type: string, socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void,
     setUser: (data: any) => void
+    handleAddNotification: (id: any, message: any, username: any, avatar: any) => void
 }
 
-function ChatComponent({ user, emited, socket, setUser }: Props) {
+function ChatComponent({ user, emited, socket, setUser, handleAddNotification }: Props) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingChat, setIsLoadingChat] = useState(true);
@@ -110,7 +111,11 @@ function ChatComponent({ user, emited, socket, setUser }: Props) {
     const socketListener = (data: any) => {
       // Check if the message with the same ID already exists in the state
       const messageExists = messagens.some((message) => message.id === data.message.id);
-    
+      if(data.message.receiveId != user.id){
+        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.user.username, data.message.user.avatar)
+      } else if(data.message.senderId != user.id){
+        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.user.username, data.message.user.avatar)
+      }
       // If the user ID matches the selected user's ID
       if (selectUser?.id === data.message.receiveId || selectUser?.id === data.message.senderId) {
         setMensanges((prevMessages) => {
