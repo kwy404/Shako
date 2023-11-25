@@ -218,14 +218,6 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
                             </> : <><h3 style={{opacity: '0.8', textTransform: 'uppercase'}}>You can see this, please make login</h3></>}
                             </div>
                             {/* end Perfil recomendado */}
-                            {user?.username && !chatProfile && <div className="feed">
-                                <div className="post_">
-                                  <div className="text_area">
-                                    <img className="avatar" src={`${user?.avatar ? user?.avatar : defaultAvatar}`}/>
-                                    <textarea placeholder="Create a post"></textarea>
-                                  </div>
-                                </div>
-                            </div>}
                         </div>
                     </div>
                 </div>
