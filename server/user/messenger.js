@@ -91,7 +91,7 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
               senderId: myProfile[0].id,
               receiveId: userAnonymous.id,
               username: myProfile[0].username,
-              usernameAnonymous: myProfile.username,
+              usernameAnonymous: myProfile[0].username,
             },
             id,
           }, io, socket);
@@ -111,7 +111,7 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
               senderId: myProfile[0].id,
               receiveId: userAnonymous.id,
               username: userAnonymous.username,
-              usernameAnonymous: myProfile.username,
+              usernameAnonymous: myProfile[0].username,
             },
             id,
           }, io, socket);
