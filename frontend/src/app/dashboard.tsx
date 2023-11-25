@@ -220,6 +220,9 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
                             </> : <><h3 style={{opacity: '0.8', textTransform: 'uppercase'}}>You can see this, please make login</h3></>}
                             </div>
                             {/* end Perfil recomendado */}
+                            <div className="notification_news">
+                              <h4>Obrigado por fazer parte do Shako.</h4>
+                            </div>
                         </div>
                     </div>
                 </div>
