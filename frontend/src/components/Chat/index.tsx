@@ -109,27 +109,29 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
 
   useEffect(() => {
     const socketListener = (data: any) => {
-      // Check if the message with the same ID already exists in the state
+      // Verifica se a mensagem com o mesmo ID já existe no estado
       const messageExists = messagens.some((message) => message.id === data.message.id);
-      if(data.message.receiveId == user.id){
-        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.username, data.message.avatar)
+      
+      if (data.message.receiveId === user.id) {
+        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.username, data.message.avatar);
       }
-      // If the user ID matches the selected user's ID
+  
+      // Se o ID do usuário corresponder ao ID do usuário selecionado
       if (selectUser?.id === data.message.receiveId || selectUser?.id === data.message.senderId) {
         setMensanges((prevMessages) => {
-          // If the message exists, replace it with the new message
+          // Se a mensagem existir, substitui-a pela nova mensagem
           if (messageExists) {
             return prevMessages.map((message) =>
               message.id === data.message.id ? data.message : message
             );
           } else {
-            // Otherwise, add the new message to the state
+            // Caso contrário, adiciona a nova mensagem ao estado
             return [...prevMessages, data.message];
           }
         });
         scrollToBottom();
       }
-    };    
+    };
   
     socket?.on('messenger', socketListener);
   
