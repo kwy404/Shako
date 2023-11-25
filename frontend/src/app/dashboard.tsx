@@ -131,23 +131,23 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
       });
     };
 
-    useEffect(() => {
-        socketSpotfiy = io("localhost:4100");
-        setTimeout(() => {
-            emited({}, "connected", socketSpotfiy!);
-        }, 1000);
+    // useEffect(() => {
+    //     socketSpotfiy = io("localhost:4100");
+    //     setTimeout(() => {
+    //         emited({}, "connected", socketSpotfiy!);
+    //     }, 1000);
 
-        socketSpotfiy.on("currentSong", (song: any) => {
-            if(song.isPlaying){
-              console.log(`%c[Spotify] CurrentSong ${song.name} - by ${song.artists[0].name}`, 'color: purple;');
-            } else{
-              console.log(`%c[Spotify] CurrentSong None`, 'color: purple;');
-            }
-            const oldProfile = {...user};
-            oldProfile.spotify_object = song.current_song;
-            setUser(oldProfile);
-        })
-      }, []);
+    //     socketSpotfiy.on("currentSong", (song: any) => {
+    //         if(song.isPlaying){
+    //           console.log(`%c[Spotify] CurrentSong ${song.name} - by ${song.artists[0].name}`, 'color: purple;');
+    //         } else{
+    //           console.log(`%c[Spotify] CurrentSong None`, 'color: purple;');
+    //         }
+    //         const oldProfile = {...user};
+    //         oldProfile.spotify_object = song.current_song;
+    //         setUser(oldProfile);
+    //     })
+    //   }, []);
 
     const handleCloseNotification = (id: string) => {
       setNotifications(notifications.filter((notification) => notification.id !== id));
