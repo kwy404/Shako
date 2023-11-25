@@ -118,20 +118,18 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
   
       // Se o ID do usuário corresponder ao ID do usuário selecionado
       if (selectUser?.id === data.message.receiveId || selectUser?.id === data.message.senderId) {
-        if (!messageExists) {
-          setMensanges((prevMessages) => {
-            // Se a mensagem existir, substitui-a pela nova mensagem
-            if (messageExists) {
-              return prevMessages.map((message) =>
-                message.id === data.message.id ? data.message : message
-              );
-            } else {
-              // Caso contrário, adiciona a nova mensagem ao estado
-              return [...prevMessages, data.message];
-            }
-          });
-          scrollToBottom();
-        }
+        setMensanges((prevMessages) => {
+          // Se a mensagem existir, substitui-a pela nova mensagem
+          if (messageExists) {
+            return prevMessages.map((message) =>
+              message.id === data.message.id ? data.message : message
+            );
+          } else {
+            // Caso contrário, adiciona a nova mensagem ao estado
+            return [...prevMessages, data.message];
+          }
+        });
+        scrollToBottom();
       }
     };
   
