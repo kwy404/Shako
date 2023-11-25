@@ -85,6 +85,7 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
             message: {
               message,
               avatar: myProfile[0].avatar,
+              avatarAnonymous: userAnonymous.avatar,
               id,
               userId: myProfile[0].id,
               senderId: myProfile[0].id,
@@ -103,6 +104,7 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
             message: {
               message,
               avatar: myProfile[0].avatar,
+              avatarAnonymous: userAnonymous.avatar,
               id,
               userId: myProfile[0].id,
               senderId: myProfile[0].id,

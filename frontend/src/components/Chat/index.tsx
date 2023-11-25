@@ -113,7 +113,7 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
       const messageExists = messagens.some((message) => message.id === data.message.id);
       
       if (data.message.senderId != user.id) {
-        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.username, data.message.avatar);
+        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.username, data.message.avatarAnonymous);
       }
   
       // Se o ID do usuário corresponder ao ID do usuário selecionado
