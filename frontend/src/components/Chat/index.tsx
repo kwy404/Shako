@@ -327,6 +327,7 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
             }</h3>
           </div></Link>
           { isLoading ? <><Loading></Loading></> : <>
+            {selectUser.botYee && <p>Yee bot messages will disappear when you close the site. :/</p>}
             { messagens.map((message: any) => (
             <li 
             className={`chatmessage ${message.sending ? 'msg--sending' : 'msg--receive'}`}
@@ -434,7 +435,6 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
     <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
       {!selectUser.botYee && <Dashboard isProfile={true} setUser={setUser} user={user} chatProfile={{user_id: selectUser.id, username: selectUser.username, discrimination: selectUser.discrimination}}/> }
       {selectUser.botYee && <h1>Bots no have profile include, maybe in the future.</h1>}
-      
     </div> }
     { !selectUser.id && isOpen && 
     <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
