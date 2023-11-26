@@ -40,6 +40,7 @@ interface User {
     followBack: any;
     spotify_object: any;
     spotify: string;
+    botYee: boolean;
 } 
 
 // Future use the code to chat date
@@ -87,7 +88,8 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
     avatar: '',
     admin: '',
     is_activated: '1',
-    spotify_object: {name: "", artist: "", album: ""}
+    spotify_object: {name: "", artist: "", album: ""},
+    botYee: false
   })
 
   const generateToken = (length : any) => {
@@ -179,7 +181,8 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
           avatar: 'https://img.freepik.com/vetores-premium/modelo-de-vetor-de-logotipo-de-bot-de-bate-papo-de-robo-ai-de-inteligencia-artificial_8169-533.jpg',
           admin: '',
           is_activated: '1',
-          spotify_object: { name: "", artist: "", album: "" }
+          spotify_object: { name: "", artist: "", album: "" },
+          botYee: true
         })
         setMyChatUsers(data.messages);
         // Novo objeto a ser adicionado no início do array
@@ -429,7 +432,9 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
     </div>
     { selectUser.id && isOpen && 
     <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
-      <Dashboard isProfile={true} setUser={setUser} user={user} chatProfile={{user_id: selectUser.id, username: selectUser.username, discrimination: selectUser.discrimination}}/> 
+      {!selectUser.botYee && <Dashboard isProfile={true} setUser={setUser} user={user} chatProfile={{user_id: selectUser.id, username: selectUser.username, discrimination: selectUser.discrimination}}/> }
+      {selectUser.botYee && <h1>Bots no have profile include, maybe in the future.</h1>}
+      
     </div> }
     { !selectUser.id && isOpen && 
     <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
