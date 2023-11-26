@@ -170,17 +170,17 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
     if (socket) {
       const startTime = Date.now();
       const getLastMensagens = (data: any) => {
-        // data.messages.unshift({
-        //   id: 'Yee',
-        //   username: 'Yee.ia',
-        //   token: '',
-        //   email: '',
-        //   discrimination: '0001',
-        //   avatar: 'https://img.freepik.com/vetores-premium/chatbot-servico-de-ia-virtual-suporta-bot-de-chat-de-robo_8071-11023.jpg?w=2000',
-        //   admin: '',
-        //   is_activated: '1',
-        //   spotify_object: { name: "", artist: "", album: "" }
-        // })
+        data.messages.unshift({
+          id: 'Yee',
+          username: 'Yee.ia',
+          token: '',
+          email: '',
+          discrimination: '0001',
+          avatar: 'https://img.freepik.com/vetores-premium/modelo-de-vetor-de-logotipo-de-bot-de-bate-papo-de-robo-ai-de-inteligencia-artificial_8169-533.jpg',
+          admin: '',
+          is_activated: '1',
+          spotify_object: { name: "", artist: "", album: "" }
+        })
         setMyChatUsers(data.messages);
         // Novo objeto a ser adicionado no início do array
         setIsLoadingChat(false);
