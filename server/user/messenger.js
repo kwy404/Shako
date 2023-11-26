@@ -65,11 +65,13 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
               noMessageError: true,
               message: {
                 message: resposta,
-                avatar: 'https://img.freepik.com/vetores-premium/chatbot-servico-de-ia-virtual-suporta-bot-de-chat-de-robo_8071-11023.jpg?w=2000',
+                avatar: 'https://img.freepik.com/vetores-premium/modelo-de-vetor-de-logotipo-de-bot-de-bate-papo-de-robo-ai-de-inteligencia-artificial_8169-533.jpg',
                 id: id+'051',
                 userId: 'Yee',
                 senderId: 'Yee',
                 receiveId: myProfile[0].id,
+                avatarAnonymous: 'https://img.freepik.com/vetores-premium/modelo-de-vetor-de-logotipo-de-bot-de-bate-papo-de-robo-ai-de-inteligencia-artificial_8169-533.jpg',
+                usernameAnonymous: 'Yee.ia',
               },
               id,
             }, io, socket);
