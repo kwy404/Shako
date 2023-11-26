@@ -4,12 +4,13 @@ const axios = require('axios');
 async function obterRespostaDoBot(pergunta) {
   // Chave de API da OpenAI (substitua pela sua chave)
   const apiKey = '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';
+
   try {
     const resposta = await axios.post(
-      'https://api.openai.com/v1/chat/completions',
+      'https://api.openai.com/v1/engines/gpt-3.5-turbo/completions',
       {
-        model: 'gpt-3.5-turbo',
-        messages: [{ role: 'system', content: pergunta }, { role: 'user', content: pergunta }],
+        prompt: pergunta,
+        max_tokens: 50 // Número de tokens máximos de resposta
       },
       {
         headers: {
@@ -18,12 +19,12 @@ async function obterRespostaDoBot(pergunta) {
         },
       }
     );
-
-    return resposta.data.choices[0].message.content;
-  } catch (error) {
-    console.error('Erro ao obter resposta do bot:', error.message);
-    return 'Desculpe, ocorreu um erro ao processar sua pergunta.';
-  }
+    return resposta.data.choices[0].text.trim();
+    
+    } catch(error){
+      console.error('Erro ao obter resposta do bot:', error.message);
+      return 'Desculpe, ocorreu um erro ao processar sua pergunta.';
+    }
 }
 
 const yeeIA = async mensagem => {
