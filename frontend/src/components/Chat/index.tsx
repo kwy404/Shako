@@ -434,7 +434,7 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
     { selectUser.id && isOpen && 
     <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
       {!selectUser.botYee && <Dashboard isProfile={true} setUser={setUser} user={user} chatProfile={{user_id: selectUser.id, username: selectUser.username, discrimination: selectUser.discrimination}}/> }
-      {selectUser.botYee && <h1>Bots no have profile include, maybe in the future.</h1>}
+      {selectUser.botYee && <h4>Bots no have profile include, maybe in the future.</h4>}
     </div> }
     { !selectUser.id && isOpen && 
     <div className={`right--profile--selected ${isOpen ? 'chat--component--max--' : 'chat--component--min--'}`}>
