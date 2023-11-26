@@ -150,7 +150,7 @@ function Dashboard({ user, isProfile, setUser, chatProfile }: any) {
     //   }, []);
 
     const handleCloseNotification = (id: string) => {
-      setNotifications(notifications.filter((notification) => notification.id !== id));
+      setNotifications(notifications.filter((notification) => notification.id != id));
     };
     
     return (

@@ -22,15 +22,11 @@ const Notification: React.FC<NotificationProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
+      onClose(id);
     }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
-
-  const handleClose = () => {
-    setIsVisible(false);
-    onClose(id);
-  };
 
   return (
     <div className={`notification ${isVisible ? 'visible' : 'hidden'}`}>
