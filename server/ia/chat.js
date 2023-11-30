@@ -3,7 +3,7 @@ const axios = require('axios');
 // Função para obter resposta do bot usando a API do ChatGPT
 async function obterRespostaDoBot(pergunta) {
   // Chave de API da OpenAI (substitua pela sua chave)
-  const apiKey = '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';
+  const apiKey = process.env.OPENAI_KEY || "9022";
 
   try {
     const resposta = await axios.post(
