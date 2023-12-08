@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import './App.css';
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 import Dashboard from './app/dashboard';
 import Ativar from './pages/auth/ativar';
-import Spotify from './pages/Spotify';
+import Spotify from "./pages/Spotify";
 
-const ws = new WebSocket('wss://shakoapp.onrender.com/ws/login');
+const ws = new WebSocket('wss://shakoapp.onrender.com/ws/login')
 
 interface User {
   id: string;
@@ -23,6 +30,7 @@ interface User {
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [localStorageItem, setLocalStorageItem] = useState<string | null>(null);
   const [user, setUser] = useState<User>({
     id: '',
     username: '',
@@ -33,19 +41,18 @@ function App() {
     bg: '',
     admin: '',
     is_activated: '1',
-    spotify_object: { name: '', artist: '', album: '' }
+    spotify_object: {name: "", artist: "", album: ""}
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        ws.onmessage = (evt: MessageEvent) => {
-          const message = JSON.parse(evt.data);
-          if (message.user?.id) {
-            window.localStorage.setItem('token', message.user.token);
-            setLogged(message.user);
-          } else {
+      setLoading(true);
+      ws.onmessage = (evt: any) => {
+          // listen to data sent from the websocket server
+          const message = JSON.parse(evt.data)
+          if(message.user?.id){
+            window.localStorage.setItem('token', message.user.token)
+            setLogged(message.user)
+          } else{
             setUser({
               id: '',
               username: '',
@@ -56,70 +63,46 @@ function App() {
               bg: '',
               admin: '',
               is_activated: '1',
-              spotify_object: { name: '', artist: '', album: '' }
+              spotify_object: {name: "", artist: "", album: ""}
             });
+          } 
+          if(message.type == 'validateToken'){
+            //Validate token and logged if sucess
+            const data = {type: 'validationToken', data: {token: window.localStorage.getItem('token')?window.localStorage.getItem('token'): 'undefined'}};
+            ws.send(stringy(data))
           }
-          if (message.type === 'validateToken') {
-            const data = {
-              type: 'validationToken',
-              data: { token: window.localStorage.getItem('token') || 'undefined' }
-            };
-            ws.send(stringify(data));
-          }
-        };
-
-        const storedToken = window.localStorage.getItem('token');
-        if (storedToken) {
-          setLoading(false);
-          const data = { type: 'validationToken', data: { token: storedToken } };
-          ws.send(stringify(data));
-        } else {
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Error fetching data: ', error);
-        setLoading(false);
       }
-    };
-
-    fetchData();
-
-    return () => {
-      ws.close();
-    };
+      window.localStorage.getItem('token')?window.localStorage.getItem('token'): setLoading(true);
+      setLoading(true);
   }, []);
 
-
-  const setLocalStorageItem = (value: any) => {
-    window.localStorage.setItem('token', value);
-  };
-
   useEffect(() => {
+    // Function to handle the storage event
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === 'token') {
         setLocalStorageItem(event.newValue);
-        const data = {
-          type: 'validationToken',
-          data: { token: window.localStorage.getItem('token') || 'undefined' }
-        };
-        ws.send(stringify(data));
+        //Validate token and logged if sucess
+        const data = {type: 'validationToken', data: {token: window.localStorage.getItem('token')?window.localStorage.getItem('token'): 'undefined'}};
+        ws.send(stringy(data))
       }
     };
 
+    // Add event listener for the storage event
     window.addEventListener('storage', handleStorageChange);
 
+    // Cleanup function to remove the event listener
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, []);
+  }, []); // Empty dependency array to run the effect only once
 
-  const stringify = (json: object) => {
-    return JSON.stringify(json);
-  };
+  const stringy = (json: object) => {
+    return JSON.stringify(json)
+  }
 
   const setLogged = (user: User) => {
     setUser(user);
-    setLoading(false);
+    setLoading(true);
   };
 
   return (
