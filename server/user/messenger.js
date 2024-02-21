@@ -56,25 +56,25 @@ const sendMessage = async (data, knex, io, socket, sendToRoom, receive) => {
               id,
             }, io, socket);
             if(resposta){
-            const resposta = await yeeIA(message);
-            // Yee
-            sendToRoom(myProfile[0], 'messenger', {
-              type: 'messenger',
-              userId: myProfile.id,
-              success: true,
-              noMessageError: true,
-              message: {
-                message: resposta,
-                avatar: 'https://img.freepik.com/vetores-premium/modelo-de-vetor-de-logotipo-de-bot-de-bate-papo-de-robo-ai-de-inteligencia-artificial_8169-533.jpg',
-                id: id+'051',
-                userId: 'Yee',
-                senderId: 'Yee',
-                receiveId: myProfile[0].id,
-                avatarAnonymous: 'https://img.freepik.com/vetores-premium/modelo-de-vetor-de-logotipo-de-bot-de-bate-papo-de-robo-ai-de-inteligencia-artificial_8169-533.jpg',
-                usernameAnonymous: 'Yee.ia',
-              },
-              id,
-            }, io, socket);
+              const resposta = await yeeIA(message);
+              // Yee
+              sendToRoom(myProfile[0], 'messenger', {
+                type: 'messenger',
+                userId: myProfile.id,
+                success: true,
+                noMessageError: true,
+                message: {
+                  message: resposta,
+                  avatar: 'https://img.freepik.com/vetores-premium/modelo-de-vetor-de-logotipo-de-bot-de-bate-papo-de-robo-ai-de-inteligencia-artificial_8169-533.jpg',
+                  id: id+'051',
+                  userId: 'Yee',
+                  senderId: 'Yee',
+                  receiveId: myProfile[0].id,
+                  avatarAnonymous: 'https://img.freepik.com/vetores-premium/modelo-de-vetor-de-logotipo-de-bot-de-bate-papo-de-robo-ai-de-inteligencia-artificial_8169-533.jpg',
+                  usernameAnonymous: 'Yee.ia',
+                },
+                id,
+              }, io, socket);
             }
             return;
           }
