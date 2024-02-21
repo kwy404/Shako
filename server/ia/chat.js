@@ -1,31 +1,17 @@
-const axios = require('axios');
+const OpenAI = require('openai');
 
-// Função para obter resposta do bot usando a API do ChatGPT
-async function obterRespostaDoBot(pergunta) {
-  // Chave de API da OpenAI (substitua pela sua chave)
-  const apiKey = process.env.OPENAI_KEY || "9022";
+const openai = new OpenAI();
 
-  try {
-    const resposta = await axios.post(
-      'https://api.openai.com/v1/engines/gpt-3.5-turbo/completions',
-      {
-        prompt: pergunta,
-        max_tokens: 50 // Número de tokens máximos de resposta
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-      }
-    );
-    return resposta.data.choices[0].text.trim();
-    
-    } catch(error){
-      console.error('Erro ao obter resposta do bot:', error.message);
-      return 'Desculpe, ocorreu um erro ao processar sua pergunta.';
-    }
+async function obterRespostaDoBot(mensagem) {
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: "system", content: mensagem }],
+    model: "gpt-3.5-turbo",
+  });
+
+  return completion.choices[0];
 }
+
+main();
 
 const yeeIA = async mensagem => {
     const resposta = await obterRespostaDoBot(mensagem);
