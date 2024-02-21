@@ -14,7 +14,7 @@ async function obterRespostaDoBot(mensagem) {
       },
     });
 
-    return response.data.choices[0].content;
+    return response.data.choices[0].message.content;
   } catch (error) {
     return "Desculpe, estou tendo problemas para entender."
   }
