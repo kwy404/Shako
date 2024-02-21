@@ -11,8 +11,6 @@ async function obterRespostaDoBot(mensagem) {
   return completion.choices[0];
 }
 
-main();
-
 const yeeIA = async mensagem => {
     const resposta = await obterRespostaDoBot(mensagem);
     return resposta
