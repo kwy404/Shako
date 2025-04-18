@@ -8,7 +8,7 @@ import {
 import { FaSpinner } from 'react-icons/fa';
 const typePage = 'validateCode'
 
-const ws = new WebSocket('wss://shakoapp.onrender.com/ws/validateCode')
+const ws = new WebSocket('ws://localhost:9022/ws/validateCode')
 
 function getRandomChoicePhoto() {
   const choices = ['geek', 'anime', 'rock', 'error', 'space', 'place', 'music'];

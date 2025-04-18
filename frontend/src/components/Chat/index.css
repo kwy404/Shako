@@ -503,3 +503,11 @@
     top: 123px;
     left: -27px;
 }
+
+.video-info strong{
+    margin-left: 10px;
+}
+
+.video-info p{
+    margin-left: 10px;
+}

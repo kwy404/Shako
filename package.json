@@ -10,7 +10,7 @@
     "dashboard": "node ./server/services/dashboard.js",
     "photo": "node ./server/services/photo.js",
     "spotify": "node ./server/services/spotify.js",
-    "dev": "node ./dev.js"
+    "dev": "node ./server/dev.js"
   },
   "author": "",
   "license": "ISC",

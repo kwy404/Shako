@@ -111,36 +111,47 @@ function ChatComponent({ user, emited, socket, setUser, handleAddNotification }:
 
   useEffect(() => {
     const socketListener = (data: any) => {
-      // Verifica se a mensagem com o mesmo ID já existe no estado
-      const messageExists = messagens.some((message) => message.id === data.message.id);
-      
-      if (data.message.receiveId == user.id && !messageExists) {
-        handleAddNotification(data.message.id, "Enviou uma mensagem", data.message.usernameAnonymous, data.message.avatarAnonymous);
+      // Verifica se a mensagem é destinada ao usuário atual
+      if (data.message.receiveId === user.id) {
+        handleAddNotification(
+          data.message.id,
+          "Enviou uma mensagem",
+          data.message.usernameAnonymous,
+          data.message.avatarAnonymous
+        );
       }
   
       // Se o ID do usuário corresponder ao ID do usuário selecionado
-      if (selectUser?.id === data.message.receiveId || selectUser?.id === data.message.senderId) {
+      if (
+        selectUser?.id === data.message.receiveId ||
+        selectUser?.id === data.message.senderId
+      ) {
         setMensanges((prevMessages) => {
-          // Se a mensagem existir, substitui-a pela nova mensagem
+          const messageExists = prevMessages.some(
+            (message) => message.id === data.message.id
+          );
+  
           if (messageExists) {
+            // Substitui a mensagem existente
             return prevMessages.map((message) =>
               message.id === data.message.id ? data.message : message
             );
           } else {
-            // Caso contrário, adiciona a nova mensagem ao estado
+            // Adiciona nova mensagem
             return [...prevMessages, data.message];
           }
         });
+  
         scrollToBottom();
       }
     };
   
-    socket?.on('messenger', socketListener);
+    socket?.on("messenger", socketListener);
   
     return () => {
-      socket?.off('messenger', socketListener);
+      socket?.off("messenger", socketListener);
     };
-  }, [selectUser, messagens, socket]);
+  }, [selectUser, socket, user.id]); // Removido `messagens` daqui
 
   useEffect(() => {
     const loadMessenger = (data: any) => {
