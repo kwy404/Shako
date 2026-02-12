@@ -5,7 +5,7 @@ require('dotenv').config();
 class userRegister {
   constructor(data, knex, ws) {
     const { email, password, username } = data;
-    if(email.trim().length == 0 || password.trim().length == 0 || username.trim().length == 0 ){
+    if (email.trim().length == 0 || password.trim().length == 0 || username.trim().length == 0) {
       ws.send(
         JSON.stringify({
           type: "register",
@@ -17,7 +17,7 @@ class userRegister {
       );
       return {};
     }
-    if(email, password, username){
+    if (email, password, username) {
       this.email = email;
       this.password = password;
       this.username = username;
@@ -136,10 +136,7 @@ class userRegister {
   }
 
   encrypt(password) {
-    const cipher = crypto.createCipher('aes256', 'my_little_hex_deca');
-    let encrypted = cipher.update(password, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    return encrypted;
+    return crypto.createHash('sha256').update(password).digest('hex');
   }
 
   generateToken(length) {

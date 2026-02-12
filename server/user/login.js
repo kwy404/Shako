@@ -7,7 +7,7 @@ class userLogin {
       return;
     }
 
-    if(data.email.trim().length == 0 || data.password.trim().length == 0){
+    if (data.email.trim().length == 0 || data.password.trim().length == 0) {
       ws.send(
         JSON.stringify({
           type: 'login',
@@ -28,10 +28,7 @@ class userLogin {
   }
 
   encrypt(password) {
-    const cipher = crypto.createCipher('aes256', 'my_little_hex_deca');
-    let encrypted = cipher.update(password, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    return encrypted;
+    return crypto.createHash('sha256').update(password).digest('hex');
   }
 
   async execute() {
@@ -102,16 +99,16 @@ class userLogin {
         .count('receiver_id as count')
         .first();
 
-      if(typeof rows[0].spotify_object == 'object'){
+      if (typeof rows[0].spotify_object == 'object') {
         rows[0].spotify_object = JSON.parse(rows[0].spotify_object);
       }
       rows[0].followers = followersWithFollowMe;
       rows[0].followersCount = followersCount.count || 0;
       rows[0].followingCount = followingCount.count || 0;
       const existingInterest = await this.knex('interests')
-      .where({ user_id: rows[0].id })
-      .first();
-      rows[0].selectedInterests = existingInterest ? true: false;
+        .where({ user_id: rows[0].id })
+        .first();
+      rows[0].selectedInterests = existingInterest ? true : false;
 
       this.ws.send(
         JSON.stringify({

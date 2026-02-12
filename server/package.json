@@ -6,10 +6,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "app": "node ./server/services/app.js",
-    "dashboard": "node ./server/services/dashboard.js",
-    "photo": "node ./server/services/photo.js",
-    "spotify": "node ./server/services/spotify.js",
+    "app": "node ./services/app.js",
+    "dashboard": "node ./services/dashboard.js",
+    "photo": "node ./services/photo.js",
+    "spotify": "node ./services/spotify.js",
     "dev": "node ./dev.js"
   },
   "author": "",

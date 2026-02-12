@@ -31,6 +31,13 @@ class SpotifyServer {
     this.apiCallsCount = 0;
   }
 
+  socketByToken(token) {
+    for (const [socket, data] of this.clientSockets.entries()) {
+      if (data.user.token === token) return socket;
+    }
+    return null;
+  }
+
   start() {
     this.configureRoutes();
     this.configureSocketIO();
@@ -291,8 +298,12 @@ class SpotifyServer {
           try {
             const refreshTokenResponse = await axios.post('https://accounts.spotify.com/api/token', refreshTokenParams, config);
             const newAccessToken = refreshTokenResponse.data.access_token;
-            if (user.token && user.access_token && user.spotify_refresh_token, code) {
+            if (user.token && newAccessToken && user.spotify_refresh_token) {
               try {
+                const clientData = this.clientSockets.get(this.socketByToken(user.token));
+                if (clientData) {
+                  clientData.accessToken = newAccessToken;
+                }
                 await knex('users')
                   .where('token', user.token)
                   .update({ spotify: newAccessToken, spotify_refresh_token: user.spotify_refresh_token, spotify_code: code });
